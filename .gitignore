@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Dev tooling (not needed for end users)
+.claude/
+.aidlc-rule-details/
+aidlc-docs/
+
+# Internal planning docs
+CLAUDE.md
+CLAUDE_DESIGN_BRIEF.md
+REDESIGN_PLAN.md
+DESIGN_GUIDELINES.md
+
+# Preview
+preview.html
+
+# Internal design briefs
+landing/LANDING_DESIGN_BRIEF.md

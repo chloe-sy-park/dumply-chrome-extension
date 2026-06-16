@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumply — Simply Dumpy · 정리하지 말고, 그냥 쏟아내세요</title>
+  <meta name="description" content="Simply Dumpy. 머릿속에 떠다니는 모든 것을 그냥 쏟아내세요. 탐정 펭귄 알프레도가 할 일·감정·고민으로 정리해 드립니다. Chrome 확장 무료." />
+
+  <!-- Pretendard(본문) · 학교안심 바른바탕(한글 강조) · Lora(영문 강조) — 폰트는 styles.css의 @font-face -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+  <link rel="icon" type="image/png" href="../icons/favicon.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ambient warm field -->
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <!-- ───────────── NAV ───────────── -->
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="Dumply 홈">
+      <img class="brand__mark" src="../icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="주요">
+      <a href="#how">작동 방식</a>
+      <a href="#sort">분류</a>
+      <a href="#products">제품</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="#products">
+      <span>Chrome에 추가</span>
+      <span class="btn__tag">무료</span>
+    </a>
+  </header>
+
+  <main id="top">
+    <!-- ───────────── HERO ───────────── -->
+    <section class="hero">
+      <div class="hero__copy">
+        <p class="eyebrow reveal" data-reveal>
+          <span class="eyebrow__dot"></span> 머릿속이 시끄러운 사람들을 위한 도구
+        </p>
+        <h1 class="hero__title">
+          <span class="line reveal" data-reveal style="--d:.05s">정리하지 말고,</span>
+          <span class="line reveal" data-reveal style="--d:.16s">그냥 <em>쏟아내세요.</em></span>
+        </h1>
+        <p class="hero__sub reveal" data-reveal style="--d:.30s">
+          떠오르는 대로 적기만 하면, 탐정 펭귄 <strong>알프레도</strong>가
+          <br class="only-wide" />할 일·감정·고민으로 조용히 정리해 둡니다.
+        </p>
+        <div class="hero__actions reveal" data-reveal style="--d:.42s">
+          <a class="btn btn--solid btn--lg" href="#products">
+            <img src="../icons/icon-512.png" alt="" width="20" height="20" />
+            <span>Chrome에 추가</span>
+            <span class="btn__tag">무료</span>
+          </a>
+          <a class="btn btn--ghost btn--lg" href="#how">어떻게 작동하나요</a>
+        </div>
+        <p class="hero__note reveal" data-reveal style="--d:.52s">
+          설치 30초 · 회원가입 없이 바로 · iOS/Android 앱 <span class="soon">곧 출시</span>
+        </p>
+      </div>
+
+      <!-- 시그니처: 흩어진 덤프 → 카드로 착지 -->
+      <div class="stage reveal" data-reveal style="--d:.36s" aria-hidden="true">
+        <div class="stage__panel">
+          <div class="panel__bar">
+            <span class="panel__dot"></span><span class="panel__dot"></span><span class="panel__dot"></span>
+            <span class="panel__label">brain&nbsp;dump</span>
+          </div>
+
+          <!-- 1막: 쏟아지는 생각들 -->
+          <div class="dump" id="dump">
+            <span class="thought" style="--t:0">금요일까지 보고서 마감</span>
+            <span class="thought" style="--t:1">아 너무 피곤해...</span>
+            <span class="thought" style="--t:2">엄마 생신 선물 뭐 하지</span>
+            <span class="thought" style="--t:3">이직할까 말까</span>
+            <span class="thought" style="--t:4">우유 사기</span>
+            <span class="thought" style="--t:5">오늘 좀 뿌듯했다</span>
+          </div>
+
+          <!-- 2막: 정리된 카드 -->
+          <div class="sorted" id="sorted">
+            <article class="scard scard--task" style="--s:0">
+              <header><span class="scard__tag">할 일</span></header>
+              <ul>
+                <li><i class="chk"></i>보고서 마감 <em>금</em></li>
+                <li><i class="chk"></i>엄마 생신 선물</li>
+                <li><i class="chk"></i>우유 사기</li>
+              </ul>
+            </article>
+            <article class="scard scard--feel" style="--s:1">
+              <header><span class="scard__tag">오늘의 마음</span></header>
+              <p class="mood">😮‍💨 피곤 · 🙂 뿌듯</p>
+            </article>
+            <article class="scard scard--ponder" style="--s:2">
+              <header><span class="scard__tag">생각 중</span></header>
+              <p>이직할까 말까 <span class="muted">— 천천히 결정해요</span></p>
+            </article>
+          </div>
+        </div>
+        <span class="stage__glow"></span>
+      </div>
+    </section>
+
+    <!-- ───────────── MARQUEE ───────────── -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>할 일</span><i>·</i><span>마감</span><i>·</i><span>감정</span><i>·</i><span>에너지</span><i>·</i><span>고민</span><i>·</i><span>아이디어</span><i>·</i><span>약속</span><i>·</i><span>걱정</span><i>·</i>
+        <span>할 일</span><i>·</i><span>마감</span><i>·</i><span>감정</span><i>·</i><span>에너지</span><i>·</i><span>고민</span><i>·</i><span>아이디어</span><i>·</i><span>약속</span><i>·</i><span>걱정</span><i>·</i>
+      </div>
+    </div>
+
+    <!-- ───────────── EMPATHY ───────────── -->
+    <section class="manifesto">
+      <p class="manifesto__text">
+        <span class="w" data-reveal>머릿속에</span>
+        <span class="w" data-reveal>떠다니는</span>
+        <span class="w" data-reveal>생각은</span>
+        <span class="w w--dim" data-reveal>정리할</span>
+        <span class="w w--dim" data-reveal>기운이</span>
+        <span class="w w--dim" data-reveal>날</span>
+        <span class="w w--dim" data-reveal>때까지</span>
+        <span class="w" data-reveal>기다려</span>
+        <span class="w" data-reveal>주지</span>
+        <span class="w" data-reveal>않죠.</span>
+        <br aria-hidden="true" />
+        <span class="w" data-reveal>그래서</span>
+        <span class="w" data-reveal>Dumply는</span>
+        <span class="w" data-reveal><em>정리를</em></span>
+        <span class="w" data-reveal><em>대신</em></span>
+        <span class="w" data-reveal><em>합니다.</em></span>
+      </p>
+    </section>
+
+    <!-- ───────────── HOW ───────────── -->
+    <section class="how" id="how">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>작동 방식</p>
+        <h2 class="sec-head__title reveal" data-reveal>세 번의 호흡이면 끝나요</h2>
+      </header>
+
+      <ol class="steps">
+        <li class="step reveal" data-reveal>
+          <span class="step__no">01</span>
+          <h3>쏟아내기</h3>
+          <p>줄 단위로 그냥 적어요. 맞춤법도, 순서도, 카테고리도 신경 쓰지 마세요.</p>
+          <div class="step__demo demo-dump">
+            <span>금요일까지 보고서</span>
+            <span>너무 피곤해</span>
+            <span>이직할까…</span>
+          </div>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.1s">
+          <span class="step__no">02</span>
+          <h3>알프레도가 분류</h3>
+          <p>한 줄 한 줄을 읽고 <b>할 일·감정·고민</b> 셋 중 어디에 속하는지 알아서 나눠요.</p>
+          <div class="step__demo demo-route">
+            <span class="rt rt--task">할 일</span>
+            <span class="rt rt--feel">감정</span>
+            <span class="rt rt--ponder">고민</span>
+          </div>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.2s">
+          <span class="step__no">03</span>
+          <h3>오늘에 집중</h3>
+          <p>할 일만 우선순위로 떠오르고, 감정과 고민은 부담 없이 곁에 둬요.</p>
+          <div class="step__demo demo-focus">
+            <span class="focus-row"><i class="chk"></i>보고서 마감 <em>오늘</em></span>
+            <span class="focus-row focus-row--ghost"><i class="chk"></i>우유 사기</span>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ───────────── SORT / ROUTING ───────────── -->
+    <section class="sort" id="sort">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>세 갈래 분류</p>
+        <h2 class="sec-head__title reveal" data-reveal>모든 생각이<br/>‘할 일’은 아니니까</h2>
+        <p class="sec-head__lead reveal" data-reveal>
+          감정은 처리할 일이 아니라 상태이고, 고민은 결정 전이라 재촉하면 부담이 돼요.
+          Dumply는 셋을 다르게 대합니다.
+        </p>
+      </header>
+
+      <div class="lanes">
+        <article class="lane lane--task reveal" data-reveal>
+          <span class="lane__icon">✓</span>
+          <h3>할 일</h3>
+          <p>실행할 수 있는 것. 마감과 우선순위(MoSCoW)를 붙여 오늘 할 일로 떠올려요.</p>
+          <div class="lane__chip">금요일까지 보고서 마감 <em>D-2</em></div>
+        </article>
+        <article class="lane lane--feel reveal" data-reveal style="--d:.08s">
+          <span class="lane__icon">♥</span>
+          <h3>감정 · 오늘의 마음</h3>
+          <p>피곤·뿌듯·짜증 같은 마음은 태스크로 만들지 않아요. 그날의 에너지로만 부드럽게 기록돼요.</p>
+          <div class="lane__chip">오늘은 좀 무리하지 말기 🌙</div>
+        </article>
+        <article class="lane lane--ponder reveal" data-reveal style="--d:.16s">
+          <span class="lane__icon">∿</span>
+          <h3>고민 · 생각 중</h3>
+          <p>아직 결정 전인 것들. 우선순위를 강요하지 않고, 준비됐을 때 <b>할 일로</b> 올릴 수 있어요.</p>
+          <div class="lane__chip">이직할까 말까 <em>천천히</em></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────────── PRODUCTS ───────────── -->
+    <section class="products" id="products">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>어디서나 쏟아내기</p>
+        <h2 class="sec-head__title reveal" data-reveal>지금은 브라우저에서,<br/>곧 더 많은 곳에서</h2>
+      </header>
+
+      <div class="prod-grid">
+        <article class="prod prod--live reveal" data-reveal>
+          <div class="prod__top">
+            <img src="../icons/icon-512.png" alt="" width="40" height="40" />
+            <span class="badge badge--live">사용 가능 · 무료</span>
+          </div>
+          <h3>Chrome 확장</h3>
+          <p>브라우저 우측 사이드 패널에서 언제든 열어 쏟아내세요. 회원가입도, 결제도 없습니다.</p>
+          <a class="btn btn--solid" href="#" data-cta="chrome">
+            <span>Chrome에 추가</span><span class="btn__tag">무료</span>
+          </a>
+        </article>
+
+        <article class="prod prod--soon reveal" data-reveal style="--d:.08s">
+          <div class="prod__top">
+            <span class="prod__glyph">􀙊</span>
+            <span class="badge badge--soon">Coming soon</span>
+          </div>
+          <h3>iOS · Android 앱</h3>
+          <p>주머니 속에서도 떠오르는 즉시. 위젯과 잠금화면에서 한 번에 덤프하도록 준비 중이에요.</p>
+          <form class="notify" data-notify>
+            <input type="email" placeholder="출시되면 알려드릴게요" aria-label="이메일" required />
+            <button class="btn btn--ghost" type="submit">알림 받기</button>
+          </form>
+        </article>
+
+        <article class="prod prod--ghost reveal" data-reveal style="--d:.16s">
+          <span class="prod__plus">+</span>
+          <h3>그리고 더</h3>
+          <p>맥 메뉴바, 슬랙, API… 쏟아낼 곳을 계속 넓혀갈 거예요.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────────── FINAL CTA ───────────── -->
+    <section class="cta">
+      <div class="cta__inner reveal" data-reveal>
+        <img class="cta__mascot" src="../icons/icon-512.png" alt="알프레도" width="72" height="72" />
+        <p class="cta__kicker">Simply Dumpy.</p>
+        <h2>머릿속, 지금 비워볼까요?</h2>
+        <p>정리는 알프레도에게 맡기고, 당신은 그냥 쏟아내기만 하면 돼요.</p>
+        <a class="btn btn--solid btn--lg" href="#" data-cta="chrome">
+          <span>Chrome에 무료로 추가</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ───────────── FOOTER ───────────── -->
+  <footer class="foot">
+    <div class="foot__brand">
+      <img src="../icons/icon-512.png" alt="" width="22" height="22" />
+      <span>Dumply</span>
+    </div>
+    <p class="foot__tag"><em class="foot__catch">Simply Dumpy.</em> 정리하지 말고, 그냥 덤프. 🐧🔍</p>
+    <nav class="foot__links" aria-label="푸터">
+      <a href="#how">작동 방식</a>
+      <a href="#sort">분류</a>
+      <a href="#products">제품</a>
+    </nav>
+    <p class="foot__copy">© 2026 Dumply</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

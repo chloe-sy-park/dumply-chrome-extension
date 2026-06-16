@@ -1,0 +1,372 @@
+/* Dumply 크롬 확장 — 디자인 토큰 (단일 소스) */
+
+:root {
+  /* ── Layout ── (사이드 패널 전용 · 유동 너비) */
+  /* ── 톤온톤 서피스 사다리 (웜 · 순백/순흑 미사용) ──
+     들어감(soft·track) < 바닥(page) < 올라옴(card)
+     L: 90 ───────── 95.7 ───────── 98.4  (모두 같은 웜 온도) */
+  --dumply-bg: #F3F1EB;                 /* 바닥 — 페이지·시트 배경 */
+  --dumply-sheet: #F3F1EB;              /* 본문 영역 배경 */
+  --dumply-surface: #FBFAF6;            /* 올라온 카드 — 웜 오프화이트 (순백 X) */
+  --dumply-card: #FBFAF6;               /* empty-card · dump-card 등 */
+  --dumply-padding-x: 16px;             /* 가장자리 패딩 (가변 너비 대응) */
+  --dumply-content-max: 520px;          /* 넓은 패널 대비 콘텐츠 최대 폭 */
+  --dumply-safe-top: 24px;
+  --dumply-chrome-safe-top: 12px;       /* 헤더 상단 (safe-top의 절반) */
+  --dumply-chrome-padding-y: 8px;       /* 헤더 상하 패딩 */
+  --dumply-sheet-gap: 16px;             /* 헤더 ↔ 곡선 시트 · 시트 하단 여백 */
+  --dumply-sheet-inset-x: 16px;         /* 시트 좌우 · 배경 여백 */
+  --nav-rail-w: 36px;
+  --nav-rail-w-expanded: 88px;
+  --dumply-cta-bottom: 24px;
+
+  /* ── Typography — family & scale ── */
+  --dumply-font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --dumply-font-size-xs: 10px;
+  --dumply-font-size-sm: 11px;
+  --dumply-font-size-caption: 12px;
+  --dumply-font-size-body: 14px;
+  --dumply-font-size-md: 15px;
+  --dumply-font-size-lg: 18px;
+  --dumply-font-size-title: 22px;
+  --dumply-font-size-display: 20px;
+  --dumply-line-height: 1.45;
+  --dumply-line-height-tight: 1.35;
+  --dumply-font-weight-regular: 400;
+  --dumply-font-weight-medium: 500;
+  --dumply-font-weight-semibold: 600;
+  --dumply-font-weight-bold: 700;
+
+  /* ── Typography — color (4단계) ── */
+  --dumply-text-primary: #36312B;       /* 가장 중요한 텍스트 (웜 소프트 먹색 — 순흑 회피) */
+  --dumply-text-body: #5E574E;          /* 일반 설명 · 소제목 */
+  --dumply-text-secondary: #928B80;     /* 보조 텍스트 (웜 그레이) */
+  --dumply-text-placeholder: #B7B0A4;   /* 플레이스홀더 · 비활성 */
+
+  /* ── Surface & UI (모노톤) ── */
+  --dumply-input: #E6E1D8;              /* 들어간 트랙·태그칩 (바닥보다 어둡게) */
+  --dumply-tag-bg: #E6E1D8;
+  --dumply-tag-text: #5E574E;
+  --dumply-active: #DFD9CF;             /* hover·active (한 계단 더 깊게) */
+  --dumply-border: #EAE7E1;             /* 웜 보더 */
+  --dumply-border-strong: #DDD8D0;
+  --dumply-accent: #262019;            /* 모노톤 Primary (웜 에스프레소 차콜) */
+  --dumply-accent-dark: #1A1510;
+  --dumply-accent-soft: #EAE6DE;       /* 들어간 소프트 웰 — 빈상태·배지·세그먼트 트랙 */
+  --dumply-cal-range-bg: rgba(8, 9, 10, 0.10);
+  --dumply-accent-gradient: linear-gradient(to right, #2E2820, #262019);
+  --dumply-accent-text: #FBFAF8;
+  --dumply-success: #34C759;
+  --dumply-warning: #FF9500;
+  --dumply-error: #FF3B30;
+  --dumply-mint: #34C759;
+  --dumply-coral: #FF3B30;
+  --dumply-could: var(--dumply-text-secondary);
+  --dumply-info: #3B82F6;
+
+  /* ── MoSCoW (기능색 — 상태·우선순위 전용) ── */
+  --dumply-moscow-must: var(--dumply-error);
+  --dumply-moscow-should: var(--dumply-warning);
+  --dumply-moscow-could: var(--dumply-could);
+  --dumply-moscow-wont: var(--dumply-text-placeholder);
+
+  /* ── Calendar band pastels ── */
+  --dumply-cal-a: #D4E4FF;
+  --dumply-cal-b: #FFD6E8;
+  --dumply-cal-c: #FFF3B0;
+  --dumply-cal-d: #D4F5E0;
+  --dumply-cal-gcal: #E8EEF8;
+  --dumply-cal-tl: #FFE4CC;
+  --dumply-cal-memo: #E8DEFF;
+
+  /* ── Status soft fills ── */
+  --dumply-status-success-soft: rgba(52, 199, 89, 0.12);
+  --dumply-status-warning-soft: rgba(255, 149, 0, 0.12);
+  --dumply-trend-up-soft: rgba(52, 199, 89, 0.12);
+
+  /* ── Component sizes ── */
+  --dumply-dot-size-sm: 8px;
+  --dumply-dot-size-md: 10px;
+
+  /* ── Radius ── */
+  --dumply-radius-card: 16px;
+  --dumply-radius-md: 10px;
+  --dumply-radius-sm: 8px;
+  --dumply-radius-sheet: 12px;         /* 본문 곡선 시트 (4모서리) */
+  --dumply-radius-sheet-top: 12px;     /* 하위 호환 */
+
+  /* ── Shadow ── */
+  --dumply-shadow-sm: 0 1px 2px rgba(52, 40, 24, 0.05), 0 1px 1px rgba(52, 40, 24, 0.04);
+  --dumply-shadow-md: 0 6px 20px rgba(52, 40, 24, 0.09), 0 1px 2px rgba(52, 40, 24, 0.05);
+  --dumply-overlay: rgba(38, 32, 25, 0.54);
+
+  /* ── Spacing ── */
+  --dumply-gap-xs: 6px;
+  --dumply-gap-sm: 10px;
+  --dumply-gap-md: 16px;
+  --dumply-gap-lg: 20px;
+  --dumply-gap-xl: 28px;
+  --dumply-section-gap: 32px;           /* 섹션 ↔ 섹션 */
+
+  /* ── Aliases (컴포넌트용) ── */
+  --bg-base: var(--dumply-bg);
+  --bg-sheet: var(--dumply-sheet);
+  --bg-surface: var(--dumply-surface);
+  --bg-card: var(--dumply-card);
+  --bg-input: var(--dumply-input);
+  --bg-active: var(--dumply-active);
+  --bg-accent-soft: var(--dumply-accent-soft);
+  --cal-range-bg: var(--dumply-cal-range-bg);
+  --text-primary: var(--dumply-text-primary);
+  --text-body: var(--dumply-text-body);
+  --text-secondary: var(--dumply-text-secondary);
+  --text-placeholder: var(--dumply-text-placeholder);
+  /* 하위 호환 — tertiary → 보조, muted → 플레이스홀더 */
+  --text-tertiary: var(--dumply-text-secondary);
+  --text-muted: var(--dumply-text-placeholder);
+  --border: var(--dumply-border);
+  --border-strong: var(--dumply-border-strong);
+  --accent: var(--dumply-accent);
+  --accent-dark: var(--dumply-accent-dark);
+  --accent-gradient: var(--dumply-accent-gradient);
+  --accent-text: var(--dumply-accent-text);
+  --success: var(--dumply-success);
+  --warning: var(--dumply-warning);
+  --error: var(--dumply-error);
+  --mint: var(--dumply-mint);
+  --coral: var(--dumply-coral);
+  --could: var(--dumply-could);
+  --info: var(--dumply-info);
+  --moscow-must: var(--dumply-moscow-must);
+  --moscow-should: var(--dumply-moscow-should);
+  --moscow-could: var(--dumply-moscow-could);
+  --moscow-wont: var(--dumply-moscow-wont);
+  --cal-band-a: var(--dumply-cal-a);
+  --cal-band-b: var(--dumply-cal-b);
+  --cal-band-c: var(--dumply-cal-c);
+  --cal-band-d: var(--dumply-cal-d);
+  --cal-band-gcal: var(--dumply-cal-gcal);
+  --cal-band-tl: var(--dumply-cal-tl);
+  --cal-band-memo: var(--dumply-cal-memo);
+  --status-success-soft: var(--dumply-status-success-soft);
+  --status-warning-soft: var(--dumply-status-warning-soft);
+  --trend-up-soft: var(--dumply-trend-up-soft);
+  --font-size-xs: var(--dumply-font-size-xs);
+  --font-size-sm: var(--dumply-font-size-sm);
+  --font-size-caption: var(--dumply-font-size-caption);
+  --font-size-body: var(--dumply-font-size-body);
+  --font-size-md: var(--dumply-font-size-md);
+  --font-size-lg: var(--dumply-font-size-lg);
+  --font-size-title: var(--dumply-font-size-title);
+  --font-weight-regular: var(--dumply-font-weight-regular);
+  --font-weight-medium: var(--dumply-font-weight-medium);
+  --font-weight-semibold: var(--dumply-font-weight-semibold);
+  --font-weight-bold: var(--dumply-font-weight-bold);
+  --dot-size-sm: var(--dumply-dot-size-sm);
+  --dot-size-md: var(--dumply-dot-size-md);
+  --shadow-sm: var(--dumply-shadow-sm);
+  --shadow-md: var(--dumply-shadow-md);
+  --shadow-glass: var(--dumply-shadow-md);
+  --radius-card: var(--dumply-radius-card);
+  --radius-md: var(--dumply-radius-md);
+  --radius-sm: var(--dumply-radius-sm);
+  --radius-sheet-top: var(--dumply-radius-sheet-top);
+  --radius-sheet: var(--dumply-radius-sheet);
+}
+
+/* ─────────────────────────────────────────────
+   컬러 테마 (Linear 팀 팔레트 기반 · 톤온톤 사다리 동일 구조)
+   6색[배경·텍스트·서피스·서피스텍스트·액센트·액센트텍스트]에서
+   밝은 면=카드 / 어두운 면=페이지로 매핑, 나머지 토큰은 유도.
+   미지정 토큰(기능색 등)은 :root에서 상속.
+   ───────────────────────────────────────────── */
+
+/* 시스템 — 순중립 그레이 (macOS/iOS System Gray 팔레트) · 라이트 */
+:root[data-theme="system"] {
+  --dumply-bg: #F2F2F5;
+  --dumply-sheet: #F2F2F5;
+  --dumply-surface: #FFFFFF;
+  --dumply-card: #FFFFFF;
+  --dumply-input: #E5E5EA;
+  --dumply-tag-bg: #E5E5EA;
+  --dumply-tag-text: #636366;
+  --dumply-active: #D8D8DC;
+  --dumply-border: #E4E4E8;
+  --dumply-border-strong: #CCCCD0;
+  --dumply-accent: #636366;
+  --dumply-accent-dark: #48484A;
+  --dumply-accent-soft: #E9E9EC;
+  --dumply-accent-gradient: linear-gradient(to right, #6E6E72, #636366);
+  --dumply-accent-text: #FFFFFF;
+  --dumply-text-primary: #1C1C1E;
+  --dumply-text-body: #3A3A3C;
+  --dumply-text-secondary: #8E8E93;
+  --dumply-text-placeholder: #AEAEB2;
+  --dumply-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08), 0 1px 1px rgba(0, 0, 0, 0.04);
+  --dumply-shadow-md: 0 6px 20px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --dumply-overlay: rgba(0, 0, 0, 0.48);
+}
+
+/* 애쉬 — 화이트 + 인디고 (Linear: Ash) · 라이트 */
+:root[data-theme="ash"] {
+  --dumply-bg: #EDEEF3;
+  --dumply-sheet: #EDEEF3;
+  --dumply-surface: #FFFFFF;
+  --dumply-card: #FFFFFF;
+  --dumply-input: #E4E6EC;
+  --dumply-tag-bg: #E4E6EC;
+  --dumply-active: #DADDE6;
+  --dumply-border: #E3E5EC;
+  --dumply-border-strong: #D4D7E0;
+  --dumply-accent: #475BA1;
+  --dumply-accent-dark: #3B4D88;
+  --dumply-accent-soft: #E5E8F4;
+  --dumply-accent-gradient: linear-gradient(to right, #5163AC, #475BA1);
+  --dumply-accent-text: #FFFFFF;
+  --dumply-tag-text: #5C6166;
+  --dumply-text-primary: #44494D;
+  --dumply-text-body: #5C6166;
+  --dumply-text-secondary: #888D92;
+  --dumply-text-placeholder: #AFB3B8;
+  --dumply-shadow-sm: 0 1px 2px rgba(40, 48, 75, 0.06), 0 1px 1px rgba(40, 48, 75, 0.04);
+  --dumply-shadow-md: 0 6px 20px rgba(40, 48, 75, 0.10), 0 1px 2px rgba(40, 48, 75, 0.05);
+  --dumply-overlay: rgba(30, 35, 55, 0.54);
+}
+
+/* 바비 드림하우스 (ADHD 친화 리디자인) — 차분한 블러시 중성 + 흰 카드 + 틸 신호 하나.
+   채도 높은 면을 걷어내 과자극을 줄이고, 흰 카드로 도형-배경 분리를 명확히,
+   색은 오직 '신호'(버튼·오늘·지금·체크)에만 = 진짜 중요한 것이 튀게. */
+:root[data-theme="barbie"] {
+  --dumply-bg: #F5EEF1;                 /* 아주 옅은 블러시 (정체성만 남기고 채도↓) */
+  --dumply-sheet: #F5EEF1;
+  --dumply-surface: #FFFFFF;            /* 흰 카드 — 강한 도형-배경 분리 */
+  --dumply-card: #FFFFFF;
+  --dumply-input: #EFE6EA;
+  --dumply-tag-bg: #EFE6EA;
+  --dumply-active: #E6DAE0;
+  --dumply-border: #ECE3E8;
+  --dumply-border-strong: #DCCED6;
+  --dumply-accent: #16899A;            /* 틸 신호 — 빨강/주황 기능색과 구별돼 ADHD에 유리 */
+  --dumply-accent-dark: #11707E;
+  --dumply-accent-soft: #ECE3E8;        /* 중성 소프트 — 트랙·빈상태는 색 빼고 차분히 */
+  --dumply-accent-gradient: linear-gradient(to right, #1B98AA, #16899A);
+  --dumply-accent-text: #FFFFFF;
+  --dumply-tag-text: #6A5C64;
+  /* 이벤트 밴드 — 차분하지만 서로 구별되는 절제된 파스텔 */
+  --dumply-cal-a: #C8D6EC;
+  --dumply-cal-b: #EFCEDD;
+  --dumply-cal-c: #ECE2BE;
+  --dumply-cal-d: #CBE5D2;
+  --dumply-cal-gcal: #D5DBEA;
+  --dumply-cal-tl: #DBCEEA;
+  --dumply-cal-memo: #D2C6E6;
+  --dumply-text-primary: #342D32;       /* 진한 플럼-차콜 — 흰 카드 위 대비 ~12:1 */
+  --dumply-text-body: #645A60;
+  --dumply-text-secondary: #948A90;
+  --dumply-text-placeholder: #BAB1B7;
+  --dumply-shadow-sm: 0 1px 2px rgba(70, 45, 60, 0.06), 0 1px 1px rgba(70, 45, 60, 0.04);
+  --dumply-shadow-md: 0 6px 20px rgba(70, 45, 60, 0.10), 0 1px 2px rgba(70, 45, 60, 0.05);
+  --dumply-overlay: rgba(50, 35, 45, 0.54);
+}
+
+/* 미드나잇 — 블랙 + 로즈 (Linear: Midnight) · 다크 */
+:root[data-theme="midnight"] {
+  --dumply-bg: #0F0F10;
+  --dumply-sheet: #0F0F10;
+  --dumply-surface: #151516;
+  --dumply-card: #151516;
+  --dumply-input: #1E1E20;
+  --dumply-tag-bg: #1E1E20;
+  --dumply-tag-text: #B0B2B6;
+  --dumply-active: #26262A;
+  --dumply-border: #232325;
+  --dumply-border-strong: #343438;
+  --dumply-accent: #D25E65;
+  --dumply-accent-dark: #B84E55;
+  --dumply-accent-soft: #2A1E20;
+  --dumply-accent-gradient: linear-gradient(to right, #DA6A70, #D25E65);
+  --dumply-accent-text: #FFFFFF;
+  --dumply-text-primary: #EEEFF1;
+  --dumply-text-body: #B0B2B6;
+  --dumply-text-secondary: #87898E;
+  --dumply-text-placeholder: #5B5D62;
+  --dumply-cal-range-bg: rgba(238, 239, 241, 0.10);
+  --dumply-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --dumply-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --dumply-overlay: rgba(0, 0, 0, 0.55);
+  --dumply-cal-a: #253040;
+  --dumply-cal-b: #3A2830;
+  --dumply-cal-c: #3A3520;
+  --dumply-cal-d: #283A30;
+  --dumply-cal-gcal: #2A3040;
+  --dumply-cal-tl: #3A3028;
+  --dumply-cal-memo: #302840;
+}
+
+/* 새벽 — 딥퍼플 + 마젠타 (Linear: Dawn) · 다크 */
+:root[data-theme="dawn"] {
+  --dumply-bg: #2A222E;
+  --dumply-sheet: #2A222E;
+  --dumply-surface: #382A3C;
+  --dumply-card: #382A3C;
+  --dumply-input: #41324A;
+  --dumply-tag-bg: #41324A;
+  --dumply-tag-text: #C0B6C4;
+  --dumply-active: #4A3A54;
+  --dumply-border: #45374B;
+  --dumply-border-strong: #564661;
+  --dumply-accent: #A84376;
+  --dumply-accent-dark: #8E3563;
+  --dumply-accent-soft: #43304A;
+  --dumply-accent-gradient: linear-gradient(to right, #B44E81, #A84376);
+  --dumply-accent-text: #FFFFFF;
+  --dumply-text-primary: #EEEFF1;
+  --dumply-text-body: #C0B6C4;
+  --dumply-text-secondary: #968B9C;
+  --dumply-text-placeholder: #6B6172;
+  --dumply-cal-range-bg: rgba(238, 239, 241, 0.10);
+  --dumply-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --dumply-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --dumply-overlay: rgba(20, 12, 24, 0.6);
+  --dumply-cal-a: #2F3A50;
+  --dumply-cal-b: #4A3040;
+  --dumply-cal-c: #4A4030;
+  --dumply-cal-d: #304A3C;
+  --dumply-cal-gcal: #343A50;
+  --dumply-cal-tl: #4A3A30;
+  --dumply-cal-memo: #3A3050;
+}
+
+/* 창백함 — 다크 네이비 + 퍼플 (Linear: Pale) · 다크 */
+:root[data-theme="pale"] {
+  --dumply-bg: #292D3E;
+  --dumply-sheet: #292D3E;
+  --dumply-surface: #31364A;
+  --dumply-card: #31364A;
+  --dumply-input: #353A50;
+  --dumply-tag-bg: #353A50;
+  --dumply-tag-text: #BBBECB;
+  --dumply-active: #3E4358;
+  --dumply-border: #393E52;
+  --dumply-border-strong: #4A4F66;
+  --dumply-accent: #7D57C1;
+  --dumply-accent-dark: #6A47A8;
+  --dumply-accent-soft: #393D54;
+  --dumply-accent-gradient: linear-gradient(to right, #8A64CE, #7D57C1);
+  --dumply-accent-text: #FFFFFF;
+  --dumply-text-primary: #EEEFF1;
+  --dumply-text-body: #BBBECB;
+  --dumply-text-secondary: #8E92A1;
+  --dumply-text-placeholder: #62667A;
+  --dumply-cal-range-bg: rgba(238, 239, 241, 0.10);
+  --dumply-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --dumply-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --dumply-overlay: rgba(15, 18, 30, 0.6);
+  --dumply-cal-a: #2F3A52;
+  --dumply-cal-b: #44303E;
+  --dumply-cal-c: #44402E;
+  --dumply-cal-d: #304A3E;
+  --dumply-cal-gcal: #343C56;
+  --dumply-cal-tl: #463A30;
+  --dumply-cal-memo: #3A3356;
+}

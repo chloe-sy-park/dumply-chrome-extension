@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumply</title>
+  <link rel="stylesheet" href="fonts.css?v=48" />
+  <link rel="stylesheet" href="tokens.css?v=57" />
+  <link rel="stylesheet" href="components.css?v=60" />
+  <link rel="stylesheet" href="popup.css?v=96" />
+  <link rel="stylesheet" href="surface.css?v=48" />
+</head>
+<body class="surface-sidepanel">
+  <!-- 온보딩 -->
+  <div id="onboarding" class="onboarding">
+    <header class="onboard-top">
+      <button id="onboard-back" type="button" class="onboard-back" hidden data-i18n-aria="onboard.back.aria">← 뒤로</button>
+    </header>
+    <div id="onboard-body" class="onboard-body"></div>
+    <div id="onboard-footer" class="onboard-footer">
+      <div id="onboard-dots" class="page-dots"></div>
+      <div class="onboard-nav">
+        <button id="onboard-next" class="btn btn-primary btn-block" data-i18n="onboard.next">다음</button>
+      </div>
+      <button id="onboard-skip" class="link-btn onboard-skip" data-i18n="onboard.skip">건너뛰기</button>
+    </div>
+  </div>
+
+  <!-- 메인 -->
+  <div id="app" hidden>
+    <div class="app-layout">
+    <div class="app-shell">
+    <div class="app-sheet">
+    <nav id="nav-rail" class="nav-rail" aria-label="주요 메뉴">
+      <button id="btn-nav-toggle" type="button" class="rail-btn nav-toggle" aria-expanded="false" data-i18n-title="nav.toggle.expand" title="메뉴 펼치기">
+        <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4l8 8-8 8" stroke="currentColor" fill="none" stroke-width="1.75"/></svg>
+        <span class="nav-label nav-toggle-label" hidden>펼치기</span>
+      </button>
+      <div class="nav-rail-menu">
+        <div class="nav-rail-body">
+          <button type="button" class="rail-btn" data-nav="home" data-i18n-title="nav.home" title="메인">
+            <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V19a1 1 0 01-1 1h-5v-6H10v6H5a1 1 0 01-1-1v-8.5z" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linejoin="round"/></svg>
+            <span class="nav-label" data-i18n="nav.home">메인</span>
+          </button>
+          <button type="button" class="rail-btn" data-nav="calendar" data-i18n-title="nav.calendar" title="캘린더">
+            <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" fill="none" stroke-width="1.75"/><path d="M3 10h18M8 2v4M16 2v4" stroke="currentColor" fill="none" stroke-width="1.75"/></svg>
+            <span class="nav-label" data-i18n="nav.calendar">캘린더</span>
+          </button>
+          <button type="button" class="rail-btn" data-nav="projects" data-i18n-title="nav.projects" title="프로젝트">
+            <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 012-2h5l2 2h9a1 1 0 011 1v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" fill="none" stroke-width="1.75"/></svg>
+            <span class="nav-label" data-i18n="nav.projects">프로젝트</span>
+          </button>
+        </div>
+        <button type="button" class="rail-btn nav-btn-bottom" data-nav="settings" title="설정" data-i18n-title="settings.title">
+          <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" stroke="currentColor" fill="none" stroke-width="1.75"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" fill="none" stroke-width="1.75"/></svg>
+          <span class="nav-label" data-i18n="settings.title">설정</span>
+        </button>
+
+      </div>
+    </nav>
+    <div id="route-home" class="app-route is-active">
+    <header class="dash-header home-only">
+      <div class="shell dash-header-inner">
+        <div class="dash-greet">
+          <p id="hdr-greeting" class="hdr-greeting"></p>
+          <div class="hdr-meta-row">
+            <p id="hdr-meta" class="hdr-meta"></p>
+            <p id="hdr-weather" class="hdr-weather" hidden aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="nav-rail-anchor"></div>
+      </div>
+    </header>
+
+    <nav class="tabs home-only" role="tablist">
+      <button class="tab is-active" data-tab="dump" role="tab" data-i18n="dump.tab">브레인 덤프</button>
+      <button class="tab" data-tab="dashboard" role="tab" data-i18n="dashboard.tab">대시보드</button>
+    </nav>
+
+    <main class="content">
+      <section id="view-dump" class="view is-active">
+        <div class="dump-section">
+          <div class="dump-card">
+          <div class="dump-card-head">
+            <div class="dump-card-icon" data-icon="pen"></div>
+            <span class="dump-label" data-i18n="dump.card.hint">정리하지 말고, 그냥 쏟아내세요</span>
+            <button id="btn-example" class="link-btn dump-example" data-i18n="dump.example.btn">↻ 예시</button>
+          </div>
+          <div class="dump-card-body">
+            <textarea id="dump-input" rows="4"
+              data-i18n-placeholder="dump.input.placeholder"
+              placeholder="엄마 오후 3시 생일 선물 구매. 이대표랑 미팅 앱 런칭 관련..."></textarea>
+            <p class="dump-hint" data-i18n="dump.input.hint">Enter로 정리 · Shift+Enter로 줄바꿈</p>
+          </div>
+        </div>
+        </div>
+        <div id="live-tags" class="live-tags"></div>
+
+        <div class="inbox-section">
+          <div class="section-head">
+            <span class="section-label">Inbox</span>
+            <span id="inbox-count" class="section-badge">0</span>
+            <div class="section-actions">
+              <button id="btn-ai-moscow" type="button" class="link-btn inbox-ai-link" data-i18n-title="inbox.ai.title" title="AI가 하나씩 질문하며 분류해요" data-i18n="inbox.ai.label">AI 문답</button>
+            </div>
+          </div>
+          <p class="flow-hint" data-i18n="inbox.flow.hint">Enter로 덤프 → 추천 확인 → 버킷 탭 → MoSCoW에 반영</p>
+          <div id="inbox-card" class="inbox-card"></div>
+          <button id="btn-apply-suggestions" type="button" class="btn btn-primary btn-block commit-bar" hidden data-i18n="inbox.classify.btn">추천대로 분류</button>
+        </div>
+
+        <div class="moscow-section">
+          <div class="moscow-head">
+            <span class="section-label" data-i18n="moscow.title">MoSCoW 분류</span>
+          </div>
+          <p class="moscow-guide" data-i18n="moscow.guide">Must는 3개 이하 · 드래그로 순서·버킷 변경</p>
+          <div id="moscow-board" class="moscow-board"></div>
+        </div>
+
+        <div class="mind-section" id="ponders-section" hidden>
+          <div class="section-head">
+            <span class="section-label" data-i18n="ponder.title">생각 중</span>
+          </div>
+          <p class="flow-hint" data-i18n="ponder.hint">아직 결정 전 — 마음 정해지면 할 일로 옮겨요</p>
+          <div id="ponders-card" class="mind-card"></div>
+        </div>
+
+        <div class="mind-section" id="feelings-section" hidden>
+          <div class="section-head">
+            <span class="section-label" data-i18n="feeling.title">오늘의 마음</span>
+          </div>
+          <p class="flow-hint" data-i18n="feeling.hint">할 일 아닌 감정은 여기 — 오늘 컨디션에 반영돼요</p>
+          <div id="feelings-card" class="mind-card"></div>
+        </div>
+      </section>
+
+      <section id="view-dashboard" class="view">
+        <div class="a-card prio-section">
+          <div class="a-card-head">
+            <div class="a-card-icon" data-icon="target"></div>
+            <div class="a-card-title">
+              <span class="a-card-title-main" data-i18n="dashboard.priority.title">오늘의 우선순위</span>
+            </div>
+            <span id="prio-badge" class="a-card-badge" hidden></span>
+            <div class="section-actions">
+              <button id="btn-add-task" type="button" class="icon-btn-add" data-i18n-aria="dashboard.priority.add.title" aria-label="할 일 추가" data-i18n-title="dashboard.priority.add.title" title="할 일 추가">+</button>
+              <button id="btn-prio-refresh" type="button" class="icon-btn-sm prio-refresh-btn" data-i18n-title="dashboard.priority.reorder.title" title="AI 재정렬" data-i18n-aria="dashboard.priority.reorder.title" aria-label="AI 재정렬">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 00-9-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 009 9 9.75 9.75 0 006.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+              </button>
+            </div>
+          </div>
+          <div id="prio-list" class="a-card-list"></div>
+          <button id="btn-prio-expand" type="button" class="prio-expand-btn" hidden>더보기 ▾</button>
+        </div>
+
+        <div class="a-card remember-section">
+          <div class="a-card-head">
+            <div class="a-card-icon" data-icon="book-open"></div>
+            <div class="a-card-title">
+              <span class="a-card-title-main" data-i18n="dashboard.remember.title">잊지 말 것</span>
+            </div>
+          </div>
+          <div id="remember-card" class="remember-card"></div>
+        </div>
+
+        <div class="a-card timeline-section">
+          <div class="a-card-head">
+            <div class="a-card-icon" data-icon="calendar"></div>
+            <div class="a-card-title">
+              <span class="a-card-title-main" data-i18n="dashboard.timeline.title">오늘 타임라인</span>
+            </div>
+            <div class="section-actions">
+              <button id="btn-cal-sync" type="button" class="btn btn-secondary btn-sm" hidden data-i18n-title="dashboard.timeline.sync.title" title="Google Calendar 동기화" data-i18n="dashboard.timeline.sync">동기화</button>
+              <button id="btn-add-event" type="button" class="icon-btn-add" data-i18n-aria="dashboard.timeline.add.title" aria-label="일정 추가" data-i18n-title="dashboard.timeline.add.title" title="일정 추가">+</button>
+            </div>
+          </div>
+          <div id="timeline-block-wrap" class="timeline-block-wrap">
+            <div class="timeline-block">
+              <div class="tb-scroll">
+                <div id="tb-hours" class="tb-hours"></div>
+                <div id="tb-grid" class="tb-grid"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    </div>
+
+    <div id="route-calendar" class="app-route">
+      <div class="route-scroll shell">
+        <div id="calendar-root"></div>
+      </div>
+    </div>
+
+    <div id="route-projects" class="app-route">
+      <div class="route-scroll shell">
+        <div id="projects-root"></div>
+      </div>
+    </div>
+
+    <div id="route-project-detail" class="app-route">
+      <div class="route-scroll shell">
+        <div id="project-detail-root"></div>
+      </div>
+    </div>
+
+    <div id="route-settings" class="app-route">
+      <div class="route-scroll shell">
+        <label class="field">
+          <span class="field-label" data-i18n="settings.name">이름</span>
+          <input id="user-name" type="text" placeholder="닉네임" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span class="field-label" data-i18n="settings.language">언어</span>
+          <select id="language-select">
+            <option value="auto" data-i18n="settings.language.auto">자동 (브라우저)</option>
+            <option value="ko">한국어</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+        <label class="field">
+          <span class="field-label" data-i18n="settings.theme">테마</span>
+          <select id="theme-select">
+            <option value="system">System</option>
+            <option value="light">Off-white</option>
+            <option value="ash">Ash</option>
+            <option value="barbie">Barbie Dreamhouse</option>
+            <option value="midnight">Midnight</option>
+            <option value="dawn">Dawn</option>
+            <option value="pale">Pale</option>
+          </select>
+          <span class="field-hint" data-i18n="settings.theme.hint">System은 라이트=Ash · 다크=Midnight로 자동 전환돼요</span>
+        </label>
+        <label class="field">
+          <span class="field-label" data-i18n="settings.weather.city">날씨 도시</span>
+          <input id="weather-city" type="text" placeholder="예: 서울" autocomplete="off" />
+          <span class="field-hint" data-i18n="settings.weather.hint">GPS 또는 도시 이름으로 날씨를 가져와요</span>
+        </label>
+        <div class="field settings-location-field">
+          <span class="field-label" data-i18n="settings.location">위치 · 날씨</span>
+          <p id="location-status" class="field-hint settings-status">위치를 허용하면 헤더에 날씨가 표시돼요</p>
+          <button type="button" id="btn-location-enable" class="btn btn-secondary btn-block" data-i18n="settings.location.btn">위치 허용하기</button>
+        </div>
+        <div class="api-notice" id="settings-api-notice">
+          <p data-i18n="settings.api.notice">💡 Claude Pro / ChatGPT Plus / Gemini Advanced 구독은 확장에서 공식 연동되지 않아요. AI 기능은 API 키(BYOK)가 필요합니다.</p>
+        </div>
+        <div class="field">
+          <span class="field-label" data-i18n="settings.ai.provider">AI 제공자</span>
+          <select id="ai-provider">
+            <option value="anthropic">🟣 Claude (Anthropic)</option>
+            <option value="openai">🟢 OpenAI</option>
+            <option value="gemini">🔵 Gemini (Google)</option>
+          </select>
+        </div>
+        <div class="field">
+          <span class="field-label" data-i18n="settings.ai.model">모델</span>
+          <select id="ai-model"></select>
+          <span class="field-hint" id="ai-model-hint"></span>
+        </div>
+        <label class="field">
+          <span class="field-label" data-i18n="settings.api.anthropic">Anthropic API 키</span>
+          <input id="api-key-anthropic" type="password" placeholder="sk-ant-..." autocomplete="off" />
+          <span class="field-hint">console.anthropic.com/settings/keys</span>
+        </label>
+        <label class="field">
+          <span class="field-label" data-i18n="settings.api.openai">OpenAI API 키</span>
+          <input id="api-key-openai" type="password" placeholder="sk-..." autocomplete="off" />
+          <span class="field-hint">platform.openai.com/api-keys</span>
+        </label>
+        <label class="field">
+          <span class="field-label" data-i18n="settings.api.google.label">Google API 키 (Gemini)</span>
+          <input id="api-key-google" type="password" placeholder="AIza..." autocomplete="off" />
+          <span class="field-hint">aistudio.google.com/apikey</span>
+        </label>
+        <p id="settings-api-storage-notice" class="field-hint"></p>
+        <div class="field settings-google-field">
+          <span class="field-label" data-i18n="settings.google.label">Google 계정 · 캘린더</span>
+          <p id="google-account-status" class="field-hint settings-status">로그인하면 캘린더 일정을 가져와요</p>
+          <button type="button" id="btn-google-connect" class="btn btn-secondary btn-block" data-i18n="settings.google.connect">Google로 로그인 · 캘린더 연동</button>
+          <button type="button" id="btn-google-disconnect" class="btn btn-secondary btn-block" hidden data-i18n="settings.google.disconnect">연결 해제</button>
+        </div>
+        <div class="field" id="settings-cal-field" hidden>
+          <span class="field-label" data-i18n="settings.cal.sync">동기화 캘린더</span>
+          <button id="btn-settings-cal-select" type="button" class="btn btn-secondary btn-block" aria-label="캘린더 선택"></button>
+          <select id="cal-sync-dir">
+            <option value="both" data-i18n="settings.cal.sync.both">양방향 동기화</option>
+            <option value="read" data-i18n="settings.cal.sync.read">읽기만</option>
+            <option value="write" data-i18n="settings.cal.sync.write">쓰기만</option>
+          </select>
+        </div>
+        <div class="field">
+          <span class="field-label" data-i18n="settings.dictionary.label">내 단어장</span>
+          <p class="field-hint" data-i18n="settings.dictionary.hint">덤프에서 직접 등록한 고유명사예요. 탭하면 삭제돼요.</p>
+          <div id="dictionary-list" class="dictionary-list"></div>
+        </div>
+        <div class="field">
+          <span class="field-label" data-i18n="settings.decisions.label">AI 판단 기록</span>
+          <p class="field-hint" data-i18n="settings.decisions.hint">덤플리의 우선순위 제안을 그대로 썼는지, 바꿨는지 모아 봤어요.</p>
+          <div id="decision-stats" class="decision-stats"></div>
+        </div>
+        <div class="field">
+          <span class="field-label" data-i18n="settings.backup.label">데이터 백업</span>
+          <p class="field-hint" data-i18n="settings.backup.hint">데이터는 이 기기의 브라우저에만 저장돼요. 기기를 바꾸거나 Chrome을 재설치할 경우 백업 파일로 복원할 수 있어요. API 키는 보안상 파일에 포함되지 않아요.</p>
+          <div class="data-actions">
+            <button type="button" id="btn-export" class="btn btn-secondary" data-i18n="settings.backup.export">내보내기</button>
+            <label class="btn btn-secondary import-label"><span data-i18n="settings.backup.import">가져오기</span>
+              <input type="file" id="import-file" accept="application/json,.json" hidden />
+            </label>
+          </div>
+        </div>
+        <div class="field settings-danger-field">
+          <span class="field-label" data-i18n="settings.reset.label">데이터 초기화</span>
+          <p class="field-hint" data-i18n="settings.reset.hint">모든 할 일·프로젝트·연동 설정을 삭제하고 처음부터 시작해요.</p>
+          <button type="button" id="btn-reset-data" class="btn btn-danger btn-block" data-i18n="settings.reset.btn">데이터 초기화하기</button>
+        </div>
+        <button id="btn-save-settings" type="button" class="btn btn-primary btn-block" data-i18n="settings.save">저장</button>
+      </div>
+    </div>
+    </div>
+    </div>
+  </div>
+
+  <div id="ai-moscow-sheet" class="sheet" hidden>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="ai-moscow-title">
+      <div class="sheet-head">
+        <h2 id="ai-moscow-title" data-i18n="ai.moscow.title">덤플리의 우선순위 질문</h2>
+        <button id="btn-close-ai-moscow" class="icon-btn" data-i18n-aria="close.btn" aria-label="닫기"><div data-icon="x"></div></button>
+      </div>
+      <p id="ai-moscow-q" class="ai-q"></p>
+      <div id="ai-moscow-opts" class="ai-opts"></div>
+    </div>
+  </div>
+
+  <div id="detail-sheet" class="sheet" hidden>
+    <div class="sheet-panel detail-panel" role="dialog" aria-modal="true" aria-label="항목 상세">
+      <div class="detail-head">
+        <input id="detail-complete" type="checkbox" class="memo-check detail-complete" aria-label="완료" hidden />
+        <button id="btn-detail-close" type="button" class="icon-btn" data-i18n-aria="close.btn" aria-label="닫기">✕</button>
+      </div>
+      <div id="detail-type-tabs" class="compose-tabs detail-type-tabs" hidden>
+        <button type="button" class="compose-tab" data-kind="memo" data-i18n="task.tab">할 일</button>
+        <button type="button" class="compose-tab" data-kind="event" data-i18n="event.tab">일정</button>
+      </div>
+      <input id="detail-title" class="detail-title" type="text" data-i18n-placeholder="title.placeholder" placeholder="제목" autocomplete="off" />
+      <textarea id="detail-notes" class="detail-notes" data-i18n-placeholder="notes.placeholder" placeholder="설명" rows="1"></textarea>
+      <p id="detail-ai-reason" class="detail-ai-reason" hidden></p>
+      <p id="detail-source" class="detail-source" hidden></p>
+      <div id="detail-tags" class="detail-tags" hidden></div>
+      <div id="detail-rows" class="detail-rows"></div>
+      <div id="detail-steps-section" class="detail-steps-section" hidden>
+        <div class="detail-steps-head">
+          <span class="detail-steps-label" data-i18n="subtask.title">하위 작업</span>
+          <button type="button" id="btn-detail-ai-split" class="btn btn-secondary btn-xs" hidden data-i18n="subtask.split.btn">AI 쪼개기</button>
+        </div>
+        <p id="detail-steps-reason" class="detail-ai-reason" hidden></p>
+        <div id="detail-steps" class="detail-steps"></div>
+        <button type="button" id="btn-detail-add-step" class="detail-add-step" data-i18n="subtask.add.btn">+ 하위 작업 추가</button>
+      </div>
+      <div id="detail-popover" class="compose-popover detail-popover" hidden></div>
+      <button id="btn-detail-delete" type="button" class="detail-delete" data-i18n="delete.btn">삭제</button>
+    </div>
+  </div>
+
+  <div id="cal-band-sheet" class="sheet" hidden>
+    <div class="sheet-panel cal-band-panel" role="dialog" aria-modal="true" aria-labelledby="cal-band-sheet-title">
+      <div class="sheet-head">
+        <h2 id="cal-band-sheet-title" data-i18n="band.title">기간 추가</h2>
+        <button id="btn-cal-band-close" type="button" class="icon-btn" data-i18n-aria="close.btn" aria-label="닫기">✕</button>
+      </div>
+      <input id="cal-band-title" class="detail-title" type="text" data-i18n-placeholder="band.name.placeholder" placeholder="일정 이름" autocomplete="off" />
+      <div class="cal-band-dates">
+        <label class="field">
+          <span class="field-label" data-i18n="band.start">시작</span>
+          <input id="cal-band-start" type="date" />
+        </label>
+        <label class="field">
+          <span class="field-label" data-i18n="band.end">종료</span>
+          <input id="cal-band-end" type="date" />
+        </label>
+      </div>
+      <p id="cal-band-range-label" class="cal-band-range-label"></p>
+      <div class="cal-band-custom">
+        <span class="field-label" data-i18n="band.color">색상</span>
+        <div id="cal-band-colors" class="cal-band-colors"></div>
+        <span class="field-label" data-i18n="band.icon">아이콘</span>
+        <div id="cal-band-icons" class="cal-band-icons"></div>
+      </div>
+      <button id="btn-cal-band-delete" type="button" class="detail-delete" hidden data-i18n="delete.btn">삭제</button>
+      <div class="compose-footer">
+        <button type="button" id="btn-cal-band-cancel" class="btn btn-secondary" data-i18n="cancel.btn">취소</button>
+        <button type="button" id="btn-cal-band-save" class="btn btn-primary" data-i18n="add.btn">추가</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cal-day-sheet" class="sheet" hidden>
+    <div class="sheet-panel cal-day-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="cal-day-sheet-title">
+      <div class="sheet-head">
+        <div class="cal-day-nav">
+          <button id="btn-cal-day-prev" type="button" class="icon-btn-sm" aria-label="이전 날">‹</button>
+          <h2 id="cal-day-sheet-title" data-i18n="cal.day.title">일정</h2>
+          <button id="btn-cal-day-next" type="button" class="icon-btn-sm" aria-label="다음 날">›</button>
+        </div>
+        <div class="cal-day-head-actions">
+          <button id="btn-cal-day-add" type="button" class="icon-btn-add" data-i18n-aria="cal.day.add.aria" aria-label="일정 추가" data-i18n-title="cal.day.add.aria" title="일정 추가">+</button>
+          <button id="btn-cal-day-close" type="button" class="icon-btn" data-i18n-aria="close.btn" aria-label="닫기">✕</button>
+        </div>
+      </div>
+      <div id="cal-day-allday" class="cal-day-allday" hidden></div>
+      <div id="cal-day-tl-wrap" class="timeline-block-wrap cal-day-tl-wrap">
+        <div class="timeline-block">
+          <div class="tb-scroll">
+            <div id="cal-day-tl-hours" class="tb-hours"></div>
+            <div id="cal-day-tl-grid" class="tb-grid"></div>
+          </div>
+        </div>
+      </div>
+      <p class="cal-day-hint" data-i18n="cal.day.drag.hint">빈 시간대를 드래그하면 일정을 추가할 수 있어요</p>
+    </div>
+  </div>
+
+  <div id="compose-sheet" class="sheet" hidden>
+    <div class="sheet-panel compose-panel" role="dialog" aria-modal="true" aria-label="새 항목 작성">
+      <div class="compose-tabs tabs" role="tablist" aria-label="입력 유형">
+        <button type="button" class="compose-tab is-active" data-compose-mode="task" role="tab" data-i18n="task.tab">할 일</button>
+        <button type="button" class="compose-tab" data-compose-mode="event" role="tab" data-i18n="event.tab">일정</button>
+      </div>
+      <div class="compose-body" id="compose-body">
+        <input
+          id="compose-title"
+          class="compose-title"
+          type="text"
+          data-i18n-placeholder="compose.task.placeholder"
+          placeholder="할 일을 입력하세요"
+          autocomplete="off"
+          aria-label="제목"
+        />
+        <div id="compose-tags" class="compose-tags" hidden></div>
+        <textarea
+          id="compose-notes"
+          class="compose-notes"
+          data-i18n-placeholder="compose.notes.placeholder"
+          placeholder="설명 (선택)"
+          rows="2"
+          hidden
+        ></textarea>
+        <button type="button" id="btn-compose-notes-toggle" class="compose-notes-toggle" data-i18n="compose.notes.btn">+ 설명</button>
+        <div id="compose-event-meta" class="compose-event-meta" hidden>
+          <input id="compose-with" class="compose-meta-input" type="text" data-i18n-placeholder="compose.with.placeholder" placeholder="👥 누구랑" autocomplete="off" />
+          <input id="compose-location" class="compose-meta-input" type="text" data-i18n-placeholder="compose.location.placeholder" placeholder="📍 어디서" autocomplete="off" />
+        </div>
+        <div class="compose-pills">
+          <button type="button" id="compose-pill-moscow" class="compose-pill" hidden>🎯 MoSCoW</button>
+          <button type="button" id="compose-pill-start-date" class="compose-pill" hidden>📅 시작</button>
+          <button type="button" id="compose-pill-start-time" class="compose-pill" hidden>⏰ 시작</button>
+          <button type="button" id="compose-pill-deadline" class="compose-pill" hidden>📅 마감</button>
+          <button type="button" id="compose-pill-deadline-time" class="compose-pill" hidden>⏰ 마감</button>
+          <button type="button" id="compose-pill-duration" class="compose-pill" hidden>⏱️ 소요</button>
+          <button type="button" id="compose-pill-date" class="compose-pill" hidden>📅 날짜</button>
+          <button type="button" id="compose-pill-time" class="compose-pill" hidden>⏰ 시간</button>
+          <button type="button" id="compose-pill-event-duration" class="compose-pill" hidden>⏱️ 30분</button>
+          <button type="button" id="compose-pill-reminder" class="compose-pill" hidden>🔔 알림</button>
+        </div>
+        <div id="compose-expanded-fields" class="compose-expanded-fields" hidden></div>
+        <div id="compose-popover" class="compose-popover" hidden></div>
+      </div>
+      <div class="compose-footer">
+        <button type="button" id="btn-compose-expand" class="compose-expand-btn">상세 ▼</button>
+        <div class="compose-footer-actions">
+          <button type="button" id="btn-compose-cancel" class="btn btn-secondary" data-i18n="cancel.btn">취소</button>
+          <button type="button" id="btn-compose-save" class="btn btn-primary" data-i18n="add.btn">추가</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="proj-sheet" class="sheet" hidden>
+    <div class="sheet-panel proj-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="proj-sheet-title">
+      <div class="sheet-head">
+        <h2 id="proj-sheet-title">새 프로젝트</h2>
+        <button id="btn-proj-sheet-close" type="button" class="icon-btn" aria-label="닫기">✕</button>
+      </div>
+      <div id="proj-sheet-body"></div>
+    </div>
+  </div>
+
+  <div id="cal-select-sheet" class="sheet" hidden>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="cal-select-sheet-title">
+      <div class="sheet-head">
+        <h2 id="cal-select-sheet-title" data-i18n="cal.select.title">동기화할 캘린더</h2>
+        <button id="btn-cal-select-close" type="button" class="icon-btn" aria-label="닫기">✕</button>
+      </div>
+      <p class="field-hint" data-i18n="cal.select.hint">체크한 캘린더를 덤플리에서 볼 수 있어요. 쓰기 캘린더로 지정하면 덤플리에서 추가한 일정이 해당 캘린더에 저장돼요.</p>
+      <div id="cal-select-list" class="cal-list cal-select-list"></div>
+      <button id="btn-cal-select-confirm" type="button" class="btn btn-primary btn-block" style="margin-top:var(--dumply-gap-lg)" data-i18n="cal.select.confirm">확인</button>
+    </div>
+  </div>
+
+  <div id="confirm-sheet" class="sheet" hidden>
+    <div class="sheet-panel confirm-panel" role="alertdialog" aria-modal="true" aria-labelledby="confirm-message">
+      <p id="confirm-message" class="confirm-message"></p>
+      <p id="confirm-detail" class="confirm-detail"></p>
+      <div class="confirm-actions">
+        <button type="button" id="btn-confirm-cancel" class="btn btn-secondary">취소</button>
+        <button type="button" id="btn-confirm-ok" class="btn btn-danger">삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="lib/icons.js?v=3"></script>
+  <script src="lib/brand.js?v=48"></script>
+  <script src="lib/i18n.js?v=1"></script>
+  <script src="lib/storage.js?v=63"></script>
+  <script src="lib/decisions.js?v=5"></script>
+  <script src="lib/tags.js?v=80"></script>
+  <script src="lib/ai.js?v=71"></script>
+  <script src="lib/calendar.js?v=52"></script>
+  <script src="lib/weather.js?v=49"></script>
+  <script src="app/core.js?v=85"></script>
+  <script src="app/ui.js?v=66"></script>
+  <script src="app/onboard.js?v=57"></script>
+  <script src="app/timeline-block.js?v=66"></script>
+  <script src="app/render.js?v=72"></script>
+  <script src="app/compose.js?v=52"></script>
+  <script src="app/detail.js?v=60"></script>
+  <script src="app/nav.js?v=51"></script>
+  <script src="app/calendar-view.js?v=76"></script>
+  <script src="app/projects.js?v=52"></script>
+  <script src="app/handlers.js?v=95"></script>
+  <script src="popup.js?v=49"></script>
+  <script src="lib/icons-init.js?v=1"></script>
+</body>
+</html>

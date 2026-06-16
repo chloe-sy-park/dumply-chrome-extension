@@ -1,0 +1,191 @@
+/* Dumply — 전체 페이지 레이아웃
+ * surface-fullpage 바디에서만 적용 */
+
+.surface-fullpage {
+  min-height: 100vh;
+  background: var(--dumply-bg);
+}
+
+/* ── 기본 앱 레이아웃 ── */
+.surface-fullpage #app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.surface-fullpage .app-layout,
+.surface-fullpage .app-shell,
+.surface-fullpage .app-sheet {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ── 네비게이션 레일: 왼쪽 고정 사이드바 ──
+ * fullpage.html에서 .nav-rail-anchor를 제거하여
+ * mountNavRail()이 레일을 이동시키지 않도록 함 */
+.surface-fullpage .nav-rail {
+  width: 160px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--dumply-border);
+  background: var(--dumply-surface);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.surface-fullpage .nav-label {
+  display: block !important;
+}
+
+.surface-fullpage .nav-toggle {
+  display: none;
+}
+
+/* 드롭다운 → 인라인 사이드바로 전환 */
+.surface-fullpage .nav-rail-menu {
+  display: flex !important;
+  position: static !important;
+  flex-direction: column !important;
+  flex: 1;
+  width: 100% !important;
+  top: auto !important;
+  right: auto !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 8px 0 !important;
+  gap: 2px !important;
+}
+
+.surface-fullpage .nav-rail-body {
+  display: flex !important;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* 버튼: 아이콘 + 레이블 가로 배치 */
+.surface-fullpage .rail-btn {
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  height: 36px !important;
+  padding: 0 12px !important;
+  gap: 8px !important;
+}
+
+/* 하단 버튼 정렬 */
+.surface-fullpage .nav-btn-bottom {
+  margin-top: 0 !important;
+}
+
+/* ── 라우트 공통 ── */
+.surface-fullpage .app-route {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.surface-fullpage .app-route.is-active {
+  display: flex;
+}
+
+/* ── 홈 헤더: 풀 너비 ── */
+.surface-fullpage #route-home .dash-header {
+  flex-shrink: 0;
+}
+
+.surface-fullpage #route-home .tabs.home-only {
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--dumply-border);
+}
+
+/* 대시보드 탭 숨김 — 오른쪽 컬럼에 항상 표시되므로 불필요 */
+.surface-fullpage .tab[data-tab="dashboard"] {
+  display: none;
+}
+
+/* ── 홈 content: 2-column ── */
+.surface-fullpage #route-home .content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* 브레인덤프 뷰: 왼쪽, 항상 표시 */
+.surface-fullpage #view-dump {
+  display: block !important;
+  grid-column: 1;
+  overflow-y: auto;
+  border-right: 1px solid var(--dumply-border);
+  padding-bottom: 40px;
+  max-width: 640px;
+}
+
+/* 대시보드 뷰: 오른쪽, 항상 표시 */
+.surface-fullpage #view-dashboard {
+  display: flex !important;
+  flex-direction: column;
+  grid-column: 2;
+  overflow-y: auto;
+  padding-bottom: 40px;
+  max-width: 640px;
+}
+
+/* ── 캘린더 / 프로젝트 / 설정: 중앙 와이드 ── */
+.surface-fullpage #route-calendar .route-scroll,
+.surface-fullpage #route-projects .route-scroll,
+.surface-fullpage #route-project-detail .route-scroll,
+.surface-fullpage #route-settings .route-scroll {
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--dumply-gap-lg);
+  box-sizing: border-box;
+}
+
+/* ── 시트(모달): 화면 중앙 ── */
+.surface-fullpage .sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dumply-overlay);
+}
+
+.surface-fullpage .sheet[hidden] {
+  display: none;
+}
+
+.surface-fullpage .sheet-panel {
+  width: 480px;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: var(--radius-md);
+  box-shadow: var(--dumply-shadow-md);
+}
+
+/* ── 온보딩: 중앙 카드 ── */
+.surface-fullpage #onboarding {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--dumply-bg);
+}
+
+/* ── 토스트: 하단 중앙 ── */
+.surface-fullpage .toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+}

@@ -1,0 +1,11 @@
+{
+  "appName": {
+    "message": "Dumply — Brain Dump & Priorities"
+  },
+  "appDescription": {
+    "message": "Don't organize — just dump. Dumply handles MoSCoW prioritization and your daily dashboard."
+  },
+  "extActionTitle": {
+    "message": "Open Dumply"
+  }
+}

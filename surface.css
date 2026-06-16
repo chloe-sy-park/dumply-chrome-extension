@@ -1,0 +1,16 @@
+/* Dumply — 사이드 패널 전용 레이아웃 보강
+ * 기본 유동 레이아웃은 popup.css에 있음. 여기선 풀높이 스크롤만 보장. */
+
+html, body {
+  height: 100%;
+}
+
+#app,
+#onboarding {
+  flex: 1;
+  min-height: 0;
+}
+
+.app-sheet .content {
+  overscroll-behavior: contain;
+}
