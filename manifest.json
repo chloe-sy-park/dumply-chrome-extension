@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt5l5bcxSGyH9Cd+iisITtvXR255MyYa1cFcQkqxdlOsXo1s1Bgvf0M/CmsgZmPwvQ3DY+/xiPRY1ra8XTV8TQYskgqXJbqmD/oHIySVL0CVNxFBbozZ2+zQXrmDJiYLgUijrNsuNJSCYjP6D1Mc2APmiG13t0VeY5840OuC7fmHOwZyHpsyq99Cr1gitJeEwEIH2ZZXFPf49/bdO1HxnmqUQhit0e1dAfJehc5YIw8wf35HTmg2twHhPBAaf6gLwRaHQpeVhOdo2jrv6KVcKZP6lS/4RmX6PBgkz/aALHsr/gVF8wGy2wV09ehfY/Dekj3Ux3gB9P5UjpmpotAuSFQIDAQAB",
   "name": "__MSG_appName__",
-  "version": "2.1.0",
-  "version_name": "2.1",
+  "version": "2.1.1",
+  "version_name": "2.1.1",
   "description": "__MSG_appDescription__",
   "default_locale": "en",
   "action": {
