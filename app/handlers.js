@@ -214,9 +214,14 @@ function materializeDumpItem({ title, kind, time = null, date = null, dateHint =
 function extractDumpLocal(text) {
   const lines = AlfredoTags.parseToMemos(text);
   const created = [];
-  const counts = { task: 0, feeling: 0, ponder: 0, dup: 0 };
+  const counts = { task: 0, feeling: 0, ponder: 0, done: 0, dup: 0 };
   lines.forEach((line) => {
     const kind = AlfredoTags.classifyLine(line);
+    // 이미 끝낸 일(과거형 완료 보고)은 할 일로 만들지 않고 건너뜀
+    if (kind === 'done') {
+      counts.done += 1;
+      return;
+    }
     if (kind === 'feeling' || kind === 'ponder') {
       pushDumpMemo({ title: line.trim(), kind, original: line, source: 'local' });
       counts[kind] += 1;
@@ -240,11 +245,13 @@ const PREP_BUFFER_MIN = 30; // 선행 준비는 일정 시각 30분 전까지
 // AI 추출 결과(items)로 메모/일정 생성 — 쪼개 분류 + 중복 건너뜀 + 연결관계/마감 물림
 function buildMemosFromAI(items) {
   const created = [];
-  const counts = { event: 0, task: 0, remember: 0, feeling: 0, ponder: 0, dup: 0 };
+  const counts = { event: 0, task: 0, remember: 0, feeling: 0, ponder: 0, done: 0, dup: 0 };
   const byTitle = {}; // title → { id, kind, date, time }
   aiAppliedIds.clear(); // 이번 덤프 기준으로 펄스 표식 리셋
 
   items.forEach((it) => {
+    // 이미 끝낸 일은 할 일/일정으로 만들지 않고 건너뜀
+    if (it.kind === 'done') { counts.done += 1; return; }
     const { date, dateHint } = resolveDumpDate(it.date);
     const res = materializeDumpItem({
       title: it.title, kind: it.kind, time: it.time || null,
@@ -288,6 +295,11 @@ async function makeSense() {
   if (!text) { toast(t('toast.write.first')); return; }
   AlfredoTags.setDictionary(state.settings.dictionary || []);
 
+  // 되돌리기용 — 정리 전 항목 id 스냅샷. 이후 새로 생긴 것만 골라 제거할 수 있게.
+  const beforeMemoIds = new Set((state.memos || []).map((m) => m.id));
+  const beforeTlIds = new Set((state.timeline || []).map((x) => x.id));
+  const beforeRemIds = new Set((state.remember || []).map((x) => x.id));
+
   makeSenseRunning = true;
   let result = null;
   let usedAI = false;
@@ -321,10 +333,27 @@ async function makeSense() {
     clearTimeout(aiPulseTimer);
     aiPulseTimer = setTimeout(() => { aiAppliedIds.clear(); }, 6000);
   }
+  // 이번 정리를 통째로 되돌리는 복원 함수 — 새로 생긴 항목 제거 + 원문 복구
+  const restoreDump = () => {
+    state.memos = (state.memos || []).filter((m) => beforeMemoIds.has(m.id));
+    state.timeline = (state.timeline || []).filter((x) => beforeTlIds.has(x.id));
+    state.remember = (state.remember || []).filter((x) => beforeRemIds.has(x.id));
+    Object.keys(state.moscowOrder || {}).forEach((k) => {
+      state.moscowOrder[k] = state.moscowOrder[k].filter((id) => beforeMemoIds.has(id));
+    });
+    aiAppliedIds.clear();
+    state.dumpDraft = text;
+    if (input) input.value = text;
+    renderLiveTags(text);
+  };
+
   // AI를 켰는데 실패했으면 그 사실을 보이게 — 무음 폴백이 "AI가 안 된다"는 오해를 만듦
-  toast(aiError
-    ? (AlfredoI18n.lang() === 'en' ? '⚠️ AI failed — organized with basic rules (check API key & network)' : '⚠️ AI 정리 실패 — 기본 규칙으로 정리했어요 (API 키·네트워크 확인)')
-    : makeSenseToast(counts));
+  if (aiError) {
+    toast(AlfredoI18n.lang() === 'en' ? '⚠️ AI failed — organized with basic rules (check API key & network)' : '⚠️ AI 정리 실패 — 기본 규칙으로 정리했어요 (API 키·네트워크 확인)');
+  } else {
+    // 성공 시 '되돌리기' 제공 — 잘못 쪼개졌거나 지어냈을 때 원문째 복구 가능
+    toastUndo(makeSenseToast(counts), restoreDump);
+  }
 
   // AI 추출을 안 썼을 때만 백그라운드 태그 보강(감정/에너지) — 중복 호출 방지
   if (!usedAI) enrichDumpTags(created);
@@ -340,18 +369,20 @@ function makeSenseToast(c) {
     if (c.remember) parts.push(`${c.remember} reminder${c.remember > 1 ? 's' : ''}`);
     if (c.feeling) parts.push(`${c.feeling} feeling${c.feeling > 1 ? 's' : ''}`);
     if (c.ponder) parts.push(`${c.ponder} thought${c.ponder > 1 ? 's' : ''}`);
+    const done = c.done ? ` · ${c.done} already-done skipped` : '';
     const dup = c.dup ? ` · ${c.dup} duplicate${c.dup > 1 ? 's' : ''} skipped` : '';
-    if (!parts.length) return t('toast.no.content');
-    return `Organized: ${parts.join(' · ')} ✓${dup}`;
+    if (!parts.length) return done ? `Nothing to do — ${c.done} already done` : t('toast.no.content');
+    return `Organized: ${parts.join(' · ')} ✓${done}${dup}`;
   }
   if (c.task) parts.push(`할 일 ${c.task}`);
   if (c.event) parts.push(`일정 ${c.event}`);
   if (c.remember) parts.push(`기억할 것 ${c.remember}`);
   if (c.feeling) parts.push(`마음 ${c.feeling}`);
   if (c.ponder) parts.push(`고민 ${c.ponder}`);
+  const done = c.done ? ` · 이미 한 일 ${c.done}개 제외` : '';
   const dup = c.dup ? ` · 중복 ${c.dup}개 건너뜀` : '';
-  if (!parts.length) return c.dup ? t('inbox.dup', c.dup) : t('toast.no.content');
-  return `${parts.join(' · ')} 정리했어요 ✓${dup}`;
+  if (!parts.length) return done ? `이미 한 일 ${c.done}개라 할 일은 없어요` : (c.dup ? t('inbox.dup', c.dup) : t('toast.no.content'));
+  return `${parts.join(' · ')} 정리했어요 ✓${done}${dup}`;
 }
 
 /** 감정표현의 태그로 오늘 기분(condition.mood 1~5)을 살짝 보정 */
@@ -426,12 +457,12 @@ async function refreshInboxSuggestions(memoIds = null) {
         }
       });
       targets.filter((m) => !applied.has(m.id)).forEach((m) => {
-        const s = suggestMoscowLocal(m.content, m.tags);
+        const s = suggestMoscowLocal(m);
         stampSuggestion(m, s.priority, s.reason, 'local');
       });
     } else {
       targets.forEach((m) => {
-        const s = suggestMoscowLocal(m.content, m.tags);
+        const s = suggestMoscowLocal(m);
         stampSuggestion(m, s.priority, s.reason, 'local');
       });
     }
@@ -440,7 +471,7 @@ async function refreshInboxSuggestions(memoIds = null) {
   } catch {
     targets.forEach((m) => {
       if (!m.suggestedPriority) {
-        const s = suggestMoscowLocal(m.content, m.tags);
+        const s = suggestMoscowLocal(m);
         stampSuggestion(m, s.priority, s.reason, 'local');
       }
     });
@@ -470,12 +501,28 @@ async function applyInboxSuggestions() {
     suggestedAt: m.suggestedAt,
     reasonSeen: m.reasonSeen,
   }));
+  // Must는 3개 이하 원칙 — 일괄 적용으로 Must가 넘치면 초과분은 Should로 내려 적용한다.
+  // (가장 먼저 들어온 항목부터 Must 자리를 채워, 오래된/급한 일이 Must에 남도록)
+  const existingMust = state.memos.filter((m) => !m.completed && m.priority === 'must').length;
+  const mustBudget = Math.max(0, 3 - existingMust);
+  const keepMust = new Set(
+    items
+      .filter((m) => m.suggestedPriority === 'must')
+      .sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0))
+      .slice(0, mustBudget)
+      .map((m) => m.id),
+  );
+  let demoted = 0;
+
   const loggedIds = [];
   items.forEach((m) => {
+    // 추천이 Must인데 예산을 넘으면 Should로 강등해 적용
+    let effective = m.suggestedPriority;
+    if (effective === 'must' && !keepMust.has(m.id)) { effective = 'should'; demoted += 1; }
     // 일괄 적용 = 제안 그대로 수락 → accepted 로그 (null로 밀기 전)
-    const rec = AlfredoDecisions.logMoscowDecision(state, m, m.suggestedPriority);
+    const rec = AlfredoDecisions.logMoscowDecision(state, m, effective);
     if (rec) loggedIds.push(rec.id);
-    m.priority = m.suggestedPriority;
+    m.priority = effective;
     m.suggestedPriority = null;
     m.suggestReason = null;
     justLandedIds.add(m.id);
@@ -484,7 +531,11 @@ async function applyInboxSuggestions() {
   });
   await persist();
   renderAll();
-  toastUndo(t('toast.inbox.applied', items.length), () => {
+  const en = AlfredoI18n.lang() === 'en';
+  const demotedNote = demoted
+    ? (en ? ` · ${demoted} moved to Should (Must ≤ 3)` : ` · Must는 3개까지라 ${demoted}개는 Should로`)
+    : '';
+  toastUndo(t('toast.inbox.applied', items.length) + demotedNote, () => {
     // 수락을 철회하므로 그때 쌓인 판단 로그도 함께 제거 (수락률 오염 방지)
     AlfredoDecisions.remove(state, loggedIds);
     snapshot.forEach((s) => {
@@ -1343,8 +1394,12 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   });
   $('#btn-example')?.addEventListener('click', () => {
     const dumpEl = $('#dump-input');
-    if (dumpEl) dumpEl.value = EXAMPLE_TEXT;
-    renderLiveTags(EXAMPLE_TEXT);
+    const example = nextExampleText();
+    if (dumpEl) {
+      dumpEl.value = example;
+      state.dumpDraft = example;
+    }
+    renderLiveTags(example);
   });
   // 미인식 고유명사 후보 칩 → 카테고리 선택 등록
   $('#live-tags')?.addEventListener('click', (e) => {
