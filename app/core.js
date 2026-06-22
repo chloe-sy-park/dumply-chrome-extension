@@ -50,8 +50,29 @@ function onboardIllustration(name, { single = false } = {}) {
   return wrap;
 }
 
-const EXAMPLE_TEXT =
-  "Coffee first... didn't sleep great last night. Team slides due today, dentist at 2pm. Need to pack for tomorrow's flight. Oh and I have to get mom's birthday gift.";
+// 언어별 예시 모음 — "↻ 예시"를 누를 때마다 돌아가며 보여준다.
+const DUMP_EXAMPLES = {
+  ko: [
+    '엄마 오후 3시 생일 선물 사야 하고, 이대표랑 앱 런칭 미팅. 내일 출장 짐도 싸야 함. 아 그리고 팀 발표자료 오늘까지.',
+    '커피부터… 어젯밤에 잠을 잘 못 잤다. 오늘 보고서 마감인데 집중이 안 되네 ㅠㅠ 2시에 치과 예약 있고, 저녁엔 운동 가야 하는데 갈까 말까.',
+    '강아지 산책 다녀왔고 장도 봤음. 이제 책 마무리해야 하는데 막막하다. 다음 주 월요일까지 초안 보내기. 주말엔 좀 쉬고 싶다.',
+  ],
+  en: [
+    "Coffee first... didn't sleep great last night. Team slides due today, dentist at 2pm. Need to pack for tomorrow's flight. Oh and I have to get mom's birthday gift.",
+    "Ugh, report's due today and I can't focus. Call the bank, reply to Jake about the invoice. Gym later but idk if I have the energy. Pick up groceries on the way home.",
+    "Walked the dog and did laundry already. Need to finish the draft and send it by Monday. Lowkey anxious about the demo. Maybe rest this weekend.",
+  ],
+};
+let dumpExampleIdx = 0;
+
+/** 현재 언어의 예시를 하나 골라 반환하고 다음 호출엔 다른 걸 보여주도록 회전 */
+function nextExampleText() {
+  const en = typeof AlfredoI18n !== 'undefined' && AlfredoI18n.lang() === 'en';
+  const list = en ? DUMP_EXAMPLES.en : DUMP_EXAMPLES.ko;
+  const txt = list[dumpExampleIdx % list.length];
+  dumpExampleIdx += 1;
+  return txt;
+}
 
 const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 const WEEKDAYS_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -455,27 +476,51 @@ function isValidBucket(key) {
 }
 
 /** API 없을 때 Inbox MoSCoW 칩 추천 */
-function suggestMoscowLocal(content, tags) {
+// 로컬 MoSCoW 추천 — 마감/시각/감정 신호를 함께 본다. memo 객체 또는 (content, tags) 모두 허용.
+function suggestMoscowLocal(memoOrContent, tagsArg) {
+  const isObj = memoOrContent && typeof memoOrContent === 'object';
+  const content = isObj ? (memoOrContent.content || '') : memoOrContent;
+  const tags = isObj ? (memoOrContent.tags || []) : (tagsArg || []);
+  const deadline = isObj ? memoOrContent.deadline : null;
+  const deadlineTime = isObj ? memoOrContent.deadlineTime : null;
+  const en = typeof AlfredoI18n !== 'undefined' && AlfredoI18n.lang() === 'en';
+  const r = (ko, eng) => (en ? eng : ko);
   const t = String(content || '').trim();
-  if (!t) return { priority: 'could', reason: '내용을 확인해주세요' };
-  if (/(안\s?함|패스|취소|나중|skip|pass|won't|wont)/i.test(t)) {
-    return { priority: 'wont', reason: '오늘은 미루기' };
+  if (!t) return { priority: 'could', reason: r('내용을 확인해주세요', 'check the content') };
+
+  // 명시적 미루기 신호
+  if (/(안\s?함|패스|취소|나중|skip|pass|won't|wont|someday|maybe later)/i.test(t)) {
+    return { priority: 'wont', reason: r('오늘은 미루기', 'put off for today') };
   }
-  // 휴식·여가는 할 일이 아니라 "여유 되면" — 피곤한 날에도 Must로 밀어올리지 않음
-  if (/(넷플|유튜브|드라마|영화|게임|쉬기|휴식|쉬자|놀기)/i.test(t)
+  // 휴식·여가는 피곤한 날에도 Must로 밀어올리지 않음
+  if (/(넷플|유튜브|드라마|영화|게임|쉬기|휴식|쉬자|놀기|netflix|youtube|rest|chill|relax)/i.test(t)
       || (tags || []).some((tag) => tag?.label === '휴식')) {
-    return { priority: 'could', reason: '쉬는 건 여유롭게' };
+    return { priority: 'could', reason: r('쉬는 건 여유롭게', 'rest, no rush') };
   }
-  if (/(오늘|지금|급|마감|제출|미팅|회의|데드라인|\d{1,2}\s*시|\d{1,2}:\d{2})/i.test(t)) {
-    return { priority: 'must', reason: '오늘/시간 있음' };
+
+  const today = todayStr();
+  const dueToday = deadline && deadline <= today;
+  const dueFuture = deadline && deadline > today;
+  const hasClock = Boolean(deadlineTime) || /(\d{1,2}\s*시|\d{1,2}:\d{2}|am|pm)/i.test(t);
+  const urgentWord = /(오늘|지금|급한|급하|당장|마감|제출|미팅|회의|데드라인|today|asap|urgent|deadline|due|now)/i.test(t);
+  const lowEnergy = (tags || []).some((tag) => ['수면부족', '피로', '번아웃', '정신없음'].includes(tag?.label));
+
+  // 마감/시각이 박힌 일은 Must — 단, 미래 마감이면 Should로
+  if (dueToday || (urgentWord && !dueFuture) || (hasClock && !dueFuture)) {
+    return { priority: 'must', reason: r('오늘/시간 있음', 'due today / has a time') };
   }
-  if (/(예약|확인|전화|연락|치과|병원|신고|서류)/i.test(t)) {
-    return { priority: 'should', reason: '해야 할 일' };
+  if (dueFuture) {
+    return { priority: 'should', reason: r('마감 있음', 'has a deadline') };
   }
-  if (/(청소|정리|선물|쇼핑|운동|헬스)/i.test(t)) {
-    return { priority: 'could', reason: '여유 있을 때' };
+  // 연락·예약·서류 등 처리성 할 일
+  if (/(예약|확인|전화|연락|치과|병원|신고|서류|메일|이메일|문의|reply|email|call|book|appointment|submit)/i.test(t)) {
+    return { priority: 'should', reason: r('해야 할 일', 'worth doing') };
   }
-  return { priority: 'should', reason: '일반 할 일' };
+  // 집안일·자기관리는 여유 있을 때 — 컨디션 낮으면 더 가볍게
+  if (/(청소|정리|빨래|설거지|선물|쇼핑|장보|운동|헬스|산책|laundry|clean|shopping|groceries|gym|workout|walk)/i.test(t)) {
+    return { priority: 'could', reason: lowEnergy ? r('오늘은 가볍게', 'keep it light today') : r('여유 있을 때', 'when there is time') };
+  }
+  return { priority: 'should', reason: r('일반 할 일', 'general task') };
 }
 
 const LOW_ENERGY_LABELS = ['수면부족', '피로', '번아웃', '정신없음'];
