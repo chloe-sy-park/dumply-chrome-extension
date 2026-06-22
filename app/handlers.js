@@ -214,9 +214,14 @@ function materializeDumpItem({ title, kind, time = null, date = null, dateHint =
 function extractDumpLocal(text) {
   const lines = AlfredoTags.parseToMemos(text);
   const created = [];
-  const counts = { task: 0, feeling: 0, ponder: 0, dup: 0 };
+  const counts = { task: 0, feeling: 0, ponder: 0, done: 0, dup: 0 };
   lines.forEach((line) => {
     const kind = AlfredoTags.classifyLine(line);
+    // 이미 끝낸 일(과거형 완료 보고)은 할 일로 만들지 않고 건너뜀
+    if (kind === 'done') {
+      counts.done += 1;
+      return;
+    }
     if (kind === 'feeling' || kind === 'ponder') {
       pushDumpMemo({ title: line.trim(), kind, original: line, source: 'local' });
       counts[kind] += 1;
@@ -240,11 +245,13 @@ const PREP_BUFFER_MIN = 30; // 선행 준비는 일정 시각 30분 전까지
 // AI 추출 결과(items)로 메모/일정 생성 — 쪼개 분류 + 중복 건너뜀 + 연결관계/마감 물림
 function buildMemosFromAI(items) {
   const created = [];
-  const counts = { event: 0, task: 0, remember: 0, feeling: 0, ponder: 0, dup: 0 };
+  const counts = { event: 0, task: 0, remember: 0, feeling: 0, ponder: 0, done: 0, dup: 0 };
   const byTitle = {}; // title → { id, kind, date, time }
   aiAppliedIds.clear(); // 이번 덤프 기준으로 펄스 표식 리셋
 
   items.forEach((it) => {
+    // 이미 끝낸 일은 할 일/일정으로 만들지 않고 건너뜀
+    if (it.kind === 'done') { counts.done += 1; return; }
     const { date, dateHint } = resolveDumpDate(it.date);
     const res = materializeDumpItem({
       title: it.title, kind: it.kind, time: it.time || null,
@@ -340,18 +347,20 @@ function makeSenseToast(c) {
     if (c.remember) parts.push(`${c.remember} reminder${c.remember > 1 ? 's' : ''}`);
     if (c.feeling) parts.push(`${c.feeling} feeling${c.feeling > 1 ? 's' : ''}`);
     if (c.ponder) parts.push(`${c.ponder} thought${c.ponder > 1 ? 's' : ''}`);
+    const done = c.done ? ` · ${c.done} already-done skipped` : '';
     const dup = c.dup ? ` · ${c.dup} duplicate${c.dup > 1 ? 's' : ''} skipped` : '';
-    if (!parts.length) return t('toast.no.content');
-    return `Organized: ${parts.join(' · ')} ✓${dup}`;
+    if (!parts.length) return done ? `Nothing to do — ${c.done} already done` : t('toast.no.content');
+    return `Organized: ${parts.join(' · ')} ✓${done}${dup}`;
   }
   if (c.task) parts.push(`할 일 ${c.task}`);
   if (c.event) parts.push(`일정 ${c.event}`);
   if (c.remember) parts.push(`기억할 것 ${c.remember}`);
   if (c.feeling) parts.push(`마음 ${c.feeling}`);
   if (c.ponder) parts.push(`고민 ${c.ponder}`);
+  const done = c.done ? ` · 이미 한 일 ${c.done}개 제외` : '';
   const dup = c.dup ? ` · 중복 ${c.dup}개 건너뜀` : '';
-  if (!parts.length) return c.dup ? t('inbox.dup', c.dup) : t('toast.no.content');
-  return `${parts.join(' · ')} 정리했어요 ✓${dup}`;
+  if (!parts.length) return done ? `이미 한 일 ${c.done}개라 할 일은 없어요` : (c.dup ? t('inbox.dup', c.dup) : t('toast.no.content'));
+  return `${parts.join(' · ')} 정리했어요 ✓${done}${dup}`;
 }
 
 /** 감정표현의 태그로 오늘 기분(condition.mood 1~5)을 살짝 보정 */
