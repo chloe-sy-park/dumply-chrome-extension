@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumply — 개인정보 처리방침 · Privacy Policy</title>
+  <meta name="description" content="Dumply(덤플리) 크롬 확장프로그램의 개인정보 처리방침. Privacy Policy for the Dumply Chrome extension." />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+  <link rel="icon" type="image/png" href="../icons/favicon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="legal.css" />
+</head>
+<body>
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <!-- ───────────── NAV ───────────── -->
+  <header class="nav" id="nav">
+    <a class="brand" href="index.html" aria-label="Dumply 홈">
+      <img class="brand__mark" src="../icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <a class="btn btn--solid nav__cta" href="index.html#products">
+      <span>Chrome에 추가</span>
+      <span class="btn__tag">무료</span>
+    </a>
+  </header>
+
+  <main class="doc" id="top">
+    <div class="doc__lang" role="group" aria-label="언어 / Language">
+      <button type="button" id="lang-ko" aria-pressed="true">한국어</button>
+      <button type="button" id="lang-en" aria-pressed="false">English</button>
+    </div>
+
+    <!-- ═══════════ 한국어 ═══════════ -->
+    <article id="doc-ko">
+      <h1>개인정보 처리방침</h1>
+      <p class="doc__meta">최종 수정일: 2026년 6월 12일</p>
+
+      <p class="doc__lead">
+        Dumply(이하 ‘서비스’)는 사용자의 개인정보를 소중히 다루며, 관련 법령 및 구글 웹스토어 개발자 정책을 준수합니다.
+        본 개인정보 처리방침은 크롬 확장프로그램 ‘Dumply’ 및 관련 서비스가 사용자의 정보를 어떻게 수집·이용·보호하는지 설명합니다.
+      </p>
+
+      <h2>1. 개인정보 수집 항목 및 방법</h2>
+      <p>서비스는 원활한 기능 제공을 위해 최소한의 정보만을 수집하며, 사용자의 동의 하에 아래의 정보를 처리합니다.</p>
+      <ul>
+        <li><strong>Google OAuth 인증 정보</strong>: 이메일 주소, 프로필 이미지, 프로필 이름 (사용자 식별 및 기기간 데이터 동기화 준비용)</li>
+        <li><strong>Google 캘린더 데이터</strong>: 오늘 일정 표시 및 캘린더 일정 연동을 위한 구글 캘린더 이벤트 읽기/쓰기 권한</li>
+        <li><strong>사용자 입력 데이터</strong>: 사용자가 직접 작성하는 브레인 덤프 텍스트 및 MoSCoW 우선순위 분류 데이터 (기본적으로 브라우저 로컬 저장소인 <code>chrome.storage</code>에만 안전하게 보관됨)</li>
+        <li><strong>날씨 및 위치 데이터</strong>: 사용자의 대시보드 상 날씨 정보 표시를 위한 대략적인 IP 기반 위치 정보 또는 위/경도 좌표 (외부 Open-Meteo API 연동 시에만 처리되며 서버에 기록되지 않음)</li>
+      </ul>
+
+      <h2>2. 개인정보 수집 및 이용 목적</h2>
+      <p>수집된 정보는 다음의 목적 외의 용도로는 사용되지 않습니다.</p>
+      <ul>
+        <li>사용자가 작성한 정돈되지 않은 텍스트를 AI(OpenAI, Anthropic, Google Gemini)를 통해 MoSCoW 기법으로 우선순위를 분류하고 대시보드에 구조화하여 표시하기 위함.</li>
+        <li>사용자의 오늘 구글 캘린더 일정을 대시보드에 연동하여 할 일과 일정을 한눈에 관리하도록 돕기 위함.</li>
+        <li>향후 정식 웹앱 및 클라우드(Supabase 등) 서비스 출시 시, 사용자가 원활하게 기기간 데이터를 동기화하고 멤버십 등급을 연동하기 위함.</li>
+      </ul>
+
+      <h2>3. 개인정보의 제3자 제공 및 위탁 (AI API 처리)</h2>
+      <p>
+        서비스는 사용자의 동의 없이 개인정보를 외부에 제공하지 않습니다. 다만, 핵심 AI 기능을 제공하기 위해 아래와 같이 외부 API
+        서비스를 이용합니다. 이 전송 과정에서 실제 텍스트 원문은 서비스 개선을 위한 학습용 데이터로 활용되지 않는 안전한 API 조건으로
+        처리됩니다.
+      </p>
+      <ul>
+        <li>
+          <strong>OpenAI, Anthropic, Google Generative Language (Gemini)</strong>
+          <ul>
+            <li><strong>제공 목적</strong>: 브레인 덤프 텍스트 분석 및 MoSCoW 우선순위 자동 분류</li>
+            <li><strong>제공 항목</strong>: 사용자가 입력을 요청한 덤프 텍스트 내용 (개인 식별 정보 제외)</li>
+            <li><strong>보유 기간</strong>: API 처리 즉시 파기 (AI 모델 학습에 사용되지 않음)</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2>4. 개인정보의 보유 및 이용 기간</h2>
+      <ul>
+        <li><strong>로컬 저장 방식</strong>: 사용자의 모든 덤프 데이터는 기본적으로 사용자의 컴퓨터 브라우저 로컬 스토리지(<code>chrome.storage.local</code>)에만 보관됩니다. 확장프로그램을 삭제하면 해당 데이터는 즉시 물리적으로 영구 파기됩니다.</li>
+        <li><strong>서버 연동 시 (향후 계획)</strong>: 향후 클라우드 동기화 시스템 도입 시, 수집된 식별 데이터는 사용자가 회원 탈퇴를 요청하거나 서비스를 해지할 때까지 보관되며, 탈퇴 시 데이터베이스에서 즉시 안전하게 파기됩니다.</li>
+      </ul>
+
+      <h2>5. Google API 서비스 사용자 데이터 정책 준수 (Limited Use Disclosure)</h2>
+      <p>
+        서비스는 구글 API로부터 수집된 정보의 사용 및 양도 시, 크롬 웹스토어 사용자 데이터 정책(Chrome Web Store User Data
+        Policy) 및 제한적 사용 요구사항(Limited Use requirements)을 준수합니다. 구글 캘린더 등에서 획득한 데이터는 서비스 내
+        대시보드 기능 향상을 위해서만 사용되며, 광고 목적으로 사용되거나 다른 제3자에게 양도되지 않습니다.
+      </p>
+
+      <h2>6. 개인정보 보호 책임자 및 문의처</h2>
+      <p>서비스 이용 중 개인정보와 관련한 문의, 불만 처리 또는 데이터 삭제 요청이 있으신 경우 아래의 연락처로 연락해 주시기 바랍니다.</p>
+      <ul>
+        <li><strong>담당자/개발팀</strong>: Grammylabs Dumply Team (Chloe Park)</li>
+        <li><strong>이메일</strong>: <a class="inline" href="mailto:grammy.labs@gmail.com">grammy.labs@gmail.com</a></li>
+      </ul>
+    </article>
+
+    <!-- ═══════════ English ═══════════ -->
+    <article id="doc-en" hidden>
+      <h1>Privacy Policy</h1>
+      <p class="doc__meta">Last updated: June 12, 2026</p>
+
+      <p class="doc__lead">
+        Dumply (the “Service”) values your privacy and complies with applicable laws and the Chrome Web Store Developer
+        Program Policies. This Privacy Policy explains how the ‘Dumply’ Chrome extension and related services collect,
+        use, and protect your information.
+      </p>
+
+      <h2>1. Information We Collect and How We Collect It</h2>
+      <p>Dumply collects the minimum data required to deliver its priority and dashboard services.</p>
+      <ul>
+        <li><strong>Google OAuth Authentication</strong>: Email address, profile picture, and profile name (for user identification and preparation of multi-device sync).</li>
+        <li><strong>Google Calendar Data</strong>: Read/Write access to Google Calendar events to display and sync today’s schedule on the dashboard.</li>
+        <li><strong>User-generated Content</strong>: Brain dump texts and MoSCoW prioritized tasks. This data is securely stored locally on your device via <code>chrome.storage.local</code> by default.</li>
+        <li><strong>Location &amp; Weather Data</strong>: Approximate location or latitude/longitude coordinates to fetch weather information via Open-Meteo API. This data is processed client-side and never stored on any server.</li>
+      </ul>
+
+      <h2>2. How We Use Your Information</h2>
+      <p>The collected information is processed solely for the following purposes:</p>
+      <ul>
+        <li>To structure and categorize your unstructured brain dump notes into MoSCoW priorities using AI APIs (Anthropic, OpenAI, Gemini).</li>
+        <li>To integrate and display your today’s Google Calendar events alongside your prioritized tasks on the dashboard.</li>
+        <li>To enable seamless cloud database (e.g., Supabase) sync and premium membership recognition in future major releases.</li>
+      </ul>
+
+      <h2>3. Data Transmission to Third Parties (AI Integration)</h2>
+      <p>
+        We do not sell or lease your personal information. To provide the AI core functionality, user text is sent to the
+        following services under zero-data-retention APIs where the input is NOT used for training models:
+      </p>
+      <ul>
+        <li>
+          <strong>OpenAI, Anthropic, Google Generative Language (Gemini)</strong>
+          <ul>
+            <li><strong>Purpose</strong>: AI-based text analysis and MoSCoW classification.</li>
+            <li><strong>Data Sent</strong>: User-inputted brain dump text (strictly excluding any Google profile information).</li>
+            <li><strong>Retention</strong>: Destroyed immediately after processing (not used for AI model training).</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2>4. Data Retention and Deletion</h2>
+      <ul>
+        <li><strong>Local Storage</strong>: All dump data remains in your browser’s local storage (<code>chrome.storage.local</code>). Uninstalling the Dumply extension instantly and permanently deletes all data.</li>
+        <li><strong>Future Cloud Storage</strong>: Upon the release of cloud sync features, synced data will be stored securely until the user deletes their account or requests data deletion.</li>
+      </ul>
+
+      <h2>5. Google API Services User Data Policy Compliance (Limited Use Disclosure)</h2>
+      <p>
+        Dumply’s use and transfer to any other app of information received from Google APIs will adhere to the
+        <strong>Chrome Web Store User Data Policy</strong>, including the <strong>Limited Use requirements</strong>. We do
+        not use Google Calendar data for serving advertisements or transferring it to third-party ad networks.
+      </p>
+
+      <h2>6. Contact Us</h2>
+      <p>If you have any questions or requests regarding your personal data, please contact us at:</p>
+      <ul>
+        <li><strong>Developer Team</strong>: Grammylabs Dumply Team (Chloe Park)</li>
+        <li><strong>Email</strong>: <a class="inline" href="mailto:grammy.labs@gmail.com">grammy.labs@gmail.com</a></li>
+      </ul>
+    </article>
+
+    <a class="doc__back" href="index.html">← 홈으로 / Back to home</a>
+  </main>
+
+  <script src="legal.js"></script>
+</body>
+</html>
