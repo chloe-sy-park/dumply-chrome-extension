@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumply — 문의 · 오류 보고 · Support</title>
+  <meta name="description" content="덤플리 사용 문의와 오류 보고. 폼이나 이메일로 알려주세요." />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+  <link rel="icon" type="image/png" href="icons/favicon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="hub.css" />
+</head>
+<body>
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="index.html" aria-label="Dumply 홈">
+      <img class="brand__mark" src="icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="주요">
+      <a href="guide.html">사용 방법</a>
+      <a href="changelog.html">업데이트</a>
+      <a href="support.html">문의</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="index.html#products">
+      <span>Chrome에 추가</span>
+      <span class="btn__tag">무료</span>
+    </a>
+  </header>
+
+  <main class="hub" id="top" data-hub="support">
+    <header class="hub__head">
+      <p class="hub__eyebrow">문의 · 오류 보고</p>
+      <h1>무엇이든 알려주세요</h1>
+      <p class="hub__lead">사용 중 막히는 곳, 버그, 제안 모두 환영해요. 아래 폼을 채우면 이메일이 열립니다.</p>
+    </header>
+
+    <div class="support__grid">
+      <!-- 폼 → mailto -->
+      <section class="support__card">
+        <h2>빠른 문의</h2>
+        <p>제품과 내용을 적고 보내면 알프레도 팀에게 메일로 전달돼요.</p>
+        <form class="support__form" data-support-form data-email="grammy.labs@gmail.com">
+          <label for="kind">유형</label>
+          <select id="kind" name="kind">
+            <option value="사용 문의">사용 문의</option>
+            <option value="오류 보고">오류 보고</option>
+            <option value="기능 제안">기능 제안</option>
+          </select>
+
+          <label for="product">제품</label>
+          <select id="product" name="product" data-product-select></select>
+
+          <label for="body">내용</label>
+          <textarea id="body" name="body" placeholder="어떤 상황이었는지, 무엇을 기대했는지 적어주세요." required></textarea>
+
+          <button class="btn btn--solid" type="submit">메일로 보내기</button>
+          <p class="support__note">메일 앱이 열리지 않으면 <a class="hub__back" href="mailto:grammy.labs@gmail.com" style="margin:0;display:inline">grammy.labs@gmail.com</a> 으로 직접 보내주세요.</p>
+        </form>
+      </section>
+
+      <!-- 직접 채널 -->
+      <section class="support__card">
+        <h2>다른 방법</h2>
+        <p>편한 채널로 연락 주셔도 좋아요.</p>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;">
+          <li><strong>이메일</strong> · <a class="hub__back" style="margin:0;display:inline" href="mailto:grammy.labs@gmail.com">grammy.labs@gmail.com</a></li>
+          <li><strong>버그 리포트</strong> · <a class="hub__back" style="margin:0;display:inline" href="https://github.com/chloe-sy-park/dumply-chrome-extension/issues/new">GitHub 이슈 열기</a></li>
+        </ul>
+        <!-- Tally / Google Form 임베드 자리: <iframe>를 넣으면 위 폼 대신/함께 노출 가능 -->
+        <div class="support__embed">
+          더 자세한 설문형 접수가 필요하면 이 자리에 Tally·Google Form <code>iframe</code>을 끼워 넣을 수 있어요. (현재는 폼+이메일 방식)
+        </div>
+      </section>
+    </div>
+
+    <a class="hub__back" href="index.html">← 홈으로</a>
+  </main>
+
+  <script src="hub.js"></script>
+</body>
+</html>

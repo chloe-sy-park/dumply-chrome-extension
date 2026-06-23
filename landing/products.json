@@ -1,0 +1,41 @@
+{
+  "_comment": "덤플리 시리즈 단일 소스(single source of truth). 새 제품이 나오면 여기에 항목 하나만 추가하면 랜딩 제품 카드 · 변경로그 필터 · 가이드 탭 · 문의 폼 제품 선택에 자동 반영됩니다.",
+  "products": [
+    {
+      "id": "extension",
+      "name": "Dumply 크롬 확장",
+      "tagline": "브라우저 사이드 패널에서 언제든 쏟아내기",
+      "status": "live",
+      "kind": "intro",
+      "url": "/#products",
+      "accent": "task"
+    },
+    {
+      "id": "prompts",
+      "name": "프롬프트 라이브러리",
+      "tagline": "자주 쓰는 프롬프트를 모아두고 바로 꺼내 쓰기",
+      "status": "soon",
+      "kind": "intro",
+      "url": "/prompts",
+      "accent": "feel"
+    },
+    {
+      "id": "planner",
+      "name": "우선순위 플래너",
+      "tagline": "MoSCoW로 오늘 진짜 중요한 일만 남기기",
+      "status": "soon",
+      "kind": "intro",
+      "url": "/planner",
+      "accent": "ponder"
+    },
+    {
+      "id": "mobile",
+      "name": "iOS · Android 앱",
+      "tagline": "주머니 속에서도 떠오르는 즉시 덤프",
+      "status": "soon",
+      "kind": "app",
+      "url": "",
+      "accent": "task"
+    }
+  ]
+}

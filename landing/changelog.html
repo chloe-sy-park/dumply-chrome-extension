@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumply — 업데이트 로그 · Changelog</title>
+  <meta name="description" content="덤플리 시리즈의 새 기능·개선·수정 내역을 한곳에서 확인하세요." />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+  <link rel="icon" type="image/png" href="icons/favicon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="hub.css" />
+</head>
+<body>
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="index.html" aria-label="Dumply 홈">
+      <img class="brand__mark" src="icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="주요">
+      <a href="guide.html">사용 방법</a>
+      <a href="changelog.html">업데이트</a>
+      <a href="support.html">문의</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="index.html#products">
+      <span>Chrome에 추가</span>
+      <span class="btn__tag">무료</span>
+    </a>
+  </header>
+
+  <main class="hub" id="top" data-hub="changelog">
+    <header class="hub__head">
+      <p class="hub__eyebrow">덤플리 시리즈</p>
+      <h1>업데이트 로그</h1>
+      <p class="hub__lead">새 기능, 개선, 버그 수정을 한곳에 모았어요. 제품별로 골라 볼 수 있습니다.</p>
+    </header>
+
+    <div class="hub__filter" data-filter role="group" aria-label="제품 필터"></div>
+    <div class="log" data-log></div>
+
+    <a class="hub__back" href="index.html">← 홈으로</a>
+  </main>
+
+  <script src="hub.js"></script>
+</body>
+</html>
