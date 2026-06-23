@@ -35,17 +35,18 @@ function getCachedMonthEvents(monthKey) {
 // 현재 월 이벤트 캐시 갱신 (비동기 — 완료 후 뷰 재렌더)
 async function refreshMonthEventsCache(monthKey) {
   const cal = state.settings?.calendar;
-  if (!cal?.connected || !cal?.accessToken) return;
+  if (!cal?.connected) return;
   const [y, m] = monthKey.split('-').map(Number);
   try {
-    const events = await AlfredoCalendar.pullMonthEvents(cal.accessToken, cal.calendars, y, m - 1);
+    // sync()와 동일하게 chrome.identity로 토큰 확보 (저장된 cal.accessToken에 의존하지 않음)
+    const token = await AlfredoCalendar.connect({ interactive: false });
+    const events = await AlfredoCalendar.pullMonthEvents(token, cal.calendars, y, m - 1);
     calMonthEventsCache[monthKey] = dedupeEvents(events);
     renderCalendarView();
   } catch (e) {
     if (/401|403/.test(String(e?.message))) {
       try {
-        const newToken = await AlfredoCalendar.refreshAccessToken(cal.accessToken);
-        cal.accessToken = newToken;
+        const newToken = await AlfredoCalendar.refreshAccessToken();
         const events = await AlfredoCalendar.pullMonthEvents(newToken, cal.calendars, y, m - 1);
         calMonthEventsCache[monthKey] = dedupeEvents(events);
         renderCalendarView();
