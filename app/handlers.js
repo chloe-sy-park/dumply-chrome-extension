@@ -1431,7 +1431,18 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   bindIntegrationMessages?.();
   $('#btn-settings-cal-select')?.addEventListener('click', openCalSelectSheet);
   $('#btn-cal-select-close')?.addEventListener('click', () => { $('#cal-select-sheet').hidden = true; });
-  $('#btn-cal-select-confirm')?.addEventListener('click', () => { $('#cal-select-sheet').hidden = true; });
+  $('#btn-cal-select-confirm')?.addEventListener('click', async () => {
+    $('#cal-select-sheet').hidden = true;
+    await persist();
+    refreshGoogleSettingsUI?.();
+    renderCalListSettings?.();
+    updateTimelineSyncBtn?.();
+    if (state.settings.calendar?.connected) {
+      toast(t('toast.cal.syncing'));
+      await syncCalendarIfConnected();
+      refreshCalendarIfActive?.();
+    }
+  });
 
   $('#language-select')?.addEventListener('change', async () => {
     state.settings.language = $('#language-select').value;
