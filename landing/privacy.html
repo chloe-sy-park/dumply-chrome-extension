@@ -42,7 +42,7 @@
     <!-- ═══════════ 한국어 ═══════════ -->
     <article id="doc-ko">
       <h1>개인정보 처리방침</h1>
-      <p class="doc__meta">최종 수정일: 2026년 6월 12일</p>
+      <p class="doc__meta">최종 수정일: 2026년 7월 1일</p>
 
       <p class="doc__lead">
         Dumply(이하 ‘서비스’)는 사용자의 개인정보를 소중히 다루며, 관련 법령 및 구글 웹스토어 개발자 정책을 준수합니다.
@@ -96,7 +96,18 @@
         대시보드 기능 향상을 위해서만 사용되며, 광고 목적으로 사용되거나 다른 제3자에게 양도되지 않습니다.
       </p>
 
-      <h2>6. 개인정보 보호 책임자 및 문의처</h2>
+      <h2>6. 민감 데이터 보호 메커니즘</h2>
+      <p>서비스는 수집·처리하는 민감 데이터를 보호하기 위해 아래의 기술적·관리적 조치를 적용합니다.</p>
+      <ul>
+        <li><strong>전송 중 암호화(Encryption in Transit)</strong>: Google OAuth 인증 토큰, Google Calendar 데이터, AI API로 전송되는 텍스트 등 모든 민감 데이터는 TLS 1.2 이상의 암호화 프로토콜을 통해서만 전송됩니다.</li>
+        <li><strong>로컬 저장소 격리</strong>: 사용자 입력 데이터(브레인 덤프 텍스트, 우선순위 데이터)는 Chrome 확장프로그램의 격리된 <code>chrome.storage.local</code> 영역에 저장되며, 다른 웹사이트나 확장프로그램에서는 접근할 수 없습니다.</li>
+        <li><strong>최소 권한 원칙</strong>: OAuth 액세스 토큰은 메모리에만 임시 보관되며, 필요한 기능(캘린더 조회/쓰기)에만 한정된 최소 범위(scope)의 권한만 요청합니다.</li>
+        <li><strong>제로 데이터 보존 API 사용</strong>: AI API(OpenAI, Anthropic, Google Gemini) 전송 시, 입력 데이터가 모델 학습에 사용되지 않는 제로 데이터 보존(Zero Data Retention) 조건의 API를 사용합니다. 처리 완료 후 해당 데이터는 즉시 파기됩니다.</li>
+        <li><strong>제3자 공유 제한</strong>: Google API를 통해 획득한 사용자 데이터(이메일, 캘린더 이벤트 등)는 핵심 서비스 기능 제공 목적 외에는 제3자와 공유되지 않으며, 광고·마케팅 목적으로는 절대 사용되지 않습니다.</li>
+        <li><strong>위치 데이터 처리</strong>: 날씨 표시에 활용되는 위치 정보(IP 기반 또는 GPS 좌표)는 클라이언트 측에서만 처리되며 서버에 기록되지 않습니다.</li>
+      </ul>
+
+      <h2>7. 개인정보 보호 책임자 및 문의처</h2>
       <p>서비스 이용 중 개인정보와 관련한 문의, 불만 처리 또는 데이터 삭제 요청이 있으신 경우 아래의 연락처로 연락해 주시기 바랍니다.</p>
       <ul>
         <li><strong>담당자/개발팀</strong>: Grammylabs Dumply Team (Chloe Park)</li>
@@ -107,7 +118,7 @@
     <!-- ═══════════ English ═══════════ -->
     <article id="doc-en" hidden>
       <h1>Privacy Policy</h1>
-      <p class="doc__meta">Last updated: June 12, 2026</p>
+      <p class="doc__meta">Last updated: July 1, 2026</p>
 
       <p class="doc__lead">
         Dumply (the “Service”) values your privacy and complies with applicable laws and the Chrome Web Store Developer
@@ -161,7 +172,18 @@
         not use Google Calendar data for serving advertisements or transferring it to third-party ad networks.
       </p>
 
-      <h2>6. Contact Us</h2>
+      <h2>6. Data Protection Mechanisms for Sensitive Data</h2>
+      <p>Dumply applies the following technical and organizational measures to protect sensitive data it collects and processes:</p>
+      <ul>
+        <li><strong>Encryption in Transit</strong>: All sensitive data — including Google OAuth tokens, Google Calendar events, and brain dump text sent to AI APIs — is transmitted exclusively over TLS 1.2+ encrypted connections.</li>
+        <li><strong>Isolated Local Storage</strong>: User-generated content (brain dump text, MoSCoW task data) is stored only within Chrome's isolated <code>chrome.storage.local</code> sandbox, inaccessible to other websites or extensions.</li>
+        <li><strong>Principle of Least Privilege</strong>: OAuth access tokens are held in memory only for the duration of the session and are never written to disk. Only the minimum required OAuth scopes (calendar read/write) are requested.</li>
+        <li><strong>Zero Data Retention APIs</strong>: Text sent to AI providers (OpenAI, Anthropic, Google Gemini) is processed under zero-data-retention API agreements — the data is not used to train AI models and is permanently deleted immediately after processing.</li>
+        <li><strong>Strict Third-Party Sharing Limits</strong>: Data received via Google APIs (email address, calendar events) is used solely to deliver the core dashboard functionality and is never shared with third parties for advertising, analytics, or any other secondary purpose.</li>
+        <li><strong>Location Data Handling</strong>: Location information used for weather display (IP-based or GPS coordinates) is processed client-side only and is never stored on any server or logged.</li>
+      </ul>
+
+      <h2>7. Contact Us</h2>
       <p>If you have any questions or requests regarding your personal data, please contact us at:</p>
       <ul>
         <li><strong>Developer Team</strong>: Grammylabs Dumply Team (Chloe Park)</li>
