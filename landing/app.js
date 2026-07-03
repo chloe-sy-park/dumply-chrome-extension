@@ -91,17 +91,12 @@
     stage.classList.add('is-playing');
   }
 
-  /* ── Chrome CTA (스토어 링크 자리) ── */
-  const STORE_URL = ''; // TODO: 크롬 웹스토어 게시 후 URL 입력
+  /* ── Chrome CTA (스토어 링크) ── */
+  const STORE_URL = 'https://chromewebstore.google.com/detail/anageghlhlgmcabcgchboedlbdgfiali';
   document.querySelectorAll('[data-cta="chrome"]').forEach((el) => {
-    el.addEventListener('click', (ev) => {
-      if (!STORE_URL) {
-        ev.preventDefault();
-        toast('곧 크롬 웹스토어에 올라가요. 조금만 기다려 주세요! 🐧');
-      } else {
-        el.setAttribute('href', STORE_URL);
-      }
-    });
+    el.setAttribute('href', STORE_URL);
+    el.setAttribute('target', '_blank');
+    el.setAttribute('rel', 'noopener');
   });
 
   /* ── notify form (앱 출시 알림 자리) ── */

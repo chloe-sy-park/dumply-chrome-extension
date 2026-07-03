@@ -2,6 +2,14 @@
   "_comment": "덤플리 통합 업데이트 로그. 새 글은 배열 맨 앞에 추가하세요. product 값은 products.json의 id와 맞춰야 필터가 동작합니다. type: new(신규) · improve(개선) · fix(수정).",
   "entries": [
     {
+      "date": "2026-07-03",
+      "product": "prompts",
+      "version": "0.1.0-beta",
+      "type": "new",
+      "title": "프롬프트 라이브러리 베타 오픈",
+      "body": "자주 쓰는 프롬프트를 모아두고 바로 꺼내 쓰는 프롬프트 라이브러리를 prompts.dumply.app에서 베타로 선보여요. 플랫폼 자동 분류, 태그·검색, 기기 간 동기화를 무료로 제공하고, 개인 Anthropic API 키를 연결하면 AI 프롬프트 개선·자동 생성도 무제한으로 쓸 수 있어요."
+    },
+    {
       "date": "2026-06-12",
       "product": "extension",
       "version": "2.1.2",
