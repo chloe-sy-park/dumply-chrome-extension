@@ -1,0 +1,37 @@
+{
+ "_comment": "English changelog — keep entries in sync with changelog.json",
+ "entries": [
+  {
+   "date": "2026-07-03",
+   "product": "prompts",
+   "version": "0.1.0-beta",
+   "type": "new",
+   "title": "Prompt Library beta is live",
+   "body": "The Prompt Library — save your go-to prompts and pull them out instantly — is now in beta at prompts.dumply.app. Automatic platform sorting, tags and search, and cross-device sync are free, and connecting a personal Anthropic API key unlocks unlimited AI prompt improvement and generation."
+  },
+  {
+   "date": "2026-06-12",
+   "product": "extension",
+   "version": "2.1.2",
+   "type": "fix",
+   "title": "Fixed calendar monthly view not loading",
+   "body": "Fixed an issue where monthly events wouldn't load. Also improved Google sign-in stability for non-store installs."
+  },
+  {
+   "date": "2026-06-01",
+   "product": "extension",
+   "version": "2.1.0",
+   "type": "improve",
+   "title": "Smoother onboarding",
+   "body": "Lightened up onboarding so first-time users can finish their first dump within 30 seconds."
+  },
+  {
+   "date": "2026-05-20",
+   "product": "extension",
+   "version": "2.0.0",
+   "type": "new",
+   "title": "First release, with Alfredo",
+   "body": "The first release of the side-panel extension where Alfredo the detective penguin reads your dumps and sorts them with MoSCoW. Supports Claude · OpenAI · Gemini (BYOK)."
+  }
+ ]
+}

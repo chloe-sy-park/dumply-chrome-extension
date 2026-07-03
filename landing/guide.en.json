@@ -1,0 +1,57 @@
+{
+ "_comment": "English guide data — keep sections in sync with guide.json",
+ "sections": [
+  {
+   "product": "extension",
+   "title": "Getting started",
+   "steps": [
+    "Click the Dumply penguin icon in the toolbar to open the side panel on the right.",
+    "Type whatever comes to mind, no format needed — tasks, worries, any thought.",
+    "Alfredo automatically sorts everything into tasks, feelings, and thoughts, and picks what to focus on today."
+   ]
+  },
+  {
+   "product": "extension",
+   "title": "Setting up your AI key (BYOK)",
+   "steps": [
+    "Go to Dumply → Settings.",
+    "Enter an API key from Claude (sk-ant-...), OpenAI (sk-...), or Gemini.",
+    "Your key is stored locally in the browser and sent only to the AI provider you chose. No subscription needed."
+   ]
+  },
+  {
+   "product": "extension",
+   "title": "Google Calendar integration (optional)",
+   "steps": [
+    "Turn on Google Calendar integration in Settings and authorize your account.",
+    "Today's and this week's events appear alongside your board.",
+    "Calendar data comes straight from the Google API and never passes through an external server."
+   ]
+  },
+  {
+   "product": "prompts",
+   "title": "Getting started with the Prompt Library",
+   "steps": [
+    "Go to prompts.dumply.app and log in — your prompts sync across devices.",
+    "Saved prompts are automatically sorted by platform, with tags, sources, and example results recorded alongside.",
+    "Search to find the prompt you need instantly and chain them into workflows."
+   ]
+  },
+  {
+   "product": "prompts",
+   "title": "Refining prompts with AI (optional)",
+   "steps": [
+    "Connect a personal Anthropic API key for free, unlimited AI prompt improvement and generation. No key? Platform credits work too.",
+    "Your API key is stored locally in the browser by default and sent only when a function is called.",
+    "Korean, English, and Japanese are supported, and you can share prompts with teammates or import/export them."
+   ]
+  },
+  {
+   "product": "planner",
+   "title": "Priority Planner",
+   "steps": [
+    "This product is in the works. Usage instructions will be added here at launch."
+   ]
+  }
+ ]
+}

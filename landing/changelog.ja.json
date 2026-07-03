@@ -1,0 +1,37 @@
+{
+ "_comment": "日本語チェンジログ — changelog.jsonと同期を保つこと",
+ "entries": [
+  {
+   "date": "2026-07-03",
+   "product": "prompts",
+   "version": "0.1.0-beta",
+   "type": "new",
+   "title": "プロンプトライブラリ ベータ公開",
+   "body": "よく使うプロンプトをまとめておいて、すぐ取り出せるプロンプトライブラリをprompts.dumply.appでベータ公開しました。プラットフォーム自動分類、タグ・検索、デバイス間同期を無料で提供し、個人のAnthropic APIキーを接続するとAIによるプロンプト改善・自動生成も無制限で使えます。"
+  },
+  {
+   "date": "2026-06-12",
+   "product": "extension",
+   "version": "2.1.2",
+   "type": "fix",
+   "title": "カレンダー月表示の読み込み問題を修正",
+   "body": "月間の予定が読み込まれない問題を修正しました。ストア外インストール環境でのGoogleログインの安定性も改善しています。"
+  },
+  {
+   "date": "2026-06-01",
+   "product": "extension",
+   "version": "2.1.0",
+   "type": "improve",
+   "title": "オンボーディングの改善",
+   "body": "初めての方でも30秒以内に最初のダンプを終えられるよう、オンボーディングを軽く整えました。"
+  },
+  {
+   "date": "2026-05-20",
+   "product": "extension",
+   "version": "2.0.0",
+   "type": "new",
+   "title": "アルフレドと迎える初公開",
+   "body": "探偵ペンギンのアルフレドがダンプを読んでMoSCoWで仕分けてくれるサイドパネル拡張を初公開しました。Claude · OpenAI · Gemini（BYOK）対応。"
+  }
+ ]
+}

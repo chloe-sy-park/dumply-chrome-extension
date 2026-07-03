@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumply — 使い方 · Guide</title>
+  <meta name="description" content="Dumplyの使い方ガイド。インストールからAIキー設定、カレンダー連携まで、順を追って説明します。" />
+  <link rel="canonical" href="https://www.dumply.app/ja/guide" />
+  <link rel="alternate" hreflang="ko" href="https://www.dumply.app/guide" />
+  <link rel="alternate" hreflang="en" href="https://www.dumply.app/en/guide" />
+  <link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/guide" />
+  <link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/guide" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Dumply" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="Dumplyの使い方 — インストールからカレンダー連携まで" />
+  <meta property="og:description" content="Dumplyの使い方ガイド。インストールからAIキー設定、カレンダー連携まで、順を追って説明します。" />
+  <meta property="og:url" content="https://www.dumply.app/ja/guide" />
+  <meta property="og:image" content="https://www.dumply.app/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Dumply Chrome拡張をはじめる",
+    "description": "インストール後にブレインダンプを始める方法。登録不要、30秒で終わります。",
+    "inLanguage": "ja",
+    "totalTime": "PT1M",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "サイドパネルを開く",
+        "text": "ツールバーのDumplyペンギンアイコンをクリックすると、右側にサイドパネルが開きます。" },
+      { "@type": "HowToStep", "position": 2, "name": "形式を気にせず吐き出す",
+        "text": "形式を気にせず、思いつくままに入力してください — タスク、心配ごと、どんな考えでも。" },
+      { "@type": "HowToStep", "position": 3, "name": "自動仕分けを確認",
+        "text": "アルフレドが自動でタスク・気持ち・悩みに仕分けて、今日集中することを選んでくれます。" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "DumplyのAIキー設定（BYOK）",
+    "description": "自分のAI APIキーを接続して自動仕分けを使う方法。サブスクリプションは不要です。",
+    "inLanguage": "ja",
+    "totalTime": "PT2M",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "設定を開く",
+        "text": "Dumply → 設定に移動します。" },
+      { "@type": "HowToStep", "position": 2, "name": "APIキーを入力",
+        "text": "Claude（sk-ant-...）、OpenAI（sk-...）、Geminiのいずれかのapiキーを入力してください。" },
+      { "@type": "HowToStep", "position": 3, "name": "ローカル保存を確認",
+        "text": "キーはブラウザにローカル保存され、選んだAIプロバイダーにだけ送信されます。サブスクリプションは不要です。" }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-jp.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-jp@5.2.5/500.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-jp@5.2.5/600.css" />
+
+  <link rel="icon" type="image/png" href="/icons/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/hub.css" />
+</head>
+<body>
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="/ja" aria-label="Dumply ホーム">
+      <img class="brand__mark" src="/icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="メイン">
+      <a href="/ja/guide">使い方</a>
+      <a href="/ja/changelog">アップデート</a>
+      <a href="/ja/support">お問い合わせ</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="/ja#products">
+      <span>Chromeに追加</span>
+      <span class="btn__tag">無料</span>
+    </a>
+  </header>
+
+  <main class="hub" id="top" data-hub="guide">
+    <header class="hub__head">
+      <p class="hub__eyebrow">使い方</p>
+      <h1>Dumply、こう使います</h1>
+      <p class="hub__lead">インストール30秒、登録不要ですぐ始められます。プロダクト別にご覧ください。</p>
+      <p style="margin-top:18px">
+        <a class="btn btn--solid" href="https://chloesypark.notion.site/dumply-google" target="_blank" rel="noopener">
+          <span>拡張機能の詳細ガイド（韓国語）</span>
+          <span class="btn__tag">Notion ↗</span>
+        </a>
+      </p>
+    </header>
+
+    <div class="hub__filter" data-filter role="group" aria-label="プロダクトフィルター"></div>
+    <div data-guide></div>
+
+    <a class="hub__back" href="/ja">← ホームへ</a>
+    <nav class="foot__links" aria-label="言語" style="margin-top:20px">
+      <a href="/guide" hreflang="ko" lang="ko">한국어</a>
+      <a href="/en/guide" hreflang="en" lang="en">English</a>
+      <a href="/ja/guide" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+  </main>
+
+  <script src="/hub.js"></script>
+</body>
+</html>
