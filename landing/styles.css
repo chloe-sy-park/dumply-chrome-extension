@@ -563,6 +563,50 @@ section { position: relative; }
   .nav__cta .btn__tag { display: none; }
 }
 
+/* ───────────── i18n: 강조 세리프 폰트 (en/ja 페이지) ─────────────
+   DumplySerif의 unicode-range는 한글·라틴만 커버 → 일본어 가나/한자가
+   시스템 폴백으로 섞이는 것을 방지 */
+html[lang="ja"] {
+  --serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --sans: "Pretendard JP", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+html[lang="en"] { --serif: "Lora", Georgia, serif; }
+/* 일본어는 글자폭이 넓어 히어로 타이틀이 어중간하게 줄바꿈됨 → 살짝 축소 */
+html[lang="ja"] .hero__title { font-size: clamp(30px, 4vw, 48px); }
+
+/* ───────────── 제품 상세 히어로 (extension/prompts/finance 페이지) ───────────── */
+.phero {
+  max-width: var(--max); margin: 0 auto; text-align: center;
+  padding: clamp(56px, 9vh, 110px) clamp(20px, 5vw, 52px) clamp(24px, 4vh, 48px);
+}
+.phero .hero__title { font-size: clamp(32px, 4.4vw, 54px); }
+html[lang="ja"] .phero .hero__title { font-size: clamp(28px, 3.8vw, 46px); }
+.phero .hero__sub { margin-left: auto; margin-right: auto; }
+.phero .hero__actions { justify-content: center; }
+.phero .notify, .cta .notify { max-width: 420px; margin: 28px auto 0; }
+
+/* ───────────── FAQ ───────────── */
+.faq { padding: clamp(40px, 8vh, 90px) 0; }
+.faq__list {
+  max-width: 760px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 52px);
+  display: grid; gap: 12px;
+}
+.faq__item {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);
+}
+.faq__item summary {
+  cursor: pointer; padding: 18px 22px; font-weight: 600; font-size: 16.5px;
+  list-style: none; position: relative;
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after {
+  content: "+"; position: absolute; right: 22px; top: 50%; transform: translateY(-50%);
+  color: var(--text-3); font-weight: 400; font-size: 20px;
+}
+.faq__item[open] summary::after { content: "−"; }
+.faq__item p { padding: 0 22px 18px; color: var(--text-body); font-size: 15.5px; line-height: 1.7; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
   [data-reveal], .manifesto .w { opacity: 1 !important; transform: none !important; }

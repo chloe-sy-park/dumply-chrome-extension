@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumplyプロンプトライブラリ — 散らばったプロンプトをひとつの引き出しに</title>
+  <meta name="description" content="よく使うAIプロンプトを保存すると、プラットフォーム別に自動分類。タグ・出典・出力例も記録して、検索してすぐ再利用。AIで磨く・チーム共有・日英韓対応。無料ベータ。" />
+  <link rel="canonical" href="https://www.dumply.app/ja/prompts" />
+  <link rel="alternate" hreflang="ko" href="https://www.dumply.app/prompts" />
+  <link rel="alternate" hreflang="en" href="https://www.dumply.app/en/prompts" />
+  <link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/prompts" />
+  <link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/prompts" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dumply" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="Dumplyプロンプトライブラリ — 散らばったプロンプトをひとつの引き出しに" />
+  <meta property="og:description" content="よく使うAIプロンプトを保存すると、プラットフォーム別に自動分類。タグ・出典・出力例も記録して、検索してすぐ再利用。AIで磨く・チーム共有・日英韓対応。無料ベータ。" />
+  <meta property="og:url" content="https://www.dumply.app/ja/prompts" />
+  <meta property="og:image" content="https://www.dumply.app/og-image.png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="800" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dumplyプロンプトライブラリ — 散らばったプロンプトをひとつの引き出しに" />
+  <meta name="twitter:description" content="よく使うAIプロンプトを保存すると、プラットフォーム別に自動分類。タグ・出典・出力例も記録して、検索してすぐ再利用。AIで磨く・チーム共有・日英韓対応。無料ベータ。" />
+  <meta name="twitter:image" content="https://www.dumply.app/og-image.png" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Dumply Prompt Library",
+  "url": "https://www.dumply.app/ja/prompts",
+  "applicationCategory": "ProductivityApplication",
+  "operatingSystem": "Any",
+  "description": "よく使うAIプロンプトを保存すると、プラットフォーム別に自動分類。タグ・出典・出力例も記録して、検索してすぐ再利用。AIで磨く・チーム共有・日英韓対応。無料ベータ。",
+  "image": "https://www.dumply.app/icons/icon-512.png",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Dumply",
+    "url": "https://www.dumply.app/"
+  }
+}
+  </script>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-jp.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-jp@5.2.5/500.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-jp@5.2.5/600.css" />
+
+  <link rel="icon" type="image/png" href="/icons/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="/ja" aria-label="Dumply ホーム">
+      <img class="brand__mark" src="/icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="メイン">
+      <a href="/ja#products">プロダクト</a>
+      <a href="/guide">使い方</a>
+      <a href="/changelog">アップデート</a>
+      <a href="/support">お問い合わせ</a>
+      <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">プロンプトライブラリ</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="https://chromewebstore.google.com/detail/anageghlhlgmcabcgchboedlbdgfiali" target="_blank" rel="noopener">
+      <span>Chromeに追加</span>
+      <span class="btn__tag">無料</span>
+    </a>
+  </header>
+
+  <main id="top">
+    <section class="phero">
+      <p class="eyebrow reveal" data-reveal>
+        <span class="eyebrow__dot"></span> 利用可能 · ベータ
+      </p>
+      <h1 class="hero__title reveal" data-reveal style="--d:.08s">いいプロンプトも、見つからなければ<br/><em>ないのと同じ。</em></h1>
+      <p class="hero__sub reveal" data-reveal style="--d:.2s">よく使うプロンプトを保存しておいて、必要なとき検索してすぐ取り出す。複数デバイスで同期される、<strong>自分だけのプロンプトの引き出し</strong>です。</p>
+      <div class="hero__actions reveal" data-reveal style="--d:.32s">
+        <a class="btn btn--solid btn--lg" href="https://prompts.dumply.app/" target="_blank" rel="noopener"><img src="/icons/icon-512.png" alt="" width="20" height="20" /><span>ライブラリを開く</span><span class="btn__tag">無料ベータ</span></a><a class="btn btn--ghost btn--lg" href="/guide"><span>使い方を見る</span></a>
+      </div>
+    </section>
+
+    <section class="sort">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>主な機能</p>
+        <h2 class="sec-head__title reveal" data-reveal>保存は一度、再利用はずっと</h2>
+      </header>
+      <div class="lanes">
+        <article class="lane lane--task reveal" data-reveal>
+          <span class="lane__icon">▤</span>
+          <h3>保存すると自動分類</h3>
+          <p>プラットフォーム別に自動整理され、タグ・出典・出力例も一緒に記録できます。</p>
+          <div class="lane__chip">ChatGPT · Claude · Midjourney</div>
+        </article>
+        <article class="lane lane--ponder reveal" data-reveal style="--d:.08s">
+          <span class="lane__icon">⌕</span>
+          <h3>検索 → すぐ使う</h3>
+          <p>必要なプロンプトを検索で見つけて、コピー一回で再利用。ワークフローとしてまとめることもできます。</p>
+          <div class="lane__chip">「ブログの構成」→ すぐコピー</div>
+        </article>
+        <article class="lane lane--feel reveal" data-reveal style="--d:.16s">
+          <span class="lane__icon">✦</span>
+          <h3>AIで磨く · チーム共有</h3>
+          <p>Anthropic APIキーを接続すると、プロンプトの改善・自動生成が無料で無制限。チームと共有、インポート・エクスポートも。</p>
+          <div class="lane__chip">한국어 · English · 日本語</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="how">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>はじめる</p>
+        <h2 class="sec-head__title reveal" data-reveal>引き出しの整理は3分で</h2>
+      </header>
+      <ol class="steps">
+        <li class="step reveal" data-reveal>
+          <span class="step__no">01</span>
+          <h3>ログイン</h3>
+          <p>prompts.dumply.appにアクセスしてログインすると、複数デバイスで同期されます。</p>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.1s">
+          <span class="step__no">02</span>
+          <h3>保存</h3>
+          <p>使っていたプロンプトを貼り付けるだけで、自動分類されてタグがつきます。</p>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.2s">
+          <span class="step__no">03</span>
+          <h3>取り出す</h3>
+          <p>検索してコピー、すぐ使う。よく使うものはワークフローにまとめて。</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="cta" id="notify">
+      <div class="cta__inner reveal" data-reveal>
+        <img class="cta__mascot" src="/icons/icon-512.png" alt="" width="72" height="72" />
+        <p class="cta__kicker">Simply Dumpy.</p>
+        <h2>プロンプトの引き出し、今日から整理完了</h2>
+        <p>無料ベータで使えます。</p>
+        <a class="btn btn--solid btn--lg" href="https://prompts.dumply.app/" target="_blank" rel="noopener"><span>ライブラリを開く</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__brand">
+      <img src="/icons/icon-512.png" alt="" width="22" height="22" />
+      <span>Dumply</span>
+    </div>
+    <p class="foot__tag"><em class="foot__catch">Simply Dumpy.</em> 整理しないで、そのままダンプ。🐧🔍</p>
+    <nav class="foot__links" aria-label="フッター">
+      <a href="/ja#products">プロダクト</a>
+      <a href="/guide">使い方</a>
+      <a href="/changelog">アップデート</a>
+      <a href="/support">お問い合わせ</a>
+      <a href="/privacy">プライバシーポリシー</a>
+      <a href="/terms">利用規約</a>
+      <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">プロンプトライブラリ</a>
+    </nav>
+    <nav class="foot__links" aria-label="言語">
+      <a href="/prompts" hreflang="ko" lang="ko">한국어</a>
+      <a href="/en/prompts" hreflang="en" lang="en">English</a>
+      <a href="/ja/prompts" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+    <p class="foot__copy">© 2026 Dumply</p>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

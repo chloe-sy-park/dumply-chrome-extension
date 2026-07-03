@@ -1,0 +1,17 @@
+# dumply.app — 모든 크롤러 및 AI 크롤러 허용
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.dumply.app/sitemap.xml

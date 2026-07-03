@@ -106,7 +106,11 @@
       const input = form.querySelector('input');
       if (!input.value) return;
       // TODO: 실제 수집 엔드포인트 연결
-      toast('알림 신청 완료! 출시되면 가장 먼저 알려드릴게요. ✉️');
+      const notifyMsg = {
+        en: "You're on the list! We'll let you know first at launch. ✉️",
+        ja: '登録完了！リリース時に真っ先にお知らせします。✉️'
+      }[document.documentElement.lang] || '알림 신청 완료! 출시되면 가장 먼저 알려드릴게요. ✉️';
+      toast(notifyMsg);
       input.value = '';
       input.blur();
     });

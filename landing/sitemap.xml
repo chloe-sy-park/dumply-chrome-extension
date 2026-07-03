@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.dumply.app/</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/en</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/ja</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/extension</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/extension" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/extension" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/extension" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/extension" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/en/extension</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/extension" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/extension" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/extension" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/extension" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/ja/extension</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/extension" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/extension" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/extension" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/extension" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/prompts</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/prompts" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/prompts" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/prompts" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/prompts" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/en/prompts</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/prompts" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/prompts" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/prompts" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/prompts" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/ja/prompts</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/prompts" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/prompts" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/prompts" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/prompts" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/finance</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/finance" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/finance" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/finance" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/finance" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/en/finance</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/finance" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/finance" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/finance" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/finance" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/ja/finance</loc>
+    <lastmod>2026-07-03</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/finance" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/finance" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/finance" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/finance" />
+  </url>
+  <url><loc>https://www.dumply.app/guide</loc><lastmod>2026-07-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.dumply.app/changelog</loc><lastmod>2026-07-03</lastmod><priority>0.6</priority></url>
+  <url><loc>https://www.dumply.app/support</loc><lastmod>2026-07-03</lastmod><priority>0.5</priority></url>
+  <url><loc>https://www.dumply.app/privacy</loc><lastmod>2026-07-01</lastmod><priority>0.3</priority></url>
+  <url><loc>https://www.dumply.app/terms</loc><lastmod>2026-06-12</lastmod><priority>0.3</priority></url>
+</urlset>
