@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>덤플리 프롬프트 라이브러리 — 흩어진 프롬프트를 한 서랍에</title>
+  <meta name="description" content="자주 쓰는 AI 프롬프트를 저장하면 플랫폼별로 자동 분류. 태그·출처·예시 결과까지 기록하고, 검색해서 바로 꺼내 쓰세요. AI 다듬기·팀 공유·한/영/일 지원. 무료 베타." />
+  <link rel="canonical" href="https://www.dumply.app/prompts" />
+  <link rel="alternate" hreflang="ko" href="https://www.dumply.app/prompts" />
+  <link rel="alternate" hreflang="en" href="https://www.dumply.app/en/prompts" />
+  <link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/prompts" />
+  <link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/prompts" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dumply" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta property="og:title" content="덤플리 프롬프트 라이브러리 — 흩어진 프롬프트를 한 서랍에" />
+  <meta property="og:description" content="자주 쓰는 AI 프롬프트를 저장하면 플랫폼별로 자동 분류. 태그·출처·예시 결과까지 기록하고, 검색해서 바로 꺼내 쓰세요. AI 다듬기·팀 공유·한/영/일 지원. 무료 베타." />
+  <meta property="og:url" content="https://www.dumply.app/prompts" />
+  <meta property="og:image" content="https://www.dumply.app/og-image.png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="800" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="덤플리 프롬프트 라이브러리 — 흩어진 프롬프트를 한 서랍에" />
+  <meta name="twitter:description" content="자주 쓰는 AI 프롬프트를 저장하면 플랫폼별로 자동 분류. 태그·출처·예시 결과까지 기록하고, 검색해서 바로 꺼내 쓰세요. AI 다듬기·팀 공유·한/영/일 지원. 무료 베타." />
+  <meta name="twitter:image" content="https://www.dumply.app/og-image.png" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Dumply Prompt Library",
+  "url": "https://www.dumply.app/prompts",
+  "applicationCategory": "ProductivityApplication",
+  "operatingSystem": "Any",
+  "description": "자주 쓰는 AI 프롬프트를 저장하면 플랫폼별로 자동 분류. 태그·출처·예시 결과까지 기록하고, 검색해서 바로 꺼내 쓰세요. AI 다듬기·팀 공유·한/영/일 지원. 무료 베타.",
+  "image": "https://www.dumply.app/icons/icon-512.png",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KRW"
+  },
+  "inLanguage": "ko",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Dumply",
+    "url": "https://www.dumply.app/"
+  }
+}
+  </script>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+  <link rel="icon" type="image/png" href="/icons/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="/" aria-label="Dumply 홈">
+      <img class="brand__mark" src="/icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="주요">
+      <a href="/#products">제품</a>
+      <a href="/guide">사용 방법</a>
+      <a href="/changelog">업데이트</a>
+      <a href="/support">문의</a>
+      <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">프롬프트 라이브러리</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="https://chromewebstore.google.com/detail/anageghlhlgmcabcgchboedlbdgfiali" target="_blank" rel="noopener">
+      <span>Chrome에 추가</span>
+      <span class="btn__tag">무료</span>
+    </a>
+  </header>
+
+  <main id="top">
+    <section class="phero">
+      <p class="eyebrow reveal" data-reveal>
+        <span class="eyebrow__dot"></span> 사용 가능 · 베타
+      </p>
+      <h1 class="hero__title reveal" data-reveal style="--d:.08s">좋은 프롬프트, 다시 못 찾으면<br/><em>없는 거나 마찬가지죠.</em></h1>
+      <p class="hero__sub reveal" data-reveal style="--d:.2s">자주 쓰는 프롬프트를 저장해 두고, 필요할 때 검색해서 바로 꺼내 쓰세요. 여러 기기에서 동기화되는 <strong>나만의 프롬프트 서랍</strong>이에요.</p>
+      <div class="hero__actions reveal" data-reveal style="--d:.32s">
+        <a class="btn btn--solid btn--lg" href="https://prompts.dumply.app/" target="_blank" rel="noopener"><img src="/icons/icon-512.png" alt="" width="20" height="20" /><span>라이브러리 열기</span><span class="btn__tag">무료 베타</span></a><a class="btn btn--ghost btn--lg" href="/guide"><span>사용 방법 보기</span></a>
+      </div>
+    </section>
+
+    <section class="sort">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>핵심 기능</p>
+        <h2 class="sec-head__title reveal" data-reveal>저장은 한 번, 재사용은 계속</h2>
+      </header>
+      <div class="lanes">
+        <article class="lane lane--task reveal" data-reveal>
+          <span class="lane__icon">▤</span>
+          <h3>저장하면 자동 분류</h3>
+          <p>사용 플랫폼별로 자동 정리되고, 태그·출처·예시 결과도 함께 기록할 수 있어요.</p>
+          <div class="lane__chip">ChatGPT · Claude · Midjourney</div>
+        </article>
+        <article class="lane lane--ponder reveal" data-reveal style="--d:.08s">
+          <span class="lane__icon">⌕</span>
+          <h3>검색 → 바로 사용</h3>
+          <p>필요한 프롬프트를 검색으로 찾아 복사 한 번으로. 워크플로우로 엮어 쓸 수도 있어요.</p>
+          <div class="lane__chip">'블로그 개요' 검색 → 바로 복사</div>
+        </article>
+        <article class="lane lane--feel reveal" data-reveal style="--d:.16s">
+          <span class="lane__icon">✦</span>
+          <h3>AI로 다듬기 · 팀 공유</h3>
+          <p>Anthropic API 키를 연결하면 프롬프트 개선·자동 생성이 무료 무제한. 팀과 공유하고 가져오기·내보내기도 돼요.</p>
+          <div class="lane__chip">한국어 · English · 日本語</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="how">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>시작하기</p>
+        <h2 class="sec-head__title reveal" data-reveal>서랍 정리는 3분이면 돼요</h2>
+      </header>
+      <ol class="steps">
+        <li class="step reveal" data-reveal>
+          <span class="step__no">01</span>
+          <h3>로그인</h3>
+          <p>prompts.dumply.app에 접속해 로그인하면 여러 기기에서 동기화돼요.</p>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.1s">
+          <span class="step__no">02</span>
+          <h3>저장</h3>
+          <p>쓰던 프롬프트를 붙여 넣으면 자동 분류되고 태그가 붙어요.</p>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.2s">
+          <span class="step__no">03</span>
+          <h3>꺼내 쓰기</h3>
+          <p>검색해서 복사, 바로 사용. 자주 쓰는 건 워크플로우로 묶어두세요.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="cta" id="notify">
+      <div class="cta__inner reveal" data-reveal>
+        <img class="cta__mascot" src="/icons/icon-512.png" alt="" width="72" height="72" />
+        <p class="cta__kicker">Simply Dumpy.</p>
+        <h2>프롬프트 서랍, 오늘부터 정리 끝</h2>
+        <p>무료 베타로 사용할 수 있어요.</p>
+        <a class="btn btn--solid btn--lg" href="https://prompts.dumply.app/" target="_blank" rel="noopener"><span>라이브러리 열기</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__brand">
+      <img src="/icons/icon-512.png" alt="" width="22" height="22" />
+      <span>Dumply</span>
+    </div>
+    <p class="foot__tag"><em class="foot__catch">Simply Dumpy.</em> 정리하지 말고, 그냥 덤프. 🐧🔍</p>
+    <nav class="foot__links" aria-label="푸터">
+      <a href="/#products">제품</a>
+      <a href="/guide">사용 방법</a>
+      <a href="/changelog">업데이트</a>
+      <a href="/support">문의·오류 보고</a>
+      <a href="/privacy">개인정보처리방침</a>
+      <a href="/terms">이용약관</a>
+      <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">프롬프트 라이브러리</a>
+    </nav>
+    <nav class="foot__links" aria-label="언어">
+      <a href="/prompts" hreflang="ko" lang="ko">한국어</a>
+      <a href="/en/prompts" hreflang="en" lang="en">English</a>
+      <a href="/ja/prompts" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+    <p class="foot__copy">© 2026 Dumply</p>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -5,6 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dumply — Simply Dumpy · 정리하지 말고, 그냥 쏟아내세요</title>
   <meta name="description" content="Simply Dumpy. 머릿속에 떠다니는 모든 것을 그냥 쏟아내세요. 탐정 펭귄 알프레도가 할 일·감정·고민으로 정리해 드립니다. Chrome 확장 무료." />
+  <link rel="canonical" href="https://www.dumply.app/" />
+  <link rel="alternate" hreflang="ko" href="https://www.dumply.app/" />
+  <link rel="alternate" hreflang="en" href="https://www.dumply.app/en" />
+  <link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja" />
+  <link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dumply" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale:alternate" content="ja_JP" />
+  <meta property="og:title" content="Dumply — 정리하지 말고, 그냥 쏟아내세요" />
+  <meta property="og:description" content="머릿속에 떠다니는 모든 것을 그냥 쏟아내세요. AI 탐정 펭귄 알프레도가 할 일·감정·고민으로 정리해 드립니다. Chrome 확장 무료." />
+  <meta property="og:url" content="https://www.dumply.app/" />
+  <meta property="og:image" content="https://www.dumply.app/og-image.png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="800" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dumply — 정리하지 말고, 그냥 쏟아내세요" />
+  <meta name="twitter:description" content="머릿속에 떠다니는 모든 것을 그냥 쏟아내세요. AI가 할 일·감정·고민으로 정리해 드립니다. Chrome 확장 무료." />
+  <meta name="twitter:image" content="https://www.dumply.app/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Dumply",
+    "alternateName": "덤플리",
+    "url": "https://www.dumply.app/",
+    "installUrl": "https://chromewebstore.google.com/detail/anageghlhlgmcabcgchboedlbdgfiali",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome",
+    "description": "브레인덤프 도구. 머릿속 생각을 정리하지 않고 그대로 쏟아내면 AI가 할 일·일정·감정·고민으로 자동 분류합니다. 회원가입 없이 무료로 사용.",
+    "image": "https://www.dumply.app/icons/icon-512.png",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+    "inLanguage": "ko",
+    "publisher": { "@type": "Organization", "name": "Dumply", "url": "https://www.dumply.app/" }
+  }
+  </script>
 
   <!-- Pretendard(본문) · 학교안심 바른바탕(한글 강조) · Lora(영문 강조) — 폰트는 styles.css의 @font-face -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
@@ -276,6 +315,71 @@
       </div>
     </section>
 
+    <!-- ───────────── FAQ ───────────── -->
+    <section class="faq" id="faq">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>자주 묻는 질문</p>
+        <h2 class="sec-head__title reveal" data-reveal>궁금한 것들</h2>
+      </header>
+
+      <div class="faq__list">
+        <details class="faq__item reveal" data-reveal>
+          <summary>Dumply는 정말 무료인가요?</summary>
+          <p>네, Chrome 확장은 무료예요. AI 분류는 본인의 API 키(Claude·OpenAI·Gemini 중 하나)를 연결해 사용하는 방식(BYOK)이라 별도 구독이 필요 없어요.</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.06s">
+          <summary>회원가입이 필요한가요?</summary>
+          <p>아니요. 설치는 30초면 끝나고, 회원가입 없이 바로 쏟아낼 수 있어요.</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.12s">
+          <summary>내가 쓴 내용은 어디에 저장되나요?</summary>
+          <p>브라우저에 로컬 저장돼요. API 키도 로컬에만 저장되고 선택한 AI 제공사로만 전송되며, 캘린더 데이터는 Google API에서 직접 가져와 외부 서버를 거치지 않아요.</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.18s">
+          <summary>일반 할 일 앱과 뭐가 다른가요?</summary>
+          <p>모든 생각이 '할 일'은 아니라는 전제에서 출발해요. 감정은 태스크로 만들지 않고 그날의 마음으로 기록하고, 고민은 우선순위를 강요하지 않아요. 실행할 것만 MoSCoW 우선순위로 오늘에 떠올려요.</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.24s">
+          <summary>모바일에서도 쓸 수 있나요?</summary>
+          <p>지금은 Chrome 브라우저의 사이드 패널에서 사용할 수 있고, iOS·Android 앱은 곧 출시될 예정이에요.</p>
+        </details>
+      </div>
+
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Dumply는 정말 무료인가요?",
+            "acceptedAnswer": { "@type": "Answer", "text": "네, Chrome 확장은 무료예요. AI 분류는 본인의 API 키(Claude·OpenAI·Gemini 중 하나)를 연결해 사용하는 방식(BYOK)이라 별도 구독이 필요 없어요." }
+          },
+          {
+            "@type": "Question",
+            "name": "회원가입이 필요한가요?",
+            "acceptedAnswer": { "@type": "Answer", "text": "아니요. 설치는 30초면 끝나고, 회원가입 없이 바로 쏟아낼 수 있어요." }
+          },
+          {
+            "@type": "Question",
+            "name": "내가 쓴 내용은 어디에 저장되나요?",
+            "acceptedAnswer": { "@type": "Answer", "text": "브라우저에 로컬 저장돼요. API 키도 로컬에만 저장되고 선택한 AI 제공사로만 전송되며, 캘린더 데이터는 Google API에서 직접 가져와 외부 서버를 거치지 않아요." }
+          },
+          {
+            "@type": "Question",
+            "name": "일반 할 일 앱과 뭐가 다른가요?",
+            "acceptedAnswer": { "@type": "Answer", "text": "모든 생각이 '할 일'은 아니라는 전제에서 출발해요. 감정은 태스크로 만들지 않고 그날의 마음으로 기록하고, 고민은 우선순위를 강요하지 않아요. 실행할 것만 MoSCoW 우선순위로 오늘에 떠올려요." }
+          },
+          {
+            "@type": "Question",
+            "name": "모바일에서도 쓸 수 있나요?",
+            "acceptedAnswer": { "@type": "Answer", "text": "지금은 Chrome 브라우저의 사이드 패널에서 사용할 수 있고, iOS·Android 앱은 곧 출시될 예정이에요." }
+          }
+        ]
+      }
+      </script>
+    </section>
+
     <!-- ───────────── FINAL CTA ───────────── -->
     <section class="cta">
       <div class="cta__inner reveal" data-reveal>
@@ -299,12 +403,20 @@
     <p class="foot__tag"><em class="foot__catch">Simply Dumpy.</em> 정리하지 말고, 그냥 덤프. 🐧🔍</p>
     <nav class="foot__links" aria-label="푸터">
       <a href="#products">제품</a>
+      <a href="/extension">크롬 확장 소개</a>
+      <a href="/prompts">프롬프트 라이브러리 소개</a>
+      <a href="/finance">파이낸스 (준비 중)</a>
       <a href="guide.html">사용 방법</a>
       <a href="changelog.html">업데이트</a>
       <a href="support.html">문의·오류 보고</a>
       <a href="privacy.html">개인정보처리방침</a>
       <a href="terms.html">이용약관</a>
       <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">프롬프트 라이브러리</a>
+    </nav>
+    <nav class="foot__links" aria-label="언어">
+      <a href="/" hreflang="ko" lang="ko">한국어</a>
+      <a href="/en" hreflang="en" lang="en">English</a>
+      <a href="/ja" hreflang="ja" lang="ja">日本語</a>
     </nav>
     <p class="foot__copy">© 2026 Dumply</p>
   </footer>

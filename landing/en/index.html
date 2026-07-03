@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumply — Don't organize. Just dump it.</title>
+  <meta name="description" content="Simply Dumpy. Pour out everything floating around in your head — Alfredo, the detective penguin, quietly sorts it into tasks, feelings, and thoughts. Free Chrome extension." />
+  <link rel="canonical" href="https://www.dumply.app/en" />
+  <link rel="alternate" hreflang="ko" href="https://www.dumply.app/" />
+  <link rel="alternate" hreflang="en" href="https://www.dumply.app/en" />
+  <link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja" />
+  <link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dumply" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="ko_KR" />
+  <meta property="og:locale:alternate" content="ja_JP" />
+  <meta property="og:title" content="Dumply — Don't organize. Just dump it." />
+  <meta property="og:description" content="Pour out everything floating around in your head — AI detective penguin Alfredo sorts it into tasks, feelings, and thoughts. Free Chrome extension." />
+  <meta property="og:url" content="https://www.dumply.app/en" />
+  <meta property="og:image" content="https://www.dumply.app/og-image.png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="800" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dumply — Don't organize. Just dump it." />
+  <meta name="twitter:description" content="Pour out everything in your head — AI sorts it into tasks, feelings, and thoughts. Free Chrome extension." />
+  <meta name="twitter:image" content="https://www.dumply.app/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Dumply",
+    "url": "https://www.dumply.app/en",
+    "installUrl": "https://chromewebstore.google.com/detail/anageghlhlgmcabcgchboedlbdgfiali",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome",
+    "description": "A brain-dump tool. Write your thoughts without organizing them, and AI automatically sorts them into tasks, schedules, feelings, and things you're mulling over. Free, no sign-up.",
+    "image": "https://www.dumply.app/icons/icon-512.png",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "inLanguage": "en",
+    "publisher": { "@type": "Organization", "name": "Dumply", "url": "https://www.dumply.app/" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+  <link rel="icon" type="image/png" href="/icons/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- ambient warm field -->
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <!-- ───────────── NAV ───────────── -->
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="Dumply home">
+      <img class="brand__mark" src="/icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#products">Products</a>
+      <a href="/guide">How to use</a>
+      <a href="/changelog">Updates</a>
+      <a href="/support">Support</a>
+      <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">Prompt Library</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="#products">
+      <span>Add to Chrome</span>
+      <span class="btn__tag">Free</span>
+    </a>
+  </header>
+
+  <main id="top">
+    <!-- ───────────── HERO ───────────── -->
+    <section class="hero">
+      <div class="hero__copy">
+        <p class="eyebrow reveal" data-reveal>
+          <span class="eyebrow__dot"></span> A tool for noisy minds
+        </p>
+        <h1 class="hero__title">
+          <span class="line reveal" data-reveal style="--d:.05s">Don't organize.</span>
+          <span class="line reveal" data-reveal style="--d:.16s">Just <em>dump it.</em></span>
+        </h1>
+        <p class="hero__sub reveal" data-reveal style="--d:.30s">
+          Write whatever comes to mind, and <strong>Alfredo</strong> the detective penguin
+          <br class="only-wide" />quietly sorts it into tasks, feelings, and thoughts.
+        </p>
+        <div class="hero__actions reveal" data-reveal style="--d:.42s">
+          <a class="btn btn--solid btn--lg" href="#products">
+            <img src="/icons/icon-512.png" alt="" width="20" height="20" />
+            <span>Add to Chrome</span>
+            <span class="btn__tag">Free</span>
+          </a>
+          <a class="btn btn--ghost btn--lg" href="#how">How it works</a>
+        </div>
+        <p class="hero__note reveal" data-reveal style="--d:.52s">
+          30-second install · No sign-up · iOS/Android apps <span class="soon">coming soon</span>
+        </p>
+      </div>
+
+      <!-- signature: scattered dump → sorted cards -->
+      <div class="stage reveal" data-reveal style="--d:.36s" aria-hidden="true">
+        <div class="stage__panel">
+          <div class="panel__bar">
+            <span class="panel__dot"></span><span class="panel__dot"></span><span class="panel__dot"></span>
+            <span class="panel__label">brain&nbsp;dump</span>
+          </div>
+
+          <!-- act 1: thoughts pouring out -->
+          <div class="dump" id="dump">
+            <span class="thought" style="--t:0">Report due Friday</span>
+            <span class="thought" style="--t:1">I'm so tired...</span>
+            <span class="thought" style="--t:2">Gift for Mom's birthday?</span>
+            <span class="thought" style="--t:3">Should I change jobs?</span>
+            <span class="thought" style="--t:4">Buy milk</span>
+            <span class="thought" style="--t:5">Felt pretty good today</span>
+          </div>
+
+          <!-- act 2: sorted cards -->
+          <div class="sorted" id="sorted">
+            <article class="scard scard--task" style="--s:0">
+              <header><span class="scard__tag">Tasks</span></header>
+              <ul>
+                <li><i class="chk"></i>Finish report <em>Fri</em></li>
+                <li><i class="chk"></i>Gift for Mom</li>
+                <li><i class="chk"></i>Buy milk</li>
+              </ul>
+            </article>
+            <article class="scard scard--feel" style="--s:1">
+              <header><span class="scard__tag">Today's mood</span></header>
+              <p class="mood">😮‍💨 tired · 🙂 proud</p>
+            </article>
+            <article class="scard scard--ponder" style="--s:2">
+              <header><span class="scard__tag">Thinking</span></header>
+              <p>Should I change jobs? <span class="muted">— no rush</span></p>
+            </article>
+          </div>
+        </div>
+        <span class="stage__glow"></span>
+      </div>
+    </section>
+
+    <!-- ───────────── MARQUEE ───────────── -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>tasks</span><i>·</i><span>deadlines</span><i>·</i><span>feelings</span><i>·</i><span>energy</span><i>·</i><span>thoughts</span><i>·</i><span>ideas</span><i>·</i><span>promises</span><i>·</i><span>worries</span><i>·</i>
+        <span>tasks</span><i>·</i><span>deadlines</span><i>·</i><span>feelings</span><i>·</i><span>energy</span><i>·</i><span>thoughts</span><i>·</i><span>ideas</span><i>·</i><span>promises</span><i>·</i><span>worries</span><i>·</i>
+      </div>
+    </div>
+
+    <!-- ───────────── EMPATHY ───────────── -->
+    <section class="manifesto">
+      <p class="manifesto__text">
+        <span class="w" data-reveal>The</span>
+        <span class="w" data-reveal>thoughts</span>
+        <span class="w" data-reveal>in</span>
+        <span class="w" data-reveal>your</span>
+        <span class="w" data-reveal>head</span>
+        <span class="w w--dim" data-reveal>won't</span>
+        <span class="w w--dim" data-reveal>wait</span>
+        <span class="w w--dim" data-reveal>until</span>
+        <span class="w w--dim" data-reveal>you</span>
+        <span class="w w--dim" data-reveal>have</span>
+        <span class="w w--dim" data-reveal>the</span>
+        <span class="w w--dim" data-reveal>energy</span>
+        <span class="w w--dim" data-reveal>to</span>
+        <span class="w w--dim" data-reveal>sort</span>
+        <span class="w w--dim" data-reveal>them.</span>
+        <br aria-hidden="true" />
+        <span class="w" data-reveal>So</span>
+        <span class="w" data-reveal>Dumply</span>
+        <span class="w" data-reveal><em>sorts</em></span>
+        <span class="w" data-reveal><em>them</em></span>
+        <span class="w" data-reveal><em>for you.</em></span>
+      </p>
+    </section>
+
+    <!-- ───────────── HOW ───────────── -->
+    <section class="how" id="how">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>How it works</p>
+        <h2 class="sec-head__title reveal" data-reveal>Three breaths and you're done</h2>
+      </header>
+
+      <ol class="steps">
+        <li class="step reveal" data-reveal>
+          <span class="step__no">01</span>
+          <h3>Dump</h3>
+          <p>Just write, line by line. Don't worry about spelling, order, or categories.</p>
+          <div class="step__demo demo-dump">
+            <span>Report due Friday</span>
+            <span>So tired</span>
+            <span>Change jobs…?</span>
+          </div>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.1s">
+          <span class="step__no">02</span>
+          <h3>Alfredo sorts</h3>
+          <p>He reads each line and decides whether it's a <b>task, a feeling, or a thought</b>.</p>
+          <div class="step__demo demo-route">
+            <span class="rt rt--task">task</span>
+            <span class="rt rt--feel">feeling</span>
+            <span class="rt rt--ponder">thought</span>
+          </div>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.2s">
+          <span class="step__no">03</span>
+          <h3>Focus on today</h3>
+          <p>Only tasks surface with priorities — feelings and thoughts stay gently nearby.</p>
+          <div class="step__demo demo-focus">
+            <span class="focus-row"><i class="chk"></i>Finish report <em>today</em></span>
+            <span class="focus-row focus-row--ghost"><i class="chk"></i>Buy milk</span>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ───────────── SORT / ROUTING ───────────── -->
+    <section class="sort" id="sort">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>Three lanes</p>
+        <h2 class="sec-head__title reveal" data-reveal>Not every thought<br/>is a to-do</h2>
+        <p class="sec-head__lead reveal" data-reveal>
+          Feelings are states, not chores. Worries aren't decided yet — rushing them adds pressure.
+          Dumply treats all three differently.
+        </p>
+      </header>
+
+      <div class="lanes">
+        <article class="lane lane--task reveal" data-reveal>
+          <span class="lane__icon">✓</span>
+          <h3>Tasks</h3>
+          <p>Things you can act on. They get deadlines and MoSCoW priorities and surface as today's to-dos.</p>
+          <div class="lane__chip">Report due Friday <em>D-2</em></div>
+        </article>
+        <article class="lane lane--feel reveal" data-reveal style="--d:.08s">
+          <span class="lane__icon">♥</span>
+          <h3>Feelings · Today's mood</h3>
+          <p>Tired, proud, annoyed — moods never become tasks. They're gently logged as the day's energy.</p>
+          <div class="lane__chip">Take it easy today 🌙</div>
+        </article>
+        <article class="lane lane--ponder reveal" data-reveal style="--d:.16s">
+          <span class="lane__icon">∿</span>
+          <h3>Thoughts · Still deciding</h3>
+          <p>Things not yet decided. No forced priorities — promote them <b>to tasks</b> when you're ready.</p>
+          <div class="lane__chip">Change jobs or not? <em>no rush</em></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────────── PRODUCTS ───────────── -->
+    <section class="products" id="products">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>Dump from anywhere</p>
+        <h2 class="sec-head__title reveal" data-reveal>In your browser today,<br/>more places soon</h2>
+      </header>
+
+      <div class="prod-grid">
+        <article class="prod prod--live reveal" data-reveal>
+          <div class="prod__top">
+            <img src="/icons/icon-512.png" alt="" width="40" height="40" />
+            <span class="badge badge--live">Available · Free</span>
+          </div>
+          <h3>Chrome extension</h3>
+          <p>Open the side panel anytime and dump away. No sign-up, no payment.</p>
+          <a class="btn btn--solid" href="#" data-cta="chrome">
+            <span>Add to Chrome</span><span class="btn__tag">Free</span>
+          </a>
+        </article>
+
+        <article class="prod prod--live reveal" data-reveal style="--d:.08s" id="prompt-library">
+          <div class="prod__top">
+            <span class="prod__glyph">▤</span>
+            <span class="badge badge--live">Available · Beta</span>
+          </div>
+          <h3>Prompt Library</h3>
+          <p>Your own drawer for the prompts you use most — save them, find them instantly.</p>
+          <a class="btn btn--solid" href="https://prompts.dumply.app/" target="_blank" rel="noopener">
+            <span>Open library</span>
+          </a>
+        </article>
+
+        <article class="prod prod--soon reveal" data-reveal style="--d:.16s">
+          <div class="prod__top">
+            <span class="prod__glyph">􀋲</span>
+            <span class="badge badge--soon">In the works</span>
+          </div>
+          <h3>Priority Planner</h3>
+          <p>The Dumply way to keep only what really matters today, with MoSCoW.</p>
+        </article>
+
+        <article class="prod prod--soon reveal" data-reveal style="--d:.24s">
+          <div class="prod__top">
+            <span class="prod__glyph">􀙊</span>
+            <span class="badge badge--soon">Coming soon</span>
+          </div>
+          <h3>iOS · Android apps</h3>
+          <p>The moment it pops into your head, even on the go. Widgets and lock-screen dumping in the works.</p>
+          <form class="notify" data-notify>
+            <input type="email" placeholder="We'll let you know at launch" aria-label="Email" required />
+            <button class="btn btn--ghost" type="submit">Notify me</button>
+          </form>
+        </article>
+
+        <article class="prod prod--ghost reveal" data-reveal style="--d:.32s">
+          <span class="prod__plus">+</span>
+          <h3>And more</h3>
+          <p>Mac menu bar, Slack, API… more places to dump, on the way.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────────── FAQ ───────────── -->
+    <section class="faq" id="faq">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>FAQ</p>
+        <h2 class="sec-head__title reveal" data-reveal>Things you might wonder</h2>
+      </header>
+
+      <div class="faq__list">
+        <details class="faq__item reveal" data-reveal>
+          <summary>Is Dumply really free?</summary>
+          <p>Yes, the Chrome extension is free. AI sorting uses your own API key (Claude, OpenAI, or Gemini — BYOK), so there's no subscription.</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.06s">
+          <summary>Do I need an account?</summary>
+          <p>No. Install takes 30 seconds and you can start dumping right away — no sign-up.</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.12s">
+          <summary>Where is my data stored?</summary>
+          <p>Locally in your browser. Your API key is also stored locally and sent only to the AI provider you choose, and calendar data comes straight from the Google API without passing through any external server.</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.18s">
+          <summary>How is this different from a to-do app?</summary>
+          <p>It starts from the premise that not every thought is a task. Feelings are logged as the day's mood instead of becoming tasks, and worries never get forced priorities. Only actionable items surface for today, with MoSCoW priorities.</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.24s">
+          <summary>Can I use it on mobile?</summary>
+          <p>Right now it lives in Chrome's side panel. iOS and Android apps are coming soon.</p>
+        </details>
+      </div>
+
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is Dumply really free?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes, the Chrome extension is free. AI sorting uses your own API key (Claude, OpenAI, or Gemini — BYOK), so there's no subscription." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need an account?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Install takes 30 seconds and you can start dumping right away — no sign-up." }
+          },
+          {
+            "@type": "Question",
+            "name": "Where is my data stored?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Locally in your browser. Your API key is also stored locally and sent only to the AI provider you choose, and calendar data comes straight from the Google API without passing through any external server." }
+          },
+          {
+            "@type": "Question",
+            "name": "How is this different from a to-do app?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It starts from the premise that not every thought is a task. Feelings are logged as the day's mood instead of becoming tasks, and worries never get forced priorities. Only actionable items surface for today, with MoSCoW priorities." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use it on mobile?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Right now it lives in Chrome's side panel. iOS and Android apps are coming soon." }
+          }
+        ]
+      }
+      </script>
+    </section>
+
+    <!-- ───────────── FINAL CTA ───────────── -->
+    <section class="cta">
+      <div class="cta__inner reveal" data-reveal>
+        <img class="cta__mascot" src="/icons/icon-512.png" alt="Alfredo" width="72" height="72" />
+        <p class="cta__kicker">Simply Dumpy.</p>
+        <h2>Ready to empty your head?</h2>
+        <p>Leave the sorting to Alfredo — you just dump.</p>
+        <a class="btn btn--solid btn--lg" href="#" data-cta="chrome">
+          <span>Add to Chrome — free</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ───────────── FOOTER ───────────── -->
+  <footer class="foot">
+    <div class="foot__brand">
+      <img src="/icons/icon-512.png" alt="" width="22" height="22" />
+      <span>Dumply</span>
+    </div>
+    <p class="foot__tag"><em class="foot__catch">Simply Dumpy.</em> Don't organize, just dump. 🐧🔍</p>
+    <nav class="foot__links" aria-label="Footer">
+      <a href="#products">Products</a>
+      <a href="/en/extension">Chrome extension</a>
+      <a href="/en/prompts">Prompt Library</a>
+      <a href="/en/finance">Finance (coming soon)</a>
+      <a href="/guide">How to use</a>
+      <a href="/changelog">Updates</a>
+      <a href="/support">Support</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">Prompt Library</a>
+    </nav>
+    <nav class="foot__links" aria-label="Language">
+      <a href="/" hreflang="ko" lang="ko">한국어</a>
+      <a href="/en" hreflang="en" lang="en">English</a>
+      <a href="/ja" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+    <p class="foot__copy">© 2026 Dumply</p>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

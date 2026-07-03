@@ -1,0 +1,31 @@
+# Dumply (덤플리)
+
+> Dumply is a brain-dump tool. Pour out whatever is floating around in your head without organizing it, and an AI (Alfredo, a detective penguin character) automatically sorts it into tasks, schedules, feelings, and things you're still mulling over. It's a free Chrome extension — no sign-up, installed in 30 seconds — designed for people with noisy minds, including those with ADHD tendencies. Available in Korean, English, and Japanese.
+
+## Key features
+- Brain dump: type thoughts as they come, in the browser side panel
+- AI auto-sorting: each line is classified as a task, schedule, feeling, or open question
+- MoSCoW prioritization: keep only what really matters today
+- Google Calendar integration: scheduled items appear alongside your board
+- BYOK (bring your own key): AI sorting runs on your own Claude, OpenAI, or Gemini API key — no subscription
+- Privacy: data and API keys are stored locally in the browser; calendar data comes straight from the Google API
+
+## Products
+- [Dumply Chrome extension](https://chromewebstore.google.com/detail/anageghlhlgmcabcgchboedlbdgfiali): main product, free — details: [KO](https://www.dumply.app/extension) · [EN](https://www.dumply.app/en/extension) · [JA](https://www.dumply.app/ja/extension)
+- [Prompt Library](https://prompts.dumply.app/): save and instantly retrieve your frequently used AI prompts (beta) — details: [KO](https://www.dumply.app/prompts) · [EN](https://www.dumply.app/en/prompts) · [JA](https://www.dumply.app/ja/prompts)
+- Dumply Finance: a dump-first money tracker, in the works — details: [KO](https://www.dumply.app/finance) · [EN](https://www.dumply.app/en/finance) · [JA](https://www.dumply.app/ja/finance)
+- Priority Planner, iOS/Android apps: coming soon
+
+## Pages
+- [Home (Korean)](https://www.dumply.app/) · [English](https://www.dumply.app/en) · [日本語](https://www.dumply.app/ja)
+- [How to use](https://www.dumply.app/guide): from installation to AI key setup and calendar integration
+- [Changelog](https://www.dumply.app/changelog): new features, improvements, and fixes
+- [Support](https://www.dumply.app/support): questions and bug reports
+- [Privacy Policy](https://www.dumply.app/privacy)
+- [Terms of Service](https://www.dumply.app/terms)
+
+## 한국어 요약
+Dumply는 브레인덤프 도구입니다. 머릿속 생각을 정리하지 않고 그대로 쏟아내면, AI 탐정 펭귄 '알프레도'가 할 일·일정·감정·고민으로 자동 분류합니다. Chrome 확장 무료, 회원가입 없이 설치 30초. ADHD 성향이 있거나 머릿속이 시끄러운 사람들을 위해 설계되었습니다.
+
+## 日本語の概要
+Dumplyはブレインダンプツールです。頭の中の考えを整理せずそのまま書き出すと、AI探偵ペンギン「アルフレド」がタスク・予定・気持ち・悩みに自動で仕分けます。無料のChrome拡張、登録不要でインストール30秒。頭の中がうるさい人のために設計されています。

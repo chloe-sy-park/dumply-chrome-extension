@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumply 크롬 확장 — 사이드 패널에서 바로 쏟아내기</title>
+  <meta name="description" content="Dumply 크롬 확장 소개. 사이드 패널에 생각을 쏟아내면 AI 알프레도가 할 일·감정·고민으로 분류하고, MoSCoW 우선순위와 Google 캘린더 연동으로 오늘에 집중하게 해줍니다. 무료·회원가입 불필요." />
+  <link rel="canonical" href="https://www.dumply.app/extension" />
+  <link rel="alternate" hreflang="ko" href="https://www.dumply.app/extension" />
+  <link rel="alternate" hreflang="en" href="https://www.dumply.app/en/extension" />
+  <link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/extension" />
+  <link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/extension" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dumply" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta property="og:title" content="Dumply 크롬 확장 — 사이드 패널에서 바로 쏟아내기" />
+  <meta property="og:description" content="Dumply 크롬 확장 소개. 사이드 패널에 생각을 쏟아내면 AI 알프레도가 할 일·감정·고민으로 분류하고, MoSCoW 우선순위와 Google 캘린더 연동으로 오늘에 집중하게 해줍니다. 무료·회원가입 불필요." />
+  <meta property="og:url" content="https://www.dumply.app/extension" />
+  <meta property="og:image" content="https://www.dumply.app/og-image.png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="800" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dumply 크롬 확장 — 사이드 패널에서 바로 쏟아내기" />
+  <meta name="twitter:description" content="Dumply 크롬 확장 소개. 사이드 패널에 생각을 쏟아내면 AI 알프레도가 할 일·감정·고민으로 분류하고, MoSCoW 우선순위와 Google 캘린더 연동으로 오늘에 집중하게 해줍니다. 무료·회원가입 불필요." />
+  <meta name="twitter:image" content="https://www.dumply.app/og-image.png" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Dumply",
+  "url": "https://www.dumply.app/extension",
+  "applicationCategory": "BrowserApplication",
+  "operatingSystem": "Chrome",
+  "description": "Dumply 크롬 확장 소개. 사이드 패널에 생각을 쏟아내면 AI 알프레도가 할 일·감정·고민으로 분류하고, MoSCoW 우선순위와 Google 캘린더 연동으로 오늘에 집중하게 해줍니다. 무료·회원가입 불필요.",
+  "image": "https://www.dumply.app/icons/icon-512.png",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KRW"
+  },
+  "inLanguage": "ko",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Dumply",
+    "url": "https://www.dumply.app/"
+  },
+  "installUrl": "https://chromewebstore.google.com/detail/anageghlhlgmcabcgchboedlbdgfiali"
+}
+  </script>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+  <link rel="icon" type="image/png" href="/icons/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="/" aria-label="Dumply 홈">
+      <img class="brand__mark" src="/icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="주요">
+      <a href="/#products">제품</a>
+      <a href="/guide">사용 방법</a>
+      <a href="/changelog">업데이트</a>
+      <a href="/support">문의</a>
+      <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">프롬프트 라이브러리</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="https://chromewebstore.google.com/detail/anageghlhlgmcabcgchboedlbdgfiali" target="_blank" rel="noopener">
+      <span>Chrome에 추가</span>
+      <span class="btn__tag">무료</span>
+    </a>
+  </header>
+
+  <main id="top">
+    <section class="phero">
+      <p class="eyebrow reveal" data-reveal>
+        <span class="eyebrow__dot"></span> 사용 가능 · 무료
+      </p>
+      <h1 class="hero__title reveal" data-reveal style="--d:.08s">생각이 흩어지기 전에,<br/><em>사이드 패널에 덤프.</em></h1>
+      <p class="hero__sub reveal" data-reveal style="--d:.2s">브라우저 어디서든 한 번의 클릭으로 열고, 떠오르는 대로 적으세요. 탐정 펭귄 <strong>알프레도</strong>가 할 일·감정·고민으로 조용히 정리해 둡니다.</p>
+      <div class="hero__actions reveal" data-reveal style="--d:.32s">
+        <a class="btn btn--solid btn--lg" href="https://chromewebstore.google.com/detail/anageghlhlgmcabcgchboedlbdgfiali" target="_blank" rel="noopener"><img src="/icons/icon-512.png" alt="" width="20" height="20" /><span>Chrome에 추가</span><span class="btn__tag">무료</span></a><a class="btn btn--ghost btn--lg" href="/guide"><span>사용 방법 보기</span></a>
+      </div>
+    </section>
+
+    <section class="sort">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>핵심 기능</p>
+        <h2 class="sec-head__title reveal" data-reveal>정리는 알프레도의 몫</h2>
+      </header>
+      <div class="lanes">
+        <article class="lane lane--task reveal" data-reveal>
+          <span class="lane__icon">✓</span>
+          <h3>AI 자동 분류</h3>
+          <p>한 줄 한 줄 읽고 할 일·감정·고민으로 나눠요. 할 일에는 마감이, 감정에는 그날의 에너지가 붙습니다.</p>
+          <div class="lane__chip">금요일까지 보고서 마감 <em>D-2</em></div>
+        </article>
+        <article class="lane lane--ponder reveal" data-reveal style="--d:.08s">
+          <span class="lane__icon">∿</span>
+          <h3>MoSCoW 우선순위 · 캘린더</h3>
+          <p>오늘 진짜 중요한 일만 남기고, Google 캘린더 일정을 보드에서 함께 봐요.</p>
+          <div class="lane__chip">오늘 Must는 2개만 🎯</div>
+        </article>
+        <article class="lane lane--feel reveal" data-reveal style="--d:.16s">
+          <span class="lane__icon">♥</span>
+          <h3>내 데이터는 내 브라우저에</h3>
+          <p>덤프 내용도 API 키도 로컬 저장. AI 분류는 내 키(Claude·OpenAI·Gemini)로만 — 별도 구독이 없어요.</p>
+          <div class="lane__chip">BYOK · 로컬 저장 🔒</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="how">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>시작하기</p>
+        <h2 class="sec-head__title reveal" data-reveal>설치부터 첫 덤프까지 1분</h2>
+      </header>
+      <ol class="steps">
+        <li class="step reveal" data-reveal>
+          <span class="step__no">01</span>
+          <h3>Chrome에 추가</h3>
+          <p>웹스토어에서 설치하면 끝. 회원가입도 결제도 없어요.</p>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.1s">
+          <span class="step__no">02</span>
+          <h3>쏟아내기</h3>
+          <p>툴바의 펭귄 아이콘을 눌러 사이드 패널을 열고, 형식 없이 적으세요.</p>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.2s">
+          <span class="step__no">03</span>
+          <h3>오늘에 집중</h3>
+          <p>알프레도가 분류해 두면, 우선순위가 붙은 오늘 할 일만 확인하세요.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="cta" id="notify">
+      <div class="cta__inner reveal" data-reveal>
+        <img class="cta__mascot" src="/icons/icon-512.png" alt="" width="72" height="72" />
+        <p class="cta__kicker">Simply Dumpy.</p>
+        <h2>지금 브라우저에 알프레도를 들이세요</h2>
+        <p>설치 30초, 무료입니다.</p>
+        <a class="btn btn--solid btn--lg" href="https://chromewebstore.google.com/detail/anageghlhlgmcabcgchboedlbdgfiali" target="_blank" rel="noopener"><span>Chrome에 무료로 추가</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__brand">
+      <img src="/icons/icon-512.png" alt="" width="22" height="22" />
+      <span>Dumply</span>
+    </div>
+    <p class="foot__tag"><em class="foot__catch">Simply Dumpy.</em> 정리하지 말고, 그냥 덤프. 🐧🔍</p>
+    <nav class="foot__links" aria-label="푸터">
+      <a href="/#products">제품</a>
+      <a href="/guide">사용 방법</a>
+      <a href="/changelog">업데이트</a>
+      <a href="/support">문의·오류 보고</a>
+      <a href="/privacy">개인정보처리방침</a>
+      <a href="/terms">이용약관</a>
+      <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">프롬프트 라이브러리</a>
+    </nav>
+    <nav class="foot__links" aria-label="언어">
+      <a href="/extension" hreflang="ko" lang="ko">한국어</a>
+      <a href="/en/extension" hreflang="en" lang="en">English</a>
+      <a href="/ja/extension" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+    <p class="foot__copy">© 2026 Dumply</p>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

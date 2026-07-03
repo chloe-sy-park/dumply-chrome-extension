@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumply — 整理しないで、そのまま吐き出そう</title>
+  <meta name="description" content="Simply Dumpy. 頭の中に浮かぶことを、そのまま吐き出すだけ。探偵ペンギンのアルフレドがタスク・気持ち・悩みに自動で仕分けます。無料のChrome拡張。" />
+  <link rel="canonical" href="https://www.dumply.app/ja" />
+  <link rel="alternate" hreflang="ko" href="https://www.dumply.app/" />
+  <link rel="alternate" hreflang="en" href="https://www.dumply.app/en" />
+  <link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja" />
+  <link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dumply" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:locale:alternate" content="ko_KR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:title" content="Dumply — 整理しないで、そのまま吐き出そう" />
+  <meta property="og:description" content="頭の中に浮かぶことを、そのまま吐き出すだけ。AI探偵ペンギンのアルフレドがタスク・気持ち・悩みに仕分けます。無料のChrome拡張。" />
+  <meta property="og:url" content="https://www.dumply.app/ja" />
+  <meta property="og:image" content="https://www.dumply.app/og-image.png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="800" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dumply — 整理しないで、そのまま吐き出そう" />
+  <meta name="twitter:description" content="頭の中のことを吐き出すだけで、AIがタスク・気持ち・悩みに仕分けます。無料のChrome拡張。" />
+  <meta name="twitter:image" content="https://www.dumply.app/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Dumply",
+    "url": "https://www.dumply.app/ja",
+    "installUrl": "https://chromewebstore.google.com/detail/anageghlhlgmcabcgchboedlbdgfiali",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome",
+    "description": "ブレインダンプツール。頭の中の考えを整理せずそのまま書き出すと、AIがタスク・予定・気持ち・悩みに自動で仕分けます。登録不要・無料。",
+    "image": "https://www.dumply.app/icons/icon-512.png",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+    "inLanguage": "ja",
+    "publisher": { "@type": "Organization", "name": "Dumply", "url": "https://www.dumply.app/" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-jp.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-jp@5.2.5/500.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-jp@5.2.5/600.css" />
+
+  <link rel="icon" type="image/png" href="/icons/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- ambient warm field -->
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <!-- ───────────── NAV ───────────── -->
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="Dumply ホーム">
+      <img class="brand__mark" src="/icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="メイン">
+      <a href="#products">プロダクト</a>
+      <a href="/guide">使い方</a>
+      <a href="/changelog">アップデート</a>
+      <a href="/support">お問い合わせ</a>
+      <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">プロンプトライブラリ</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="#products">
+      <span>Chromeに追加</span>
+      <span class="btn__tag">無料</span>
+    </a>
+  </header>
+
+  <main id="top">
+    <!-- ───────────── HERO ───────────── -->
+    <section class="hero">
+      <div class="hero__copy">
+        <p class="eyebrow reveal" data-reveal>
+          <span class="eyebrow__dot"></span> 頭の中がうるさい人のためのツール
+        </p>
+        <h1 class="hero__title">
+          <span class="line reveal" data-reveal style="--d:.05s">整理しないで、</span>
+          <span class="line reveal" data-reveal style="--d:.16s">そのまま<em>吐き出そう。</em></span>
+        </h1>
+        <p class="hero__sub reveal" data-reveal style="--d:.30s">
+          思いつくまま書くだけで、探偵ペンギンの<strong>アルフレド</strong>が
+          <br class="only-wide" />タスク・気持ち・悩みにそっと仕分けておきます。
+        </p>
+        <div class="hero__actions reveal" data-reveal style="--d:.42s">
+          <a class="btn btn--solid btn--lg" href="#products">
+            <img src="/icons/icon-512.png" alt="" width="20" height="20" />
+            <span>Chromeに追加</span>
+            <span class="btn__tag">無料</span>
+          </a>
+          <a class="btn btn--ghost btn--lg" href="#how">仕組みを見る</a>
+        </div>
+        <p class="hero__note reveal" data-reveal style="--d:.52s">
+          インストール30秒 · 登録不要 · iOS/Androidアプリ <span class="soon">近日公開</span>
+        </p>
+      </div>
+
+      <!-- signature: scattered dump → sorted cards -->
+      <div class="stage reveal" data-reveal style="--d:.36s" aria-hidden="true">
+        <div class="stage__panel">
+          <div class="panel__bar">
+            <span class="panel__dot"></span><span class="panel__dot"></span><span class="panel__dot"></span>
+            <span class="panel__label">brain&nbsp;dump</span>
+          </div>
+
+          <!-- act 1: thoughts pouring out -->
+          <div class="dump" id="dump">
+            <span class="thought" style="--t:0">金曜までにレポート提出</span>
+            <span class="thought" style="--t:1">あー疲れた…</span>
+            <span class="thought" style="--t:2">母の誕生日プレゼント何にしよう</span>
+            <span class="thought" style="--t:3">転職しようかな</span>
+            <span class="thought" style="--t:4">牛乳を買う</span>
+            <span class="thought" style="--t:5">今日はちょっと誇らしい</span>
+          </div>
+
+          <!-- act 2: sorted cards -->
+          <div class="sorted" id="sorted">
+            <article class="scard scard--task" style="--s:0">
+              <header><span class="scard__tag">タスク</span></header>
+              <ul>
+                <li><i class="chk"></i>レポート提出 <em>金</em></li>
+                <li><i class="chk"></i>母の誕生日プレゼント</li>
+                <li><i class="chk"></i>牛乳を買う</li>
+              </ul>
+            </article>
+            <article class="scard scard--feel" style="--s:1">
+              <header><span class="scard__tag">今日の気分</span></header>
+              <p class="mood">😮‍💨 疲れ · 🙂 誇らしい</p>
+            </article>
+            <article class="scard scard--ponder" style="--s:2">
+              <header><span class="scard__tag">考え中</span></header>
+              <p>転職しようかな <span class="muted">— ゆっくり決めよう</span></p>
+            </article>
+          </div>
+        </div>
+        <span class="stage__glow"></span>
+      </div>
+    </section>
+
+    <!-- ───────────── MARQUEE ───────────── -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>タスク</span><i>·</i><span>締め切り</span><i>·</i><span>気持ち</span><i>·</i><span>エネルギー</span><i>·</i><span>悩み</span><i>·</i><span>アイデア</span><i>·</i><span>約束</span><i>·</i><span>心配</span><i>·</i>
+        <span>タスク</span><i>·</i><span>締め切り</span><i>·</i><span>気持ち</span><i>·</i><span>エネルギー</span><i>·</i><span>悩み</span><i>·</i><span>アイデア</span><i>·</i><span>約束</span><i>·</i><span>心配</span><i>·</i>
+      </div>
+    </div>
+
+    <!-- ───────────── EMPATHY ───────────── -->
+    <section class="manifesto">
+      <p class="manifesto__text">
+        <span class="w" data-reveal>頭の中に</span>
+        <span class="w" data-reveal>浮かぶ</span>
+        <span class="w" data-reveal>考えは、</span>
+        <span class="w w--dim" data-reveal>整理する</span>
+        <span class="w w--dim" data-reveal>元気が</span>
+        <span class="w w--dim" data-reveal>出るまで</span>
+        <span class="w" data-reveal>待って</span>
+        <span class="w" data-reveal>くれません。</span>
+        <br aria-hidden="true" />
+        <span class="w" data-reveal>だから</span>
+        <span class="w" data-reveal>Dumplyが</span>
+        <span class="w" data-reveal><em>整理を</em></span>
+        <span class="w" data-reveal><em>代わりに</em></span>
+        <span class="w" data-reveal><em>やります。</em></span>
+      </p>
+    </section>
+
+    <!-- ───────────── HOW ───────────── -->
+    <section class="how" id="how">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>仕組み</p>
+        <h2 class="sec-head__title reveal" data-reveal>深呼吸3回で終わります</h2>
+      </header>
+
+      <ol class="steps">
+        <li class="step reveal" data-reveal>
+          <span class="step__no">01</span>
+          <h3>吐き出す</h3>
+          <p>一行ずつ、そのまま書くだけ。誤字も順番もカテゴリも気にしないで。</p>
+          <div class="step__demo demo-dump">
+            <span>金曜までにレポート</span>
+            <span>疲れた…</span>
+            <span>転職しようかな…</span>
+          </div>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.1s">
+          <span class="step__no">02</span>
+          <h3>アルフレドが仕分け</h3>
+          <p>一行ずつ読んで、<b>タスク・気持ち・悩み</b>のどれかに自動で振り分けます。</p>
+          <div class="step__demo demo-route">
+            <span class="rt rt--task">タスク</span>
+            <span class="rt rt--feel">気持ち</span>
+            <span class="rt rt--ponder">悩み</span>
+          </div>
+        </li>
+        <li class="step reveal" data-reveal style="--d:.2s">
+          <span class="step__no">03</span>
+          <h3>今日に集中</h3>
+          <p>タスクだけが優先順位つきで浮かび上がり、気持ちと悩みはそっとそばに。</p>
+          <div class="step__demo demo-focus">
+            <span class="focus-row"><i class="chk"></i>レポート提出 <em>今日</em></span>
+            <span class="focus-row focus-row--ghost"><i class="chk"></i>牛乳を買う</span>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ───────────── SORT / ROUTING ───────────── -->
+    <section class="sort" id="sort">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>3つの仕分け</p>
+        <h2 class="sec-head__title reveal" data-reveal>すべての考えが<br/>「タスク」ではないから</h2>
+        <p class="sec-head__lead reveal" data-reveal>
+          気持ちは処理すべきことではなく状態。悩みはまだ決める前だから、急かすと負担になります。
+          Dumplyは3つを違うふうに扱います。
+        </p>
+      </header>
+
+      <div class="lanes">
+        <article class="lane lane--task reveal" data-reveal>
+          <span class="lane__icon">✓</span>
+          <h3>タスク</h3>
+          <p>実行できるもの。締め切りと優先順位（MoSCoW）をつけて、今日のタスクに浮かび上がります。</p>
+          <div class="lane__chip">金曜までにレポート提出 <em>D-2</em></div>
+        </article>
+        <article class="lane lane--feel reveal" data-reveal style="--d:.08s">
+          <span class="lane__icon">♥</span>
+          <h3>気持ち · 今日の気分</h3>
+          <p>疲れた・誇らしい・イライラみたいな気持ちはタスクにしません。その日のエネルギーとしてそっと記録されます。</p>
+          <div class="lane__chip">今日は無理しない 🌙</div>
+        </article>
+        <article class="lane lane--ponder reveal" data-reveal style="--d:.16s">
+          <span class="lane__icon">∿</span>
+          <h3>悩み · 考え中</h3>
+          <p>まだ決める前のこと。優先順位を強要せず、準備ができたら<b>タスクに</b>上げられます。</p>
+          <div class="lane__chip">転職しようかな <em>ゆっくり</em></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────────── PRODUCTS ───────────── -->
+    <section class="products" id="products">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>どこでも吐き出す</p>
+        <h2 class="sec-head__title reveal" data-reveal>今はブラウザで、<br/>これからもっと多くの場所で</h2>
+      </header>
+
+      <div class="prod-grid">
+        <article class="prod prod--live reveal" data-reveal>
+          <div class="prod__top">
+            <img src="/icons/icon-512.png" alt="" width="40" height="40" />
+            <span class="badge badge--live">利用可能 · 無料</span>
+          </div>
+          <h3>Chrome拡張</h3>
+          <p>ブラウザ右側のサイドパネルからいつでも。登録も決済も不要です。</p>
+          <a class="btn btn--solid" href="#" data-cta="chrome">
+            <span>Chromeに追加</span><span class="btn__tag">無料</span>
+          </a>
+        </article>
+
+        <article class="prod prod--live reveal" data-reveal style="--d:.08s" id="prompt-library">
+          <div class="prod__top">
+            <span class="prod__glyph">▤</span>
+            <span class="badge badge--live">利用可能 · ベータ</span>
+          </div>
+          <h3>プロンプトライブラリ</h3>
+          <p>よく使うプロンプトをまとめておいて、必要なときすぐ取り出せる自分の引き出し。</p>
+          <a class="btn btn--solid" href="https://prompts.dumply.app/" target="_blank" rel="noopener">
+            <span>ライブラリを開く</span>
+          </a>
+        </article>
+
+        <article class="prod prod--soon reveal" data-reveal style="--d:.16s">
+          <div class="prod__top">
+            <span class="prod__glyph">􀋲</span>
+            <span class="badge badge--soon">準備中</span>
+          </div>
+          <h3>優先順位プランナー</h3>
+          <p>MoSCoWで、今日本当に大事なことだけを残すDumplyシリーズ。</p>
+        </article>
+
+        <article class="prod prod--soon reveal" data-reveal style="--d:.24s">
+          <div class="prod__top">
+            <span class="prod__glyph">􀙊</span>
+            <span class="badge badge--soon">Coming soon</span>
+          </div>
+          <h3>iOS · Androidアプリ</h3>
+          <p>ポケットの中でも、思いついた瞬間に。ウィジェットとロック画面からのダンプを準備中です。</p>
+          <form class="notify" data-notify>
+            <input type="email" placeholder="リリース時にお知らせします" aria-label="メールアドレス" required />
+            <button class="btn btn--ghost" type="submit">通知を受け取る</button>
+          </form>
+        </article>
+
+        <article class="prod prod--ghost reveal" data-reveal style="--d:.32s">
+          <span class="prod__plus">+</span>
+          <h3>そしてさらに</h3>
+          <p>Macメニューバー、Slack、API… 吐き出せる場所を増やしていきます。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────────── FAQ ───────────── -->
+    <section class="faq" id="faq">
+      <header class="sec-head">
+        <p class="sec-head__eyebrow reveal" data-reveal>よくある質問</p>
+        <h2 class="sec-head__title reveal" data-reveal>気になること</h2>
+      </header>
+
+      <div class="faq__list">
+        <details class="faq__item reveal" data-reveal>
+          <summary>Dumplyは本当に無料ですか？</summary>
+          <p>はい、Chrome拡張は無料です。AI仕分けは自分のAPIキー（Claude・OpenAI・Geminiのいずれか）を接続して使う方式（BYOK）なので、サブスクリプションは不要です。</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.06s">
+          <summary>アカウント登録は必要ですか？</summary>
+          <p>いいえ。インストールは30秒で終わり、登録なしですぐ吐き出せます。</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.12s">
+          <summary>書いた内容はどこに保存されますか？</summary>
+          <p>ブラウザにローカル保存されます。APIキーもローカルのみに保存され、選んだAIプロバイダーにだけ送信されます。カレンダーのデータはGoogle APIから直接取得し、外部サーバーを経由しません。</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.18s">
+          <summary>普通のToDoアプリと何が違いますか？</summary>
+          <p>すべての考えが「タスク」ではない、という前提から始まります。気持ちはタスクにせずその日の気分として記録し、悩みには優先順位を強要しません。実行できるものだけがMoSCoW優先順位で今日に浮かび上がります。</p>
+        </details>
+        <details class="faq__item reveal" data-reveal style="--d:.24s">
+          <summary>モバイルでも使えますか？</summary>
+          <p>今はChromeのサイドパネルで使えます。iOS・Androidアプリは近日公開予定です。</p>
+        </details>
+      </div>
+
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Dumplyは本当に無料ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい、Chrome拡張は無料です。AI仕分けは自分のAPIキー（Claude・OpenAI・Geminiのいずれか）を接続して使う方式（BYOK）なので、サブスクリプションは不要です。" }
+          },
+          {
+            "@type": "Question",
+            "name": "アカウント登録は必要ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "いいえ。インストールは30秒で終わり、登録なしですぐ吐き出せます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "書いた内容はどこに保存されますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "ブラウザにローカル保存されます。APIキーもローカルのみに保存され、選んだAIプロバイダーにだけ送信されます。カレンダーのデータはGoogle APIから直接取得し、外部サーバーを経由しません。" }
+          },
+          {
+            "@type": "Question",
+            "name": "普通のToDoアプリと何が違いますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "すべての考えが「タスク」ではない、という前提から始まります。気持ちはタスクにせずその日の気分として記録し、悩みには優先順位を強要しません。実行できるものだけがMoSCoW優先順位で今日に浮かび上がります。" }
+          },
+          {
+            "@type": "Question",
+            "name": "モバイルでも使えますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "今はChromeのサイドパネルで使えます。iOS・Androidアプリは近日公開予定です。" }
+          }
+        ]
+      }
+      </script>
+    </section>
+
+    <!-- ───────────── FINAL CTA ───────────── -->
+    <section class="cta">
+      <div class="cta__inner reveal" data-reveal>
+        <img class="cta__mascot" src="/icons/icon-512.png" alt="アルフレド" width="72" height="72" />
+        <p class="cta__kicker">Simply Dumpy.</p>
+        <h2>頭の中、今空にしてみませんか？</h2>
+        <p>整理はアルフレドに任せて、あなたはただ吐き出すだけ。</p>
+        <a class="btn btn--solid btn--lg" href="#" data-cta="chrome">
+          <span>Chromeに無料で追加</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ───────────── FOOTER ───────────── -->
+  <footer class="foot">
+    <div class="foot__brand">
+      <img src="/icons/icon-512.png" alt="" width="22" height="22" />
+      <span>Dumply</span>
+    </div>
+    <p class="foot__tag"><em class="foot__catch">Simply Dumpy.</em> 整理しないで、そのままダンプ。🐧🔍</p>
+    <nav class="foot__links" aria-label="フッター">
+      <a href="#products">プロダクト</a>
+      <a href="/ja/extension">Chrome拡張の紹介</a>
+      <a href="/ja/prompts">プロンプトライブラリの紹介</a>
+      <a href="/ja/finance">ファイナンス（準備中）</a>
+      <a href="/guide">使い方</a>
+      <a href="/changelog">アップデート</a>
+      <a href="/support">お問い合わせ</a>
+      <a href="/privacy">プライバシーポリシー</a>
+      <a href="/terms">利用規約</a>
+      <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">プロンプトライブラリ</a>
+    </nav>
+    <nav class="foot__links" aria-label="言語">
+      <a href="/" hreflang="ko" lang="ko">한국어</a>
+      <a href="/en" hreflang="en" lang="en">English</a>
+      <a href="/ja" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+    <p class="foot__copy">© 2026 Dumply</p>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
