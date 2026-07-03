@@ -1,0 +1,29 @@
+{
+  "_comment": "덤플리 통합 업데이트 로그. 새 글은 배열 맨 앞에 추가하세요. product 값은 products.json의 id와 맞춰야 필터가 동작합니다. type: new(신규) · improve(개선) · fix(수정).",
+  "entries": [
+    {
+      "date": "2026-06-12",
+      "product": "extension",
+      "version": "2.1.2",
+      "type": "fix",
+      "title": "캘린더 월간 보기 로딩 문제 해결",
+      "body": "월간 일정이 불러와지지 않던 문제를 고쳤어요. 비스토어 설치 환경의 Google 로그인 안정성도 함께 개선했습니다."
+    },
+    {
+      "date": "2026-06-01",
+      "product": "extension",
+      "version": "2.1.0",
+      "type": "improve",
+      "title": "온보딩 흐름 다듬기",
+      "body": "처음 쓰는 분도 30초 안에 첫 덤프를 마칠 수 있도록 온보딩을 가볍게 정리했어요."
+    },
+    {
+      "date": "2026-05-20",
+      "product": "extension",
+      "version": "2.0.0",
+      "type": "new",
+      "title": "알프레도와 함께하는 첫 공개",
+      "body": "탐정 펭귄 알프레도가 덤프를 읽고 MoSCoW로 분류해 주는 사이드 패널 확장을 처음 선보였어요. Claude · OpenAI · Gemini(BYOK) 지원."
+    }
+  ]
+}

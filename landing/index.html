@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
 
-  <link rel="icon" type="image/png" href="../icons/favicon.png" />
+  <link rel="icon" type="image/png" href="icons/favicon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -25,13 +25,14 @@
   <!-- ───────────── NAV ───────────── -->
   <header class="nav" id="nav">
     <a class="brand" href="#top" aria-label="Dumply 홈">
-      <img class="brand__mark" src="../icons/icon-512.png" alt="" width="28" height="28" />
+      <img class="brand__mark" src="icons/icon-512.png" alt="" width="28" height="28" />
       <span class="brand__name">Dumply</span>
     </a>
     <nav class="nav__links" aria-label="주요">
-      <a href="#how">작동 방식</a>
-      <a href="#sort">분류</a>
       <a href="#products">제품</a>
+      <a href="guide.html">사용 방법</a>
+      <a href="changelog.html">업데이트</a>
+      <a href="support.html">문의</a>
       <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">프롬프트 라이브러리</a>
     </nav>
     <a class="btn btn--solid nav__cta" href="#products">
@@ -57,7 +58,7 @@
         </p>
         <div class="hero__actions reveal" data-reveal style="--d:.42s">
           <a class="btn btn--solid btn--lg" href="#products">
-            <img src="../icons/icon-512.png" alt="" width="20" height="20" />
+            <img src="icons/icon-512.png" alt="" width="20" height="20" />
             <span>Chrome에 추가</span>
             <span class="btn__tag">무료</span>
           </a>
@@ -223,7 +224,7 @@
       <div class="prod-grid">
         <article class="prod prod--live reveal" data-reveal>
           <div class="prod__top">
-            <img src="../icons/icon-512.png" alt="" width="40" height="40" />
+            <img src="icons/icon-512.png" alt="" width="40" height="40" />
             <span class="badge badge--live">사용 가능 · 무료</span>
           </div>
           <h3>Chrome 확장</h3>
@@ -233,7 +234,28 @@
           </a>
         </article>
 
-        <article class="prod prod--soon reveal" data-reveal style="--d:.08s">
+        <article class="prod prod--live reveal" data-reveal style="--d:.08s" id="prompt-library">
+          <div class="prod__top">
+            <span class="prod__glyph">▤</span>
+            <span class="badge badge--live">사용 가능 · 베타</span>
+          </div>
+          <h3>프롬프트 라이브러리</h3>
+          <p>자주 쓰는 프롬프트를 모아두고, 필요할 때 바로 꺼내 쓰는 나만의 서랍이에요.</p>
+          <a class="btn btn--solid" href="https://prompts.dumply.app/" target="_blank" rel="noopener">
+            <span>라이브러리 열기</span>
+          </a>
+        </article>
+
+        <article class="prod prod--soon reveal" data-reveal style="--d:.16s">
+          <div class="prod__top">
+            <span class="prod__glyph">􀋲</span>
+            <span class="badge badge--soon">준비 중</span>
+          </div>
+          <h3>우선순위 플래너</h3>
+          <p>MoSCoW로 오늘 진짜 중요한 일만 남기는 덤플리 시리즈예요.</p>
+        </article>
+
+        <article class="prod prod--soon reveal" data-reveal style="--d:.24s">
           <div class="prod__top">
             <span class="prod__glyph">􀙊</span>
             <span class="badge badge--soon">Coming soon</span>
@@ -246,19 +268,7 @@
           </form>
         </article>
 
-        <article class="prod prod--live reveal" data-reveal style="--d:.16s" id="prompt-library">
-          <div class="prod__top">
-            <span class="prod__glyph">▤</span>
-            <span class="badge badge--live">사용 가능 · 베타</span>
-          </div>
-          <h3>프롬프트 라이브러리</h3>
-          <p>자주 쓰는 프롬프트를 모아두고, 필요할 때 바로 꺼내 쓰는 나만의 서랍이에요.</p>
-          <a class="btn btn--solid" href="https://prompts.dumply.app/" target="_blank" rel="noopener">
-            <span>라이브러리 열기</span>
-          </a>
-        </article>
-
-        <article class="prod prod--ghost reveal" data-reveal style="--d:.24s">
+        <article class="prod prod--ghost reveal" data-reveal style="--d:.32s">
           <span class="prod__plus">+</span>
           <h3>그리고 더</h3>
           <p>맥 메뉴바, 슬랙, API… 쏟아낼 곳을 계속 넓혀갈 거예요.</p>
@@ -269,7 +279,7 @@
     <!-- ───────────── FINAL CTA ───────────── -->
     <section class="cta">
       <div class="cta__inner reveal" data-reveal>
-        <img class="cta__mascot" src="../icons/icon-512.png" alt="알프레도" width="72" height="72" />
+        <img class="cta__mascot" src="icons/icon-512.png" alt="알프레도" width="72" height="72" />
         <p class="cta__kicker">Simply Dumpy.</p>
         <h2>머릿속, 지금 비워볼까요?</h2>
         <p>정리는 알프레도에게 맡기고, 당신은 그냥 쏟아내기만 하면 돼요.</p>
@@ -283,14 +293,17 @@
   <!-- ───────────── FOOTER ───────────── -->
   <footer class="foot">
     <div class="foot__brand">
-      <img src="../icons/icon-512.png" alt="" width="22" height="22" />
+      <img src="icons/icon-512.png" alt="" width="22" height="22" />
       <span>Dumply</span>
     </div>
     <p class="foot__tag"><em class="foot__catch">Simply Dumpy.</em> 정리하지 말고, 그냥 덤프. 🐧🔍</p>
     <nav class="foot__links" aria-label="푸터">
-      <a href="#how">작동 방식</a>
-      <a href="#sort">분류</a>
       <a href="#products">제품</a>
+      <a href="guide.html">사용 방법</a>
+      <a href="changelog.html">업데이트</a>
+      <a href="support.html">문의·오류 보고</a>
+      <a href="privacy.html">개인정보처리방침</a>
+      <a href="terms.html">이용약관</a>
       <a href="https://prompts.dumply.app/" target="_blank" rel="noopener">프롬프트 라이브러리</a>
     </nav>
     <p class="foot__copy">© 2026 Dumply</p>
