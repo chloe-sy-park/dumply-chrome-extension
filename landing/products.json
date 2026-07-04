@@ -8,7 +8,9 @@
       "status": "live",
       "kind": "intro",
       "url": "/#products",
-      "accent": "task"
+      "accent": "task",
+      "name_en": "Dumply Chrome Extension",
+      "name_ja": "Dumply Chrome拡張"
     },
     {
       "id": "prompts",
@@ -17,7 +19,9 @@
       "status": "live",
       "kind": "intro",
       "url": "https://prompts.dumply.app/",
-      "accent": "feel"
+      "accent": "feel",
+      "name_en": "Prompt Library",
+      "name_ja": "プロンプトライブラリ"
     },
     {
       "id": "planner",
@@ -26,7 +30,9 @@
       "status": "soon",
       "kind": "intro",
       "url": "/planner",
-      "accent": "ponder"
+      "accent": "ponder",
+      "name_en": "Priority Planner",
+      "name_ja": "優先順位プランナー"
     },
     {
       "id": "mobile",
@@ -35,7 +41,9 @@
       "status": "soon",
       "kind": "app",
       "url": "",
-      "accent": "task"
+      "accent": "task",
+      "name_en": "iOS · Android apps",
+      "name_ja": "iOS · Androidアプリ"
     }
   ]
 }

@@ -18,9 +18,9 @@
 
 ## Pages
 - [Home (Korean)](https://www.dumply.app/) · [English](https://www.dumply.app/en) · [日本語](https://www.dumply.app/ja)
-- [How to use](https://www.dumply.app/guide): from installation to AI key setup and calendar integration
-- [Changelog](https://www.dumply.app/changelog): new features, improvements, and fixes
-- [Support](https://www.dumply.app/support): questions and bug reports
+- [How to use](https://www.dumply.app/guide): from installation to AI key setup and calendar integration — [EN](https://www.dumply.app/en/guide) · [JA](https://www.dumply.app/ja/guide)
+- [Changelog](https://www.dumply.app/changelog): new features, improvements, and fixes — [EN](https://www.dumply.app/en/changelog) · [JA](https://www.dumply.app/ja/changelog)
+- [Support](https://www.dumply.app/support): questions and bug reports — [EN](https://www.dumply.app/en/support) · [JA](https://www.dumply.app/ja/support)
 - [Privacy Policy](https://www.dumply.app/privacy)
 - [Terms of Service](https://www.dumply.app/terms)
 

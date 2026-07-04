@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumply — お問い合わせ · 不具合報告 · Support</title>
+  <meta name="description" content="Dumplyに関する質問と不具合報告。フォームまたはメールでお知らせください。" />
+  <link rel="canonical" href="https://www.dumply.app/ja/support" />
+  <link rel="alternate" hreflang="ko" href="https://www.dumply.app/support" />
+  <link rel="alternate" hreflang="en" href="https://www.dumply.app/en/support" />
+  <link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/support" />
+  <link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/support" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dumply" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="Dumply お問い合わせ · 不具合報告" />
+  <meta property="og:description" content="Dumplyに関する質問と不具合報告。フォームまたはメールでお知らせください。" />
+  <meta property="og:url" content="https://www.dumply.app/ja/support" />
+  <meta property="og:image" content="https://www.dumply.app/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-jp.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-jp@5.2.5/500.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-jp@5.2.5/600.css" />
+
+  <link rel="icon" type="image/png" href="/icons/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/hub.css" />
+</head>
+<body>
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="/ja" aria-label="Dumply ホーム">
+      <img class="brand__mark" src="/icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="メイン">
+      <a href="/ja/guide">使い方</a>
+      <a href="/ja/changelog">アップデート</a>
+      <a href="/ja/support">お問い合わせ</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="/ja#products">
+      <span>Chromeに追加</span>
+      <span class="btn__tag">無料</span>
+    </a>
+  </header>
+
+  <main class="hub" id="top" data-hub="support">
+    <header class="hub__head">
+      <p class="hub__eyebrow">お問い合わせ · 不具合報告</p>
+      <h1>なんでもお知らせください</h1>
+      <p class="hub__lead">使っていて困ったこと、バグ、提案、すべて歓迎です。フォームに記入するとメールアプリが開きます。</p>
+    </header>
+
+    <div class="support__grid">
+      <!-- フォーム → mailto -->
+      <section class="support__card">
+        <h2>クイックお問い合わせ</h2>
+        <p>プロダクトと内容を書いて送ると、アルフレドチームにメールで届きます。</p>
+        <form class="support__form" data-support-form data-email="grammy.labs@gmail.com">
+          <label for="kind">種類</label>
+          <select id="kind" name="kind">
+            <option value="使い方の質問">使い方の質問</option>
+            <option value="不具合報告">不具合報告</option>
+            <option value="機能の提案">機能の提案</option>
+          </select>
+
+          <label for="product">プロダクト</label>
+          <select id="product" name="product" data-product-select></select>
+
+          <label for="body">内容</label>
+          <textarea id="body" name="body" placeholder="どんな状況だったか、何を期待していたかを書いてください。" required></textarea>
+
+          <button class="btn btn--solid" type="submit">メールで送る</button>
+          <p class="support__note">メールアプリが開かない場合は <a class="hub__back" href="mailto:grammy.labs@gmail.com" style="margin:0;display:inline">grammy.labs@gmail.com</a> まで直接お送りください。</p>
+        </form>
+      </section>
+
+      <!-- 直接チャンネル -->
+      <section class="support__card">
+        <h2>他の方法</h2>
+        <p>使いやすいチャンネルでご連絡ください。</p>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;">
+          <li><strong>メール</strong> · <a class="hub__back" style="margin:0;display:inline" href="mailto:grammy.labs@gmail.com">grammy.labs@gmail.com</a></li>
+          <li><strong>バグ報告</strong> · <a class="hub__back" style="margin:0;display:inline" href="https://github.com/chloe-sy-park/dumply-chrome-extension/issues/new">GitHubイシューを開く</a></li>
+        </ul>
+      </section>
+    </div>
+
+    <a class="hub__back" href="/ja">← ホームへ</a>
+    <nav class="foot__links" aria-label="言語" style="margin-top:20px">
+      <a href="/support" hreflang="ko" lang="ko">한국어</a>
+      <a href="/en/support" hreflang="en" lang="en">English</a>
+      <a href="/ja/support" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+  </main>
+
+  <script src="/hub.js"></script>
+</body>
+</html>

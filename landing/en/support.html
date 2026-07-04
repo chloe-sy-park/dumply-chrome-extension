@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dumply — Support · Bug reports</title>
+  <meta name="description" content="Questions and bug reports for Dumply. Reach us through the form or by email." />
+  <link rel="canonical" href="https://www.dumply.app/en/support" />
+  <link rel="alternate" hreflang="ko" href="https://www.dumply.app/support" />
+  <link rel="alternate" hreflang="en" href="https://www.dumply.app/en/support" />
+  <link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/support" />
+  <link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/support" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dumply" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="Dumply support · bug reports" />
+  <meta property="og:description" content="Questions and bug reports for Dumply. Reach us through the form or by email." />
+  <meta property="og:url" content="https://www.dumply.app/en/support" />
+  <meta property="og:image" content="https://www.dumply.app/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+  <link rel="icon" type="image/png" href="/icons/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/hub.css" />
+</head>
+<body>
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="/en" aria-label="Dumply home">
+      <img class="brand__mark" src="/icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="/en/guide">How to use</a>
+      <a href="/en/changelog">Updates</a>
+      <a href="/en/support">Support</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="/en#products">
+      <span>Add to Chrome</span>
+      <span class="btn__tag">Free</span>
+    </a>
+  </header>
+
+  <main class="hub" id="top" data-hub="support">
+    <header class="hub__head">
+      <p class="hub__eyebrow">Support · Bug reports</p>
+      <h1>Tell us anything</h1>
+      <p class="hub__lead">Stuck somewhere, found a bug, have a suggestion — all welcome. Fill in the form and your email app opens.</p>
+    </header>
+
+    <div class="support__grid">
+      <!-- form → mailto -->
+      <section class="support__card">
+        <h2>Quick inquiry</h2>
+        <p>Pick a product, write your message, and it goes to the Alfredo team by email.</p>
+        <form class="support__form" data-support-form data-email="grammy.labs@gmail.com">
+          <label for="kind">Type</label>
+          <select id="kind" name="kind">
+            <option value="Question">Question</option>
+            <option value="Bug report">Bug report</option>
+            <option value="Feature request">Feature request</option>
+          </select>
+
+          <label for="product">Product</label>
+          <select id="product" name="product" data-product-select></select>
+
+          <label for="body">Message</label>
+          <textarea id="body" name="body" placeholder="Tell us what happened and what you expected." required></textarea>
+
+          <button class="btn btn--solid" type="submit">Send by email</button>
+          <p class="support__note">If your email app doesn't open, write to <a class="hub__back" href="mailto:grammy.labs@gmail.com" style="margin:0;display:inline">grammy.labs@gmail.com</a> directly.</p>
+        </form>
+      </section>
+
+      <!-- direct channels -->
+      <section class="support__card">
+        <h2>Other ways</h2>
+        <p>Any channel that works for you.</p>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;">
+          <li><strong>Email</strong> · <a class="hub__back" style="margin:0;display:inline" href="mailto:grammy.labs@gmail.com">grammy.labs@gmail.com</a></li>
+          <li><strong>Bug reports</strong> · <a class="hub__back" style="margin:0;display:inline" href="https://github.com/chloe-sy-park/dumply-chrome-extension/issues/new">Open a GitHub issue</a></li>
+        </ul>
+      </section>
+    </div>
+
+    <a class="hub__back" href="/en">← Back home</a>
+    <nav class="foot__links" aria-label="Language" style="margin-top:20px">
+      <a href="/support" hreflang="ko" lang="ko">한국어</a>
+      <a href="/en/support" hreflang="en" lang="en">English</a>
+      <a href="/ja/support" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+  </main>
+
+  <script src="/hub.js"></script>
+</body>
+</html>
