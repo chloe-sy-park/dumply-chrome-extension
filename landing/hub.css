@@ -125,3 +125,45 @@
 .hub__empty { padding: 40px; text-align: center; color: var(--text-3); font-size: 15px; }
 
 [hidden] { display: none !important; }
+
+/* ── guide articles (콘텐츠 허브) ── */
+.article { max-width: 720px; }
+.article__meta { font-size: 13px; color: var(--text-3); margin-bottom: 28px; }
+.article h2 {
+  font-family: var(--serif); font-weight: 500; font-size: clamp(21px, 3vw, 26px);
+  color: var(--text); margin: 40px 0 14px; letter-spacing: -.01em;
+}
+.article h3 { font-size: 17px; font-weight: 700; color: var(--text); margin: 26px 0 10px; }
+.article p { font-size: 15.5px; line-height: 1.75; color: var(--text-body); margin-bottom: 14px; }
+.article ul, .article ol { padding-left: 22px; margin: 0 0 14px; }
+.article li { font-size: 15.5px; line-height: 1.7; color: var(--text-body); margin-bottom: 8px; }
+.article strong { color: var(--text); }
+.article blockquote {
+  margin: 20px 0; padding: 16px 20px;
+  background: var(--accent-soft); border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm); font-size: 15px; line-height: 1.65; color: var(--text-body);
+}
+.article__cta {
+  margin: 40px 0 8px; padding: 26px; text-align: center;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-sm);
+}
+.article__cta h2 { margin-top: 0; }
+.article__cta p { max-width: 46ch; margin-left: auto; margin-right: auto; }
+
+/* ── guide hub: 읽을거리 목록 ── */
+.reads { margin-top: 44px; }
+.reads h2 {
+  font-family: var(--serif); font-weight: 500; font-size: 22px;
+  color: var(--text); margin-bottom: 16px;
+}
+.reads__list { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; }
+.reads__list a {
+  display: block; padding: 18px 22px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-sm);
+  transition: border-color .2s;
+}
+.reads__list a:hover { border-color: var(--text-3); }
+.reads__list h3 { font-size: 15.5px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.reads__list p { font-size: 13.5px; line-height: 1.55; color: var(--text-body); margin: 0; }

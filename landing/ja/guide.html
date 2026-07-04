@@ -56,15 +56,35 @@
   }
   </script>
 
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-jp.css" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-jp-dynamic-subset.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-jp@5.2.5/500.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-jp@5.2.5/600.css" />
 
   <link rel="icon" type="image/png" href="/icons/favicon.png" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/hub.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "ホーム",
+        "item": "https://www.dumply.app/ja"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "使い方",
+        "item": "https://www.dumply.app/ja/guide"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div class="field" aria-hidden="true">
@@ -105,6 +125,30 @@
 
     <div class="hub__filter" data-filter role="group" aria-label="プロダクトフィルター"></div>
     <div data-guide></div>
+
+    <section class="reads" aria-labelledby="reads-title">
+      <h2 id="reads-title">読みもの</h2>
+      <ul class="reads__list">
+        <li>
+          <a href="/ja/guide/brain-dump">
+            <h3>ブレインダンプとは？頭の中を空にする一番かんたんな方法</h3>
+            <p>ブレインダンプの意味と効果、5ステップの実践法。</p>
+          </a>
+        </li>
+        <li>
+          <a href="/ja/guide/adhd-brain-dump">
+            <h3>ADHDのタスク管理、なぜToDoアプリは続かない？</h3>
+            <p>頭の中がうるさい人のためのブレインダンプ式ルーティン。</p>
+          </a>
+        </li>
+        <li>
+          <a href="/ja/guide/gtd-mind-sweep">
+            <h3>GTDマインドスイープ実践ガイド</h3>
+            <p>トリガーリスト、明確化、週次レビューまで実践の順序で。</p>
+          </a>
+        </li>
+      </ul>
+    </section>
 
     <a class="hub__back" href="/ja">← ホームへ</a>
     <nav class="foot__links" aria-label="言語" style="margin-top:20px">

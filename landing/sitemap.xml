@@ -192,4 +192,85 @@
   </url>
   <url><loc>https://www.dumply.app/privacy</loc><lastmod>2026-07-01</lastmod><priority>0.3</priority></url>
   <url><loc>https://www.dumply.app/terms</loc><lastmod>2026-06-12</lastmod><priority>0.3</priority></url>
+  <url>
+    <loc>https://www.dumply.app/guide/brain-dump</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/guide/brain-dump" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/guide/brain-dump" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/guide/brain-dump" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/guide/brain-dump" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/en/guide/brain-dump</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/guide/brain-dump" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/guide/brain-dump" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/guide/brain-dump" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/guide/brain-dump" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/ja/guide/brain-dump</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/guide/brain-dump" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/guide/brain-dump" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/guide/brain-dump" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/guide/brain-dump" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/guide/adhd-brain-dump</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/guide/adhd-brain-dump" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/guide/adhd-brain-dump" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/guide/adhd-brain-dump" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/guide/adhd-brain-dump" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/en/guide/adhd-brain-dump</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/guide/adhd-brain-dump" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/guide/adhd-brain-dump" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/guide/adhd-brain-dump" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/guide/adhd-brain-dump" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/ja/guide/adhd-brain-dump</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/guide/adhd-brain-dump" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/guide/adhd-brain-dump" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/guide/adhd-brain-dump" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/guide/adhd-brain-dump" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/guide/gtd-mind-sweep</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/guide/gtd-mind-sweep" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/guide/gtd-mind-sweep" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/guide/gtd-mind-sweep" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/guide/gtd-mind-sweep" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/en/guide/gtd-mind-sweep</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/guide/gtd-mind-sweep" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/guide/gtd-mind-sweep" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/guide/gtd-mind-sweep" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/guide/gtd-mind-sweep" />
+  </url>
+  <url>
+    <loc>https://www.dumply.app/ja/guide/gtd-mind-sweep</loc>
+    <lastmod>2026-07-04</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.dumply.app/guide/gtd-mind-sweep" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.dumply.app/en/guide/gtd-mind-sweep" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/guide/gtd-mind-sweep" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/guide/gtd-mind-sweep" />
+  </url>
 </urlset>
