@@ -824,6 +824,7 @@ function memoTaskFields(extra = {}) {
     parseReasonSeen: false,
     parseJudged: false,
     parseSnapshot: null,
+    w5h1: null, // 육하원칙 추출 { who, where, how, why } — 누구와/어디서/어떻게/왜 (언제=deadline·time, 무엇=content)
     relatedHint: null, // 연결된 항목 title (예: "기린굴 방문") — 선행 준비 표시
     relatedId: null,
     relatedTime: null, // 연결된 일정의 시각 (마감 물림 표시용)
