@@ -80,12 +80,32 @@
   }
   </script>
 
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css" />
 
   <link rel="icon" type="image/png" href="icons/favicon.png" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="hub.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "홈",
+        "item": "https://www.dumply.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "사용 방법",
+        "item": "https://www.dumply.app/guide"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div class="field" aria-hidden="true">
@@ -96,16 +116,16 @@
   </div>
 
   <header class="nav" id="nav">
-    <a class="brand" href="index.html" aria-label="Dumply 홈">
+    <a class="brand" href="/" aria-label="Dumply 홈">
       <img class="brand__mark" src="icons/icon-512.png" alt="" width="28" height="28" />
       <span class="brand__name">Dumply</span>
     </a>
     <nav class="nav__links" aria-label="주요">
-      <a href="guide.html">사용 방법</a>
-      <a href="changelog.html">업데이트</a>
-      <a href="support.html">문의</a>
+      <a href="/guide">사용 방법</a>
+      <a href="/changelog">업데이트</a>
+      <a href="/support">문의</a>
     </nav>
-    <a class="btn btn--solid nav__cta" href="index.html#products">
+    <a class="btn btn--solid nav__cta" href="/#products">
       <span>Chrome에 추가</span>
       <span class="btn__tag">무료</span>
     </a>
@@ -127,7 +147,31 @@
     <div class="hub__filter" data-filter role="group" aria-label="제품 필터"></div>
     <div data-guide></div>
 
-    <a class="hub__back" href="index.html">← 홈으로</a>
+    <section class="reads" aria-labelledby="reads-title">
+      <h2 id="reads-title">읽을거리</h2>
+      <ul class="reads__list">
+        <li>
+          <a href="/guide/brain-dump">
+            <h3>브레인덤프란? 머릿속을 비우는 가장 쉬운 방법</h3>
+            <p>브레인덤프의 뜻과 효과, 그리고 5단계 실천법.</p>
+          </a>
+        </li>
+        <li>
+          <a href="/guide/adhd-brain-dump">
+            <h3>ADHD 할 일 관리, 왜 투두앱은 실패할까</h3>
+            <p>머릿속이 시끄러운 사람을 위한 브레인덤프 기반 루틴.</p>
+          </a>
+        </li>
+        <li>
+          <a href="/guide/gtd-mind-sweep">
+            <h3>GTD 마인드 스윕 실전 가이드</h3>
+            <p>트리거 리스트부터 명확화, 주간 리뷰까지 실전 순서로.</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <a class="hub__back" href="/">← 홈으로</a>
     <nav class="foot__links" aria-label="언어" style="margin-top:20px">
       <a href="/guide" hreflang="ko" lang="ko">한국어</a>
       <a href="/en/guide" hreflang="en" lang="en">English</a>

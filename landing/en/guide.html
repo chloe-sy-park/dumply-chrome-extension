@@ -56,12 +56,32 @@
   }
   </script>
 
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css" />
 
   <link rel="icon" type="image/png" href="/icons/favicon.png" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/hub.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.dumply.app/en"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "How to use",
+        "item": "https://www.dumply.app/en/guide"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div class="field" aria-hidden="true">
@@ -102,6 +122,30 @@
 
     <div class="hub__filter" data-filter role="group" aria-label="Product filter"></div>
     <div data-guide></div>
+
+    <section class="reads" aria-labelledby="reads-title">
+      <h2 id="reads-title">Reading</h2>
+      <ul class="reads__list">
+        <li>
+          <a href="/en/guide/brain-dump">
+            <h3>What Is a Brain Dump? The Easiest Way to Clear Your Head</h3>
+            <p>What a brain dump is, why it works, and how to do one in 5 steps.</p>
+          </a>
+        </li>
+        <li>
+          <a href="/en/guide/adhd-brain-dump">
+            <h3>ADHD Task Management: Why To-Do Apps Fail</h3>
+            <p>A brain-dump-based routine for noisy minds.</p>
+          </a>
+        </li>
+        <li>
+          <a href="/en/guide/gtd-mind-sweep">
+            <h3>GTD Mind Sweep: A Practical Guide</h3>
+            <p>Trigger lists, the clarify step, and the weekly review.</p>
+          </a>
+        </li>
+      </ul>
+    </section>
 
     <a class="hub__back" href="/en">← Back home</a>
     <nav class="foot__links" aria-label="Language" style="margin-top:20px">
