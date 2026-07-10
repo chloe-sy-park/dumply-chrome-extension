@@ -1,0 +1,260 @@
+/* Dumply PWA — 앱 셸 컴포넌트 스타일
+   거버넌스: raw hex 금지 · box-shadow 금지 · 유채 배경 금지(기능 칩 예외) ·
+   radius는 스케일 값만 · 다크 분기 없음(토큰 계층 책임) — .stylelintrc.json으로 강제 */
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--dumply-surface-base);
+  color: var(--dumply-ink-body);
+  font-family: var(--dumply-font-family);
+  font-size: var(--fs-body);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: contain;
+}
+button { font-family: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--dumply-ink-primary); outline-offset: 2px; border-radius: 2px; }
+
+/* ── 레이아웃 스켈레톤: 모바일 단일 칼럼+탭바 → 데스크톱 레일+2패널 ── */
+.app {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding-top: var(--safe-top);
+}
+.rail { display: none; }
+.col-side { display: none; }
+.col-main {
+  width: 100%;
+  max-width: var(--dumply-content-max);
+  margin: 0 auto;
+  padding: var(--sp-4) var(--sp-4) calc(var(--tabbar-h) + var(--sp-10));
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+@media (min-width: 1024px) {
+  .app {
+    grid-template-rows: 1fr;
+    grid-template-columns: 64px minmax(0, 1fr) minmax(280px, 380px);
+  }
+  .rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-4) 0;
+    background: var(--dumply-surface-soft);
+    border-right: 1px solid var(--dumply-border);
+    position: sticky; top: 0; height: 100dvh;
+  }
+  .col-main { padding-bottom: var(--sp-10); }
+  .col-side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    padding: var(--sp-5) var(--sp-4);
+    border-left: 1px solid var(--dumply-border);
+    background: var(--dumply-surface-raised);
+    position: sticky; top: 0; height: 100dvh; overflow-y: auto;
+  }
+}
+
+/* ── 레일(데스크톱) ── */
+.rail-btn {
+  width: var(--touch-target); height: var(--touch-target);
+  display: grid; place-items: center;
+  border: none; background: none; border-radius: var(--dumply-radius-control);
+  color: var(--dumply-ink-secondary); font-size: var(--fs-lg);
+  transition: background var(--motion-quick) var(--ease-out);
+}
+.rail-btn:hover { background: var(--dumply-surface-active); }
+.rail-btn[aria-current="page"] { background: var(--dumply-accent); color: var(--dumply-accent-text); }
+.rail-spacer { flex: 1; }
+
+/* ── 아이콘 (인라인 SVG, currentColor) ── */
+.icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.icon-sm { width: 14px; height: 14px; }
+
+/* ── 그리팅 헤더 ── */
+.greet { display: flex; align-items: center; gap: var(--sp-3); }
+.greet h1 {
+  font-size: var(--fs-title); font-weight: var(--fw-bold);
+  color: var(--dumply-ink-primary); margin: 0; letter-spacing: -0.01em;
+}
+.streak {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: var(--sp-1);
+  background: var(--dumply-surface-soft);
+  border-radius: var(--dumply-radius-chip);
+  padding: var(--sp-1) var(--sp-3);
+  font-size: var(--fs-caption); font-weight: var(--fw-semibold);
+  color: var(--dumply-ink-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 알프레도 무대 ── */
+.stage {
+  background: var(--dumply-surface-raised);
+  border: 1px solid var(--dumply-border);
+  border-radius: var(--dumply-radius-stage);
+  padding: var(--sp-4) var(--sp-5);
+  display: flex; align-items: center; gap: var(--sp-4);
+}
+.stage img { width: 72px; height: 72px; flex: none; }
+.stage-line { margin: 0; font-size: var(--fs-md); color: var(--dumply-ink-primary); font-weight: var(--fw-medium); }
+.stage-sub { margin: var(--sp-1) 0 0; font-size: var(--fs-caption); color: var(--dumply-ink-secondary); }
+.stage-fold {
+  margin-left: auto; align-self: flex-start;
+  border: none; background: none; color: var(--dumply-ink-placeholder);
+  font-size: var(--fs-caption); padding: var(--sp-1);
+  min-width: var(--touch-target); min-height: 28px;
+}
+.stage.is-folded { padding: var(--sp-2) var(--sp-5); border-radius: var(--dumply-radius-card); }
+.stage.is-folded img, .stage.is-folded .stage-sub { display: none; }
+.stage.is-folded .stage-line { font-size: var(--fs-caption); color: var(--dumply-ink-secondary); }
+
+/* ── 섹션 공통 ── */
+.sec-head {
+  display: flex; align-items: baseline; gap: var(--sp-2);
+  margin: var(--sp-2) 0 0;
+}
+.sec-head h2 {
+  font-size: var(--fs-sm); font-weight: var(--fw-bold);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--dumply-ink-placeholder); margin: 0;
+}
+.sec-head .count { font-size: var(--fs-sm); color: var(--dumply-ink-placeholder); font-variant-numeric: tabular-nums; }
+.sec-head.moscow-must h2 { color: var(--dumply-moscow-must); }
+.sec-head.moscow-should h2 { color: var(--dumply-moscow-should); }
+
+.stack { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+/* ── 덤프 카드 ── */
+.card {
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  padding: var(--sp-3) var(--card-pad);
+  display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); align-items: flex-start;
+  transition: border-color var(--motion-emphasis) var(--ease-spring), background var(--motion-standard) var(--ease-out);
+}
+.card-body { min-width: 0; flex: 1 1 160px; }
+.card .check {
+  width: 20px; height: 20px; flex: none; margin-top: 1px;
+  border: 1.5px solid var(--dumply-border-strong);
+  border-radius: 7px; background: none; padding: 0;
+}
+.card .check:hover { background: var(--dumply-surface-active); }
+.card-title { margin: 0; font-size: var(--fs-body); font-weight: var(--fw-medium); color: var(--dumply-ink-primary); }
+.card-meta { margin: 2px 0 0; font-size: var(--fs-caption); color: var(--dumply-ink-secondary); }
+.tag-must { color: var(--dumply-moscow-must); font-weight: var(--fw-semibold); }
+.tag-should { color: var(--dumply-moscow-should); font-weight: var(--fw-semibold); }
+
+/* AI 제안 상태: 점선 → 승인 시 실선 (유일한 스프링 모먼트) */
+.card.is-suggestion {
+  border: var(--suggestion-border);
+  background: var(--suggestion-bg);
+}
+.card.is-suggestion .check { border-style: dashed; }
+.card-actions { margin-left: auto; display: flex; gap: var(--sp-2); flex: none; }
+@media (max-width: 480px) {
+  .card-actions { flex: 1 1 100%; margin-left: 0; justify-content: flex-end; }
+}
+.btn {
+  font-size: var(--fs-caption); font-weight: var(--fw-semibold);
+  border-radius: var(--dumply-radius-control);
+  padding: var(--sp-2) var(--sp-3); min-height: 32px;
+  border: 1px solid var(--dumply-border-strong);
+  background: var(--dumply-surface-raised); color: var(--dumply-ink-body);
+  transition: background var(--motion-quick) var(--ease-out);
+}
+.btn:hover { background: var(--dumply-surface-active); }
+.btn-primary { background: var(--dumply-accent); color: var(--dumply-accent-text); border-color: var(--dumply-accent); }
+
+/* 완료 상태 */
+.card.is-done { opacity: 0.55; }
+.card.is-done .card-title { text-decoration: line-through; text-decoration-color: var(--dumply-ink-placeholder); }
+.card.is-done .check { background: var(--dumply-accent); border-color: var(--dumply-accent); }
+
+/* ── 빈 상태 (사건 종결) ── */
+.empty {
+  text-align: center;
+  background: var(--dumply-surface-raised);
+  border: 1px solid var(--dumply-border);
+  border-radius: var(--dumply-radius-card);
+  padding: var(--sp-8) var(--sp-4);
+}
+.empty img { width: 88px; height: 88px; }
+.empty h3 { font-size: var(--fs-md); font-weight: var(--fw-semibold); color: var(--dumply-ink-primary); margin: var(--sp-2) 0 var(--sp-1); }
+.empty p { font-size: var(--fs-caption); color: var(--dumply-ink-secondary); margin: 0; }
+
+/* ── 덤프 입력 필 ── */
+.dump-pill {
+  position: fixed;
+  left: 50%; transform: translateX(-50%);
+  bottom: calc(var(--tabbar-h) + var(--tabbar-pad-bottom) + var(--sp-3));
+  width: min(calc(100% - var(--sp-8)), calc(var(--dumply-content-max) - var(--sp-8)));
+  display: flex; align-items: center; gap: var(--sp-2);
+  background: var(--dumply-accent); color: var(--dumply-accent-text);
+  border: none; border-radius: var(--dumply-radius-chip);
+  padding: var(--sp-3) var(--sp-5); min-height: var(--touch-target);
+  font-size: var(--fs-body); font-weight: var(--fw-medium);
+}
+.dump-pill span { opacity: 0.75; }
+@media (min-width: 1024px) {
+  .dump-pill { position: sticky; bottom: var(--sp-6); transform: none; left: auto; width: 100%; margin-top: var(--sp-4); }
+}
+
+/* ── 우측 패널(데스크톱): 타임라인 자리 ── */
+.side-title { font-size: var(--fs-sm); font-weight: var(--fw-bold); letter-spacing: 0.1em; text-transform: uppercase; color: var(--dumply-ink-placeholder); margin: 0 0 var(--sp-2); }
+.tl-slot {
+  border-left: 2px solid var(--dumply-border-strong);
+  padding: var(--sp-1) 0 var(--sp-1) var(--sp-3);
+  font-size: var(--fs-caption); color: var(--dumply-ink-secondary);
+}
+.tl-slot b { display: block; color: var(--dumply-ink-primary); font-weight: var(--fw-medium); font-size: var(--fs-body); }
+.tl-slot.is-band { border-left-color: var(--dumply-info); }
+
+/* ── 바텀 탭바(모바일) ── */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  display: flex; justify-content: space-around;
+  background: var(--tabbar-bg);
+  border-top: var(--tabbar-border-top);
+  padding: var(--sp-2) var(--sp-2) var(--tabbar-pad-bottom);
+}
+.tab {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  min-width: var(--touch-target); min-height: var(--touch-target);
+  border: none; background: none; border-radius: var(--dumply-radius-control);
+  font-size: var(--fs-xs); color: var(--dumply-ink-placeholder); padding: var(--sp-1) var(--sp-2);
+}
+.tab .ico { font-size: 20px; line-height: 1; }
+.tab[aria-current="page"] { color: var(--dumply-ink-primary); font-weight: var(--fw-semibold); }
+
+/* ── 오프라인 배너 ── */
+.offline-banner {
+  display: none;
+  align-items: center; gap: var(--sp-3);
+  background: var(--dumply-surface-soft);
+  border: 1px solid var(--dumply-border);
+  border-radius: var(--dumply-radius-card);
+  padding: var(--sp-2) var(--sp-4);
+  font-size: var(--fs-caption); color: var(--dumply-ink-body);
+}
+.offline-banner img { width: 32px; height: 32px; }
+body.is-offline .offline-banner { display: flex; }
+
+/* 모션 존중 */
+@media (prefers-reduced-motion: reduce) {
+  .card, .btn, .rail-btn { transition: none; }
+}
+
+/* 데스크톱: 탭바 숨김 — .tabbar 기본 규칙보다 뒤에 와야 함 (캐스케이드) */
+@media (min-width: 1024px) {
+  .tabbar { display: none; }
+}

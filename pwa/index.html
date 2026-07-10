@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F3F1EB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191612" media="(prefers-color-scheme: dark)">
+<title>Dumply — 오늘의 수사 보드</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="../icons/icon-128.png">
+<link rel="apple-touch-icon" href="../icons/icon-128.png">
+<script>
+/* 테마 부트스트랩 — 첫 페인트 전에 적용해야 라이트→다크 플래시가 없다 */
+(() => { const t = localStorage.getItem('dumply-theme'); if (t) document.documentElement.setAttribute('data-theme', t); })();
+</script>
+<link rel="stylesheet" href="./tokens.css">
+<link rel="stylesheet" href="./app.css">
+</head>
+<body>
+<div class="app">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-6v-5h-4v5H4Z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 12h2M10 12h10M4 17h13M20 17h0"/><circle cx="16" cy="7" r="2"/><circle cx="7" cy="12" r="2"/><circle cx="18.5" cy="17" r="2"/></symbol>
+  <symbol id="i-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 4c-3 4-5 6.5-5 9.5a5 5 0 0 0 10 0C17 10.5 15 8 12 4Z"/></symbol>
+</svg>
+
+  <nav class="rail" aria-label="주 메뉴">
+    <button class="rail-btn" aria-current="page" title="홈" type="button"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg></button>
+    <button class="rail-btn" title="캘린더" type="button"><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg></button>
+    <button class="rail-btn" title="프로젝트" type="button"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg></button>
+    <span class="rail-spacer"></span>
+    <button class="rail-btn" id="theme-toggle-d" title="테마 전환" type="button"><svg class="icon" aria-hidden="true"><use href="#i-theme"/></svg></button>
+    <button class="rail-btn" title="설정" type="button"><svg class="icon" aria-hidden="true"><use href="#i-gear"/></svg></button>
+  </nav>
+
+  <main class="col-main">
+    <header class="greet">
+      <h1 id="greeting">좋은 아침이에요</h1>
+      <span class="streak" title="연속 수사 완료"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-flame"/></svg> <span id="streak-n">5</span>일 연속</span>
+    </header>
+
+    <div class="offline-banner" role="status">
+      <img src="./assets/alfredo/offline.svg" alt="">
+      <span>연결이 끊겼어요. 알프레도가 기록해두고, 연결되면 정리할게요.</span>
+    </div>
+
+    <section class="stage" id="stage" aria-label="알프레도 브리핑">
+      <img id="stage-img" src="./assets/alfredo/investigating.svg" alt="수사 중인 알프레도">
+      <div>
+        <p class="stage-line" id="stage-line">밤새 단서 3건을 분류해뒀어요.</p>
+        <p class="stage-sub">아래에서 확인하고 오늘 보드에 올려주세요.</p>
+      </div>
+      <button class="stage-fold" id="stage-fold" type="button" aria-expanded="true">접기</button>
+    </section>
+
+    <div class="sec-head">
+      <h2>알프레도의 제안</h2>
+      <span class="count" id="sug-count">3</span>
+    </div>
+    <div class="stack" id="suggestions">
+      <article class="card is-suggestion">
+        <button class="check" aria-label="완료" type="button"></button>
+        <div class="card-body">
+          <p class="card-title">지난주에 미룬 영수증 정리</p>
+          <p class="card-meta"><span class="tag-should">Should</span> · 이틀째 단서로만 남아있어요</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" data-act="accept" type="button">오늘 할래</button>
+          <button class="btn" data-act="defer" type="button">미루기</button>
+        </div>
+      </article>
+      <article class="card is-suggestion">
+        <button class="check" aria-label="완료" type="button"></button>
+        <div class="card-body">
+          <p class="card-title">엄마 생신 선물 알아보기</p>
+          <p class="card-meta"><span class="tag-must">Must</span> · 마감이 5일 남았어요</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" data-act="accept" type="button">오늘 할래</button>
+          <button class="btn" data-act="defer" type="button">미루기</button>
+        </div>
+      </article>
+      <article class="card is-suggestion">
+        <button class="check" aria-label="완료" type="button"></button>
+        <div class="card-body">
+          <p class="card-title">사이드 프로젝트 README 다듬기</p>
+          <p class="card-meta">Could · 여유 있을 때</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" data-act="accept" type="button">오늘 할래</button>
+          <button class="btn" data-act="defer" type="button">미루기</button>
+        </div>
+      </article>
+    </div>
+
+    <div class="sec-head moscow-must">
+      <h2>Must — 오늘 꼭</h2>
+    </div>
+    <div class="stack" id="board-must">
+      <article class="card">
+        <button class="check" aria-label="완료" type="button"></button>
+        <div class="card-body">
+          <p class="card-title">발표 자료 초안 마감</p>
+          <p class="card-meta"><span class="tag-must">Must</span> · 오후 3시 회의 전까지</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="sec-head moscow-should">
+      <h2>Should — 하면 좋음</h2>
+    </div>
+    <div class="stack" id="board-should">
+      <article class="card">
+        <button class="check" aria-label="완료" type="button"></button>
+        <div class="card-body">
+          <p class="card-title">주간 회고 메모 남기기</p>
+          <p class="card-meta"><span class="tag-should">Should</span></p>
+        </div>
+      </article>
+    </div>
+
+    <div class="empty" id="empty-state" hidden>
+      <img src="./assets/alfredo/celebrating.svg" alt="축하하는 알프레도">
+      <h3>오늘 사건 전부 종결!</h3>
+      <p>알프레도가 사무실 문을 닫았습니다. 내일 아침에 새 단서와 함께 만나요.</p>
+    </div>
+
+    <button class="dump-pill" id="dump-cta" type="button"><img src="./assets/alfredo/idle.svg" alt="" width="24" height="24"> <span>그냥 던져두세요 — 알프레도가 정리할게요</span></button>
+  </main>
+
+  <aside class="col-side" aria-label="오늘의 타임라인">
+    <p class="side-title">오늘의 타임라인</p>
+    <div class="tl-slot is-band"><b>10:00 팀 스탠드업</b>Google Calendar</div>
+    <div class="tl-slot"><b>11:00 — 집중 블록</b>발표 자료 초안</div>
+    <div class="tl-slot is-band"><b>15:00 발표 회의</b>Google Calendar</div>
+    <div class="tl-slot"><b>저녁</b>여유 시간 · Could 1건</div>
+  </aside>
+
+  <nav class="tabbar" aria-label="주 메뉴">
+    <button class="tab" aria-current="page" type="button"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg>홈</button>
+    <button class="tab" type="button"><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg>캘린더</button>
+    <button class="tab" type="button"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg>프로젝트</button>
+    <button class="tab" id="theme-toggle-m" type="button"><svg class="icon" aria-hidden="true"><use href="#i-theme"/></svg>테마</button>
+  </nav>
+</div>
+<script src="./app.js"></script>
+</body>
+</html>
