@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="알프레도 — 대기">
+  <!-- placeholder asset — 정식 일러스트로 교체 예정 (docs/alfredo-asset-spec.md) -->
+  <ellipse cx="60" cy="72" rx="30" ry="34" fill="#36312B"/>
+  <ellipse cx="60" cy="80" rx="20" ry="24" fill="#FBFAF6"/>
+  <circle cx="60" cy="38" r="20" fill="#36312B"/>
+  <circle cx="53" cy="35" r="3.2" fill="#FBFAF6"/>
+  <circle cx="67" cy="35" r="3.2" fill="#FBFAF6"/>
+  <circle cx="53.8" cy="35.6" r="1.4" fill="#1A1510"/>
+  <circle cx="67.8" cy="35.6" r="1.4" fill="#1A1510"/>
+  <polygon points="56,42 64,42 60,48" fill="#C97C1E"/>
+  <path d="M42 24 Q60 12 78 24 L74 20 Q60 8 46 20 Z" fill="#1A1510"/>
+  <rect x="40" y="22" width="40" height="5" rx="2.5" fill="#1A1510"/>
+</svg>

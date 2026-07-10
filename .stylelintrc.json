@@ -1,0 +1,37 @@
+{
+  "rules": {},
+  "overrides": [
+    {
+      "files": ["pwa/**/*.css"],
+      "rules": {
+        "color-no-hex": [true, { "message": "raw hex 금지 — 시맨틱 토큰(var(--dumply-*))만 사용하세요 (거버넌스 1칙)" }],
+        "function-disallowed-list": [
+          ["rgb", "rgba", "hsl", "hsla", "linear-gradient", "radial-gradient", "conic-gradient"],
+          { "message": "직접 색상 함수·그라데이션 금지 — 토큰 계층에서만 정의합니다 (거버넌스 1·5칙)" }
+        ],
+        "declaration-property-value-disallowed-list": [
+          { "box-shadow": ["/.+/"] },
+          { "message": "box-shadow 금지 — 깊이는 서피스 온도 사다리로 표현합니다 (거버넌스 2칙)" }
+        ],
+        "declaration-property-value-allowed-list": [
+          { "border-radius": ["/^var\\(--[a-z-]*radius[a-z-]*\\)$/", "0", "2px", "7px", "/^50%$/"] },
+          { "message": "border-radius는 --dumply-radius-* 스케일 값만 사용하세요 (거버넌스 4칙)" }
+        ],
+        "media-feature-name-disallowed-list": [
+          ["prefers-color-scheme"],
+          { "message": "컴포넌트 파일에 다크 분기 금지 — 테마는 토큰 파일(tokens.css)의 책임입니다 (거버넌스 6칙)" }
+        ]
+      }
+    },
+    {
+      "files": ["pwa/tokens.css"],
+      "rules": {
+        "color-no-hex": null,
+        "function-disallowed-list": null,
+        "declaration-property-value-disallowed-list": null,
+        "declaration-property-value-allowed-list": null,
+        "media-feature-name-disallowed-list": null
+      }
+    }
+  ]
+}
