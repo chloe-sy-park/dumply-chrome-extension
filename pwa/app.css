@@ -96,6 +96,46 @@ button { font-family: inherit; cursor: pointer; }
   font-variant-numeric: tabular-nums;
 }
 
+/* ── MoSCoW 필터 칩 (Superlist 필터 칩 행) ── */
+.filters { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.fchip {
+  font-size: var(--fs-caption); font-weight: var(--fw-medium);
+  border-radius: var(--dumply-radius-chip);
+  padding: var(--sp-1) var(--sp-3); min-height: 28px;
+  border: 1px solid var(--dumply-border);
+  background: none; color: var(--dumply-ink-secondary);
+  display: inline-flex; align-items: center;
+}
+.fchip:hover { background: var(--dumply-surface-active); }
+.fchip[aria-pressed="true"] { background: var(--dumply-accent); color: var(--dumply-accent-text); border-color: var(--dumply-accent); }
+.fchip .dot { width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; }
+.dot-must { background: var(--dumply-moscow-must); }
+.dot-should { background: var(--dumply-moscow-should); }
+.dot-could { background: var(--dumply-moscow-could); }
+
+/* ── 고스트 퀵애드 행 + kbd 칩 (Superlist: New task ⌃N) — 데스크톱 전용 ── */
+.quick-add {
+  display: none;
+  display: flex; align-items: center; gap: var(--sp-3);
+  width: 100%; text-align: left;
+  padding: var(--sp-2) var(--card-pad); min-height: var(--touch-target);
+  border: none; border-radius: var(--dumply-radius-control);
+  background: none; color: var(--dumply-ink-placeholder);
+  font-size: var(--fs-body); font-weight: var(--fw-medium);
+}
+.quick-add:hover { background: var(--dumply-surface-soft); color: var(--dumply-ink-secondary); }
+.quick-add .plus-circle {
+  width: 20px; height: 20px; flex: none; border-radius: 50%;
+  border: 1.5px dashed var(--dumply-border-strong);
+  display: grid; place-items: center;
+}
+kbd {
+  font-family: var(--dumply-font-family); font-size: var(--fs-xs); font-weight: var(--fw-semibold);
+  background: var(--dumply-surface-sunken); border: 1px solid var(--dumply-border);
+  border-radius: var(--dumply-radius-xs); padding: 2px 6px;
+  color: var(--dumply-ink-secondary); margin-left: auto;
+}
+
 /* ── 알프레도 무대 ── */
 .stage {
   background: var(--dumply-surface-raised);
@@ -127,6 +167,13 @@ button { font-family: inherit; cursor: pointer; }
   letter-spacing: var(--ls-label); text-transform: uppercase;
   color: var(--dumply-ink-secondary); margin: 0;
 }
+.sec-toggle {
+  display: inline-flex; align-items: center; gap: 4px;
+  border: none; background: none; padding: 0;
+  font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit;
+}
+.chev { width: 12px; height: 12px; transition: transform var(--motion-quick) var(--ease-standard); }
+.sec-head.is-collapsed .chev { transform: rotate(-90deg); }
 .sec-head .count { font-size: var(--fs-sm); color: var(--dumply-ink-placeholder); font-variant-numeric: tabular-nums; }
 .sec-head.moscow-must h2 { color: var(--dumply-moscow-must); }
 .sec-head.moscow-should h2 { color: var(--dumply-moscow-should); }
@@ -149,7 +196,7 @@ button { font-family: inherit; cursor: pointer; }
 .card .check {
   width: 20px; height: 20px; flex: none; margin-top: 1px;
   border: 1.5px solid var(--dumply-border-strong);
-  border-radius: 7px; background: none; padding: 0;
+  border-radius: 50%; background: none; padding: 0;
 }
 .card .check:hover { background: var(--dumply-surface-active); }
 .card-title { margin: 0; font-size: var(--fs-body); font-weight: var(--fw-medium); color: var(--dumply-ink-primary); }
@@ -261,7 +308,36 @@ body.is-offline .offline-banner { display: flex; }
   .card, .btn, .rail-btn { transition: none; }
 }
 
-/* 데스크톱: 탭바 숨김 — .tabbar 기본 규칙보다 뒤에 와야 함 (캐스케이드) */
+/* ── 데스크톱 오버라이드 (캐스케이드 최후순 — 기본 규칙들보다 뒤) ── */
 @media (min-width: 1024px) {
   .tabbar { display: none; }
+
+  /* Superlist식 플로팅 패널: 메인 칼럼이 라운드 시트로 떠 있음 */
+  .col-main {
+    max-width: 640px;
+    background: var(--dumply-surface-raised);
+    border: 1px solid var(--dumply-border);
+    border-radius: var(--dumply-radius-sheet);
+    box-shadow: var(--card-shadow);
+    margin: var(--sp-5) auto;
+    padding: var(--sp-8);
+    align-self: start;
+  }
+  .col-side {
+    border-left: none;
+    border: 1px solid var(--dumply-border);
+    border-radius: var(--dumply-radius-sheet);
+    box-shadow: var(--card-shadow);
+    margin: var(--sp-5) var(--sp-5) var(--sp-5) 0;
+    top: var(--sp-5); height: calc(100dvh - var(--sp-10));
+  }
+  /* 패널 위 행은 플랫 — 섀도는 패널이 가진다 (Superlist 행 문법) */
+  .card { box-shadow: none; }
+  .card:hover { box-shadow: none; background: var(--dumply-surface-soft); }
+  .card.is-suggestion:hover { background: var(--suggestion-bg); }
+  /* 페이지 타이틀 승격: 32px 디스플레이 (Superlist 극대비 위계) */
+  .greet h1 { font-size: var(--fs-display); }
+  /* 캡처는 고스트 행이 담당 — 하단 필 숨김 */
+  .dump-pill { display: none; }
+  .quick-add { display: flex; }
 }
