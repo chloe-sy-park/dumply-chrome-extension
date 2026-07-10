@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dumply PWA 디자인 시스템 제안 — AI 티 나지 않는 토큰 시스템</title>
+<style>
+  /* 이 문서는 제안하는 토큰 시스템(docs/tokens-pwa-draft.css)을 스스로 사용해 렌더링됩니다. */
+  :root {
+    --dune-0:#FBFAF6; --dune-50:#F3F1EB; --dune-100:#EAE6DE; --dune-150:#E6E1D8;
+    --dune-200:#DFD9CF; --dune-300:#C9C2B6; --dune-400:#B7B0A4; --dune-500:#928B80;
+    --dune-600:#6E675C; --dune-700:#5E574E; --dune-800:#36312B; --dune-900:#262019; --dune-950:#1A1510;
+    --fn-must:#D6493C; --fn-should:#C97C1E; --fn-success:#3F8F5F; --fn-info:#4A7DC9;
+
+    --surface-sunken:var(--dune-150); --surface-soft:var(--dune-100); --surface-base:var(--dune-50);
+    --surface-raised:var(--dune-0); --surface-active:var(--dune-200);
+    --ink:var(--dune-800); --ink-body:var(--dune-700); --ink-2:var(--dune-500); --ink-3:var(--dune-400);
+    --border:#EAE7E1; --border-strong:#DDD8D0;
+    --accent:var(--dune-900); --accent-text:#FBFAF8;
+    --must:var(--fn-must); --should:var(--fn-should); --success:var(--fn-success);
+    --ai-line:var(--dune-400);
+    --r-chip:999px; --r-ctl:10px; --r-card:14px; --r-sheet:24px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface-sunken:#14110D; --surface-soft:#2B261F; --surface-base:#191612;
+      --surface-raised:#221E18; --surface-active:#2B261F;
+      --ink:#EDE9E1; --ink-body:#C4BDB1; --ink-2:#948C7F; --ink-3:#6E675C;
+      --border:#322C24; --border-strong:#423B30;
+      --accent:#EDE9E1; --accent-text:#191612;
+      --must:#E06A5F; --should:#DE9B4A; --success:#5FB585;
+      --ai-line:#6E675C;
+    }
+  }
+  :root[data-theme="dark"] {
+    --surface-sunken:#14110D; --surface-soft:#2B261F; --surface-base:#191612;
+    --surface-raised:#221E18; --surface-active:#2B261F;
+    --ink:#EDE9E1; --ink-body:#C4BDB1; --ink-2:#948C7F; --ink-3:#6E675C;
+    --border:#322C24; --border-strong:#423B30;
+    --accent:#EDE9E1; --accent-text:#191612;
+    --must:#E06A5F; --should:#DE9B4A; --success:#5FB585;
+    --ai-line:#6E675C;
+  }
+  :root[data-theme="light"] {
+    --surface-sunken:var(--dune-150); --surface-soft:var(--dune-100); --surface-base:var(--dune-50);
+    --surface-raised:var(--dune-0); --surface-active:var(--dune-200);
+    --ink:var(--dune-800); --ink-body:var(--dune-700); --ink-2:var(--dune-500); --ink-3:var(--dune-400);
+    --border:#EAE7E1; --border-strong:#DDD8D0;
+    --accent:var(--dune-900); --accent-text:#FBFAF8;
+    --must:var(--fn-must); --should:var(--fn-should); --success:var(--fn-success);
+    --ai-line:var(--dune-400);
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--surface-base); color:var(--ink-body);
+    font-family:"Pretendard","Pretendard Variable",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+    font-size:15px; line-height:1.62; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:920px; margin:0 auto; padding:48px 20px 96px; }
+  a { color:var(--ink); text-decoration:underline; text-decoration-color:var(--ink-3); text-underline-offset:2px; }
+  a:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
+  code { font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:.88em; background:var(--surface-soft); border-radius:4px; padding:1px 5px; color:var(--ink); }
+  pre { background:var(--surface-raised); border:1px solid var(--border); border-radius:var(--r-card); padding:16px 18px; overflow-x:auto; font-size:12.5px; line-height:1.55; }
+  pre code { background:none; padding:0; }
+
+  .eyebrow { font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-2); margin:0 0 10px; }
+  h1 { font-size:clamp(26px,5vw,36px); line-height:1.24; font-weight:700; color:var(--ink); margin:0 0 14px; letter-spacing:-.015em; text-wrap:balance; }
+  .lede { font-size:16.5px; max-width:64ch; margin:0 0 12px; }
+  section { margin-top:64px; }
+  h2 { font-size:22px; font-weight:700; color:var(--ink); margin:0 0 6px; letter-spacing:-.01em; }
+  .h2-sub { font-size:13.5px; color:var(--ink-2); margin:0 0 20px; }
+  h3 { font-size:16px; font-weight:650; color:var(--ink); margin:26px 0 10px; }
+
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:720px){ .grid2 { grid-template-columns:1fr; } }
+  .cardbox { background:var(--surface-raised); border:1px solid var(--border); border-radius:var(--r-card); padding:16px 18px; }
+  .cardbox b { color:var(--ink); }
+  .cardbox p { margin:6px 0 0; font-size:13.5px; }
+  .ref { font-size:11.5px; color:var(--ink-2); margin-top:8px; }
+
+  /* 진단 테이블 */
+  .tblw { overflow-x:auto; border:1px solid var(--border); border-radius:var(--r-card); background:var(--surface-raised); margin-top:16px; }
+  table { border-collapse:collapse; width:100%; min-width:640px; font-size:13px; }
+  th { text-align:left; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); font-weight:700; padding:11px 14px; border-bottom:1px solid var(--border-strong); }
+  td { padding:10px 14px; border-bottom:1px solid var(--border); vertical-align:top; }
+  tr:last-child td { border-bottom:none; }
+  td b { color:var(--ink); font-weight:650; }
+  .bad { color:var(--must); font-weight:650; }
+  .ok { color:var(--success); font-weight:650; }
+
+  /* 스와치 */
+  .ramp { display:flex; border-radius:var(--r-ctl); overflow:hidden; border:1px solid var(--border); margin-top:12px; }
+  .ramp div { flex:1; height:52px; position:relative; }
+  .ramp span { position:absolute; bottom:4px; left:50%; transform:translateX(-50%); font-size:8.5px; font-variant-numeric:tabular-nums; color:var(--ink-2); mix-blend-mode:normal; }
+  .swrow { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  .sw { display:flex; align-items:center; gap:8px; background:var(--surface-raised); border:1px solid var(--border); border-radius:var(--r-chip); padding:5px 12px 5px 6px; font-size:12px; color:var(--ink-body); }
+  .sw i { width:18px; height:18px; border-radius:50%; display:inline-block; }
+
+  /* 스펙시먼 */
+  .spec { background:var(--surface-base); border:1px dashed var(--border-strong); border-radius:var(--r-sheet); padding:20px; margin-top:14px; }
+  .spec-label { font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); font-weight:700; margin:0 0 12px; }
+  .ladder { display:flex; gap:10px; }
+  .ladder > div { flex:1; border-radius:var(--r-ctl); padding:10px; font-size:11px; color:var(--ink-2); text-align:center; }
+  .chips { display:flex; gap:8px; flex-wrap:wrap; }
+  .mchip { font-size:11px; font-weight:600; border-radius:var(--r-chip); padding:3px 10px; display:inline-flex; align-items:center; gap:6px; background:var(--surface-soft); color:var(--ink-body); }
+  .mchip i { width:8px; height:8px; border-radius:50%; }
+  .dumpcard { background:var(--surface-raised); border:1px solid var(--border); border-radius:var(--r-card); padding:14px 16px; display:flex; gap:12px; align-items:flex-start; }
+  .dumpcard .cb { width:20px; height:20px; border-radius:7px; border:1.5px solid var(--border-strong); flex:none; margin-top:1px; }
+  .dumpcard .t { font-size:14px; color:var(--ink); font-weight:500; margin:0; }
+  .dumpcard .s { font-size:12px; color:var(--ink-2); margin:3px 0 0; }
+  .dumpcard.ai { border:1.5px dashed var(--ai-line); background:color-mix(in oklab, var(--surface-raised) 88%, var(--surface-soft)); }
+  .aibtns { display:flex; gap:8px; margin-left:auto; flex:none; }
+  .btn { font-family:inherit; font-size:12px; font-weight:600; border-radius:var(--r-ctl); padding:7px 14px; border:1px solid var(--border-strong); background:var(--surface-raised); color:var(--ink-body); cursor:pointer; min-height:32px; }
+  .btn-primary { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
+  .stack { display:flex; flex-direction:column; gap:10px; }
+  .tabbar-spec { display:flex; justify-content:space-around; align-items:center; background:var(--surface-raised); border:1px solid var(--border); border-radius:var(--r-card); padding:10px 8px 12px; max-width:360px; margin:0 auto; }
+  .tab { display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10px; color:var(--ink-3); min-width:44px; }
+  .tab i { width:22px; height:22px; border-radius:7px; background:var(--surface-sunken); }
+  .tab.on { color:var(--ink); font-weight:600; }
+  .tab.on i { background:var(--accent); }
+  .empty-spec { text-align:center; padding:28px 16px; background:var(--surface-raised); border:1px solid var(--border); border-radius:var(--r-card); }
+  .empty-spec .peng { font-size:34px; }
+  .empty-spec .h { font-size:15px; font-weight:650; color:var(--ink); margin:8px 0 2px; }
+  .empty-spec .d { font-size:12.5px; color:var(--ink-2); margin:0; }
+  .streak { display:inline-flex; align-items:center; gap:6px; background:var(--surface-soft); border-radius:var(--r-chip); padding:4px 12px; font-size:12px; font-weight:600; color:var(--ink); margin-top:10px; }
+
+  .note { background:var(--surface-raised); border:1px solid var(--border); border-radius:var(--r-card); padding:16px 18px; font-size:13.5px; margin-top:20px; }
+  .note strong { color:var(--ink); }
+  ol.rules { margin:12px 0 0; padding-left:20px; display:flex; flex-direction:column; gap:8px; font-size:13.5px; }
+  ol.rules b { color:var(--ink); }
+  footer { margin-top:72px; padding-top:18px; border-top:1px solid var(--border); font-size:12px; color:var(--ink-3); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Dumply Design System Proposal · v0.1 · 2026-07</p>
+    <h1>Dumply PWA 디자인 시스템 제안<br>— "AI 티" 나지 않는 토큰 시스템</h1>
+    <p class="lede">30개 사례 리서치(<a href="./pwa-dashboard-design-report.html">디자인 리서치 보고서</a>)에서 확인한 타사 디자인 시스템 — Vercel Geist, Stripe, Linear, Amie, Craft — 의 결정 원리를 빌려, Dumply의 기존 <code>tokens.css</code>를 PWA용 3계층 토큰 시스템으로 확장합니다. 목표는 하나: <b style="color:var(--ink)">웜 아이덴티티는 지키되, "AI가 만든 것 같은" 디자인의 관습적 마커와 토큰 수준에서 갈라서는 것.</b></p>
+    <p class="lede" style="font-size:13.5px; color:var(--ink-2)">구현 초안: <code>docs/tokens-pwa-draft.css</code> · 이 문서 자체가 제안하는 토큰으로 렌더링되며 라이트/다크를 모두 지원합니다.</p>
+  </header>
+
+  <section>
+    <h2>1 · 진단 — "AI 티"는 정확히 어디서 나는가</h2>
+    <p class="h2-sub">생성형 디자인이 수렴하는 관습적 마커와, Dumply의 현재 위치</p>
+    <p>가장 먼저 인정할 것: <b style="color:var(--ink)">Dumply의 웜 크림 배경(#F3F1EB)은 AI 생성 디자인의 최다 빈출 클리셰(웜 크림 #F4F1EA + 세리프 디스플레이 + 테라코타 액센트)와 위험할 만큼 가깝습니다.</b> 하지만 Dumply를 구하는 것은 배경색이 아니라 그 위의 결정들입니다 — 세리프도 테라코타도 없고, 액센트가 모노크롬(에스프레소 차콜)이며, 유채색이 기능에만 묶여 있습니다. 이 방어선이 우연이 아니라 <b style="color:var(--ink)">규칙</b>이 되도록 토큰으로 강제하는 것이 이 제안의 요지입니다.</p>
+    <div class="tblw">
+      <table>
+        <thead><tr><th>AI 생성 디자인 마커</th><th>Dumply 현재</th><th>토큰 시스템의 방어 규칙</th></tr></thead>
+        <tbody>
+          <tr><td><span class="bad">웜 크림 + 세리프 + 테라코타</span> 조합</td><td class="ok">크림만 해당</td><td><b>세리프 디스플레이 금지</b>(Pretendard 단일), 유채 액센트 도입 금지 — 액센트는 듄 램프 900번</td></tr>
+          <tr><td><span class="bad">보라→파랑 그라데이션 히어로</span></td><td class="ok">없음</td><td>그라데이션 전면 금지 (기존 차콜 액센트 그라데이션 1종만 예외로 등재)</td></tr>
+          <tr><td><span class="bad">균일한 rounded-lg</span> 모서리</td><td>부분 해당</td><td>반경을 역할 위계 스케일로 고정: 칩 999 / 컨트롤 10 / 카드 14 / 시트 24 / 무대 28</td></tr>
+          <tr><td><span class="bad">균일 box-shadow 카드</span></td><td class="ok">그림자 거의 없음</td><td><b>그림자 금지</b> — 깊이는 서피스 온도 사다리(들어감&lt;바닥&lt;올라옴)와 1px 보더로 (Stripe·Geist)</td></tr>
+          <tr><td><span class="bad">이모지 섹션 마커·스톡 일러스트</span></td><td class="ok">알프레도 단일 세계관</td><td>UI 일러스트는 알프레도 캐릭터 시스템만. 이모지는 사용자 콘텐츠 영역 한정</td></tr>
+          <tr><td><span class="bad">장식용 유채색</span> (컬러풀 위젯·배지)</td><td class="ok">기능색 원칙 있음</td><td>유채색 = MoSCoW·상태·캘린더 밴드만. 결정 트리로 강제 (§4)</td></tr>
+          <tr><td><span class="bad">다크 모드 = 단순 명도 반전</span></td><td>다크 부재</td><td>같은 웜 hue의 저명도 사다리를 별도로 구축, 기능색은 채도 음소거 변형 (Linear·Stripe)</td></tr>
+          <tr><td><span class="bad">모든 것 중앙 정렬 + 진입 애니메이션 남발</span></td><td class="ok">좌측 정렬 기조</td><td>모션은 상태 전환 3종(hover/전개/승인·축하)에만. 진입 애니메이션 금지</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>2 · 결정 원칙 — 타사 시스템에서 빌린 것</h2>
+    <p class="h2-sub">리서치 보고서의 사례 번호를 병기. 각 원칙은 §5의 토큰으로 구현됩니다.</p>
+    <div class="grid2">
+      <div class="cardbox"><b>색은 의미에만, 크롬은 모노크롬</b><p>Geist의 "색은 상태 점·링크·오류에만"을 Dumply 문법으로: 유채색이 보이면 그것은 반드시 MoSCoW 우선순위이거나 캘린더 이벤트다. 이 일관성 자체가 수제(手製)의 인상을 만든다.</p><p class="ref">근거: Vercel Geist (사례 21) · Stripe 액센트 1색 원칙 (20)</p></div>
+      <div class="cardbox"><b>깊이 = 온도 사다리, 그림자 금지</b><p>Stripe는 흰색→#f8fafd→#e5edf5 틴트 단계로 깊이를 만든다. Dumply 기존 tokens.css의 "들어감&lt;바닥&lt;올라옴" 서피스 사다리와 동일 사상 — 이를 5단계 시맨틱 토큰으로 승격하고 box-shadow를 린트로 차단.</p><p class="ref">근거: Stripe (20) · 기존 tokens.css 주석의 L90–98.4 사다리</p></div>
+      <div class="cardbox"><b>다크는 반전이 아니라 재구축</b><p>Linear는 LCH 색공간에서 표고(elevation)별로 지각적으로 등간격인 테마를 생성한다. Dumply 다크는 라이트 값의 반전이 아니라 같은 웜 hue(≈75–85)의 저명도 사다리(#14110D→#2B261F)를 따로 짓고, MoSCoW 색은 채도를 낮춘 다크 변형을 쌍으로 정의한다.</p><p class="ref">근거: Linear LCH 테마 (6) · Stripe 다크 상태색 음소거 (20)</p></div>
+      <div class="cardbox"><b>모션은 물리, 순간은 하나</b><p>Amie처럼 스프링 이징을 쓰되 남용하지 않는다: 스프링은 "AI 제안 승인(점선→실선)"과 "완료 축하" 두 순간에만. 나머지는 120/200ms ease-out. 진입 애니메이션은 금지 — 속도가 보상이라는 Linear의 절제를 기본값으로.</p><p class="ref">근거: Amie (12) · Linear (6) · Superhuman 100ms 예산 (19)</p></div>
+      <div class="cardbox"><b>점선 = 제안, 실선 = 확정</b><p>Motion과 Reclaim이 독립적으로 수렴한 신뢰 언어를 토큰화: <code>--dumply-ai-border-style: dashed</code>. 알프레도가 제안한 모든 것은 점선으로 태어나 사용자의 승인으로 실선이 된다. "AI 기능이 있는 앱"이 아니라 "조수가 있는 앱"으로 읽히게 하는 핵심 장치.</p><p class="ref">근거: Motion (11) · Reclaim (14)</p></div>
+      <div class="cardbox"><b>캐릭터가 유일한 장식</b><p>Craft가 커버 이미지로, Headspace가 블롭 캐스트로 하는 일을 Dumply는 알프레도 하나로 한다: 빈 상태·오프라인·로딩·축하·설치 유도 전부. 범용 일러스트·아이콘 팩·이모지 마커가 낄 자리를 없애면 생성형 디자인의 익명성이 사라진다.</p><p class="ref">근거: Craft (24) · Headspace (30) · Duolingo/Finch (25·26)</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3 · 토큰 아키텍처 — 3계층</h2>
+    <p class="h2-sub">기존 tokens.css(1계층 플랫 구조)를 호환 유지하며 확장</p>
+    <pre><code>① Primitive   --dune-0 … --dune-950   웜 듄 램프 13단계 (단일 hue, 기존 실측값이 앵커)
+              --fn-*, --fn-*-dark      기능색 라이트/다크 쌍
+              --band-*                 캘린더 밴드 파스텔 (이벤트 전용)
+                 ↓  컴포넌트에서 직접 참조 금지
+② Semantic    --dumply-surface-{sunken|soft|base|raised|overlay|active}
+              --dumply-ink-{primary|body|secondary|placeholder}
+              --dumply-moscow-*, --dumply-ai-*
+              --dumply-radius-*, --sp-*, --fs-*, --motion-*
+                 ↓  다크 테마는 이 계층에서만 재정의
+③ Component   --card-*, --suggestion-*, --tabbar-*  (필요한 곳만)</code></pre>
+    <p style="font-size:13.5px">규칙: <b style="color:var(--ink)">컴포넌트 CSS는 다크 모드를 몰라야 합니다.</b> <code>@media (prefers-color-scheme)</code>과 <code>[data-theme]</code> 분기는 토큰 파일에만 존재하고, 컴포넌트는 시맨틱 토큰만 소비합니다. 기존 사이드패널의 <code>--dumply-bg</code>·<code>--dumply-surface</code> 등은 시맨틱 계층의 별칭으로 유지되어 마이그레이션 없이 공존합니다.</p>
+  </section>
+
+  <section>
+    <h2>4 · 컬러 — 듄 램프와 사용 결정 트리</h2>
+    <p class="h2-sub">모든 무채 값은 이 13단계에서만 나온다</p>
+    <div class="ramp" role="img" aria-label="웜 듄 램프 13단계 스와치: FBFAF6부터 1A1510까지">
+      <div style="background:#FBFAF6"><span>0</span></div>
+      <div style="background:#F3F1EB"><span>50</span></div>
+      <div style="background:#EAE6DE"><span>100</span></div>
+      <div style="background:#E6E1D8"><span>150</span></div>
+      <div style="background:#DFD9CF"><span>200</span></div>
+      <div style="background:#C9C2B6"><span>300</span></div>
+      <div style="background:#B7B0A4"><span>400</span></div>
+      <div style="background:#928B80"><span>500</span></div>
+      <div style="background:#6E675C"><span>600</span></div>
+      <div style="background:#5E574E"><span>700</span></div>
+      <div style="background:#36312B"><span>800</span></div>
+      <div style="background:#262019"><span>900</span></div>
+      <div style="background:#1A1510"><span>950</span></div>
+    </div>
+    <h3>기능색 — 웜 지면에 맞춘 템퍼링 + 다크 음소거 쌍</h3>
+    <p style="font-size:13.5px">현재 tokens.css의 iOS 시스템색(<code>#FF3B30</code>·<code>#FF9500</code>)은 채도가 높아 웜 지면 위에서 "기성품" 인상을 줍니다. 온도를 맞춘 템퍼링 값과, Stripe 원칙대로 다크에서 소리치지 않는 음소거 변형을 쌍으로 제안합니다.</p>
+    <div class="swrow">
+      <span class="sw"><i style="background:#D6493C"></i>must #D6493C · 다크 #E06A5F</span>
+      <span class="sw"><i style="background:#C97C1E"></i>should #C97C1E · 다크 #DE9B4A</span>
+      <span class="sw"><i style="background:#928B80"></i>could = ink-secondary (무채)</span>
+      <span class="sw"><i style="background:#B7B0A4"></i>won't = placeholder (무채)</span>
+      <span class="sw"><i style="background:#3F8F5F"></i>success #3F8F5F · 다크 #5FB585</span>
+      <span class="sw"><i style="background:#4A7DC9"></i>info #4A7DC9 · 다크 #7AA3DE</span>
+    </div>
+    <h3>색 사용 결정 트리 (린트 가능한 형태)</h3>
+    <ol class="rules">
+      <li>이 요소가 <b>우선순위나 상태</b>(MoSCoW·성공·오류·경고)를 전달하는가? → <code>--dumply-moscow-*</code> / 상태 토큰</li>
+      <li><b>캘린더 이벤트</b>인가? → <code>--band-*</code> 파스텔 (이벤트 밖 사용 금지)</li>
+      <li><b>알프레도의 제안</b>(미확정)인가? → 점선 보더 + <code>--dumply-ai-*</code></li>
+      <li>그 외 전부 → <b>듄 램프</b>. 예외 없음.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>5 · 라이브 스펙시먼</h2>
+    <p class="h2-sub">아래 컴포넌트들은 제안 토큰만으로 렌더링됩니다 — OS 테마를 바꿔 다크 변형을 확인하세요</p>
+
+    <div class="spec">
+      <p class="spec-label">서피스 온도 사다리 — 그림자 0개</p>
+      <div class="ladder">
+        <div style="background:var(--surface-sunken)">sunken<br>트랙·인풋</div>
+        <div style="background:var(--surface-soft)">soft<br>웰·배지</div>
+        <div style="background:var(--surface-base); border:1px solid var(--border)">base<br>페이지</div>
+        <div style="background:var(--surface-raised); border:1px solid var(--border)">raised<br>카드</div>
+        <div style="background:var(--surface-active)">active<br>hover</div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <p class="spec-label">MoSCoW 칩 — 유채색이 허용되는 유일한 크롬</p>
+      <div class="chips">
+        <span class="mchip"><i style="background:var(--must)"></i>Must</span>
+        <span class="mchip"><i style="background:var(--should)"></i>Should</span>
+        <span class="mchip"><i style="background:var(--ink-2)"></i>Could</span>
+        <span class="mchip"><i style="background:var(--ink-3)"></i>Won't</span>
+        <span class="mchip" style="margin-left:12px"><i style="background:var(--success)"></i>완료</span>
+      </div>
+    </div>
+
+    <div class="spec">
+      <p class="spec-label">덤프 카드 — 확정(실선) vs 알프레도 제안(점선)</p>
+      <div class="stack">
+        <div class="dumpcard">
+          <span class="cb" aria-hidden="true"></span>
+          <div><p class="t">발표 자료 초안 마감</p><p class="s">오늘 · <span style="color:var(--must); font-weight:600">Must</span></p></div>
+        </div>
+        <div class="dumpcard ai">
+          <span class="cb" style="border-style:dashed" aria-hidden="true"></span>
+          <div><p class="t">지난주에 미룬 영수증 정리</p><p class="s">알프레도 제안 · <span style="color:var(--should); font-weight:600">Should</span> · "이틀째 단서로만 남아있어요"</p></div>
+          <div class="aibtns"><button class="btn btn-primary" type="button">오늘 할래</button><button class="btn" type="button">미루기</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <p class="spec-label">모바일 바텀 탭바 — 44pt 타깃 · safe-area 패딩</p>
+      <div class="tabbar-spec">
+        <div class="tab on"><i></i>홈</div>
+        <div class="tab"><i></i>캘린더</div>
+        <div class="tab"><i></i>프로젝트</div>
+        <div class="tab"><i></i>설정</div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <p class="spec-label">보상형 빈 상태 — 사건 종결 + 스트릭</p>
+      <div class="empty-spec">
+        <div class="peng" aria-hidden="true">🐧</div>
+        <p class="h">오늘 사건 전부 종결!</p>
+        <p class="d">알프레도가 사무실 문을 닫았습니다. 내일 아침에 새 단서와 함께 만나요.</p>
+        <span class="streak">🔥 5일 연속 수사 완료</span>
+      </div>
+      <p style="font-size:11.5px; color:var(--ink-2); margin:10px 0 0">프로덕션에서는 이모지 대신 알프레도 일러스트 세트(요일별 variant)를 사용 — 이모지 마커는 시스템 규칙상 금지.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>6 · 형태 · 타이포 · 모션 스케일</h2>
+    <div class="grid2">
+      <div class="cardbox"><b>반경 위계</b><p><code>chip 999</code> · <code>control 10</code> · <code>card 14</code> · <code>sheet 24</code> · <code>stage 28</code> — 큰 것일수록 둥글게. 균일한 rounded-lg가 만드는 "생성물" 인상을 위계로 대체.</p></div>
+      <div class="cardbox"><b>간격</b><p>4px 베이스 스케일(<code>--sp-1</code>…<code>--sp-12</code>). 형제 요소 간격은 flex/grid <code>gap</code>으로만 — 마진 겹침 금지.</p></div>
+      <div class="cardbox"><b>타이포</b><p>Pretendard 단일 패밀리 유지(세리프 디스플레이 금지). 기존 스케일 유지 + PWA 그리팅 전용 <code>--fs-display: 28px</code>. 숫자 정렬 구간엔 <code>tabular-nums</code>.</p></div>
+      <div class="cardbox"><b>모션 3단</b><p><code>quick 120ms</code>(hover/press) · <code>standard 200ms</code>(전개/접힘) · <code>emphasis 320ms + spring</code>(제안 승인·완료 축하 한정). <code>prefers-reduced-motion</code>에서 전부 0ms.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>7 · 거버넌스 — 규칙을 규칙답게</h2>
+    <p class="h2-sub">Stylelint(declaration-property-value-allowed-list)로 CI에서 강제 가능한 6칙</p>
+    <ol class="rules">
+      <li><b>raw hex 금지.</b> 컴포넌트 CSS는 시맨틱 토큰만 소비한다.</li>
+      <li><b>box-shadow 금지.</b> 오버레이 서피스 1곳 예외. 깊이는 사다리로.</li>
+      <li><b>유채색 배경 금지.</b> MoSCoW 칩·캘린더 밴드 예외.</li>
+      <li><b>border-radius는 스케일 값만.</b> 임의 반경 금지.</li>
+      <li><b>그라데이션 금지.</b> 기존 액센트 그라데이션 1종만 등재 예외.</li>
+      <li><b>컴포넌트 파일에 다크 분기 금지.</b> 테마는 토큰 계층의 책임.</li>
+    </ol>
+    <div class="note"><strong>마이그레이션 경로:</strong> ① <code>docs/tokens-pwa-draft.css</code>를 PWA 셸에 로드 (기존 <code>--dumply-*</code> 이름은 별칭으로 호환) → ② 신규 컴포넌트부터 시맨틱 토큰 사용 → ③ 사이드패널 CSS의 raw hex를 점진 치환 → ④ Stylelint 규칙 활성화. 기존 확장 UI는 한 줄도 깨지지 않습니다.</div>
+  </section>
+
+  <footer>
+    <p>Dumply Design System Proposal v0.1 · 2026-07-09 · 근거 사례 번호는 <a href="./pwa-dashboard-design-report.html">PWA 대시보드 디자인 리서치 보고서</a>(30사례)를 참조. 구현 초안: <code>docs/tokens-pwa-draft.css</code>.</p>
+  </footer>
+</div>
+</body>
+</html>
