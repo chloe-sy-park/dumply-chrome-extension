@@ -27,7 +27,7 @@
     // 샌드박스 테스트 중에만 유지 — 라이브 전환 시 아래 줄 삭제
     Paddle.Environment.set('sandbox');
     Paddle.Initialize({
-      token: 'REPLACE_WITH_PADDLE_CLIENT_TOKEN', // Paddle → Developer Tools → Authentication → Client-side token
+      token: 'test_b4042ebc1ecb0bda95a63b11106', // 샌드박스 클라이언트 토큰 — 라이브 전환 시 live_ 토큰으로 교체
     });
     // URL에 ?_ptxn=txn_... 이 있으면 Paddle.js가 결제 오버레이를 자동으로 띄움
     if (!new URLSearchParams(location.search).has('_ptxn')) {
