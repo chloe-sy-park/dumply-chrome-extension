@@ -68,6 +68,7 @@
             <p id="hdr-weather" class="hdr-weather" hidden aria-live="polite"></p>
           </div>
         </div>
+        <button id="credit-pill" type="button" class="credit-pill" hidden data-i18n-title="credit.pill.title" title="내 크레딧">✦ <span id="credit-pill-num">…</span></button>
       </div>
     </header>
 
@@ -89,7 +90,7 @@
             <textarea id="dump-input" rows="4"
               data-i18n-placeholder="dump.input.placeholder"
               placeholder="엄마 오후 3시 생일 선물 구매. 이대표랑 미팅 앱 런칭 관련..."></textarea>
-            <p class="dump-hint" data-i18n="dump.input.hint">Enter로 정리 · Shift+Enter로 줄바꿈</p>
+            <p class="dump-hint"><span data-i18n="dump.input.hint">Enter로 정리 · Shift+Enter로 줄바꿈</span> <span id="dump-cost-hint" class="dump-cost-hint" hidden data-i18n="dump.cost.hint">· AI 정리 ✦1</span></p>
           </div>
         </div>
         </div>
@@ -521,6 +522,33 @@
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- 크레딧 시트 — 잔액/미터/팩/Pro (Mimo P5 패턴) -->
+  <div id="credit-sheet" class="sheet" hidden>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="credit-sheet-title">
+      <div class="sheet-head">
+        <h2 id="credit-sheet-title" data-i18n="credit.sheet.title">내 크레딧</h2>
+        <button type="button" id="credit-sheet-close" class="link-btn" data-i18n="credit.sheet.close">닫기</button>
+      </div>
+      <div class="credit-balance-row"><span id="credit-sheet-balance" class="credit-balance-num">…</span><span id="credit-sheet-plan" class="credit-balance-plan"></span></div>
+      <div id="credit-meter-row" hidden>
+        <div class="credit-meter-labels"><span data-i18n="credit.meter.label">이번 달 사용</span><span id="credit-meter-count"></span></div>
+        <div class="credit-meter"><i id="credit-meter-fill"></i></div>
+      </div>
+      <p id="credit-sheet-note" class="credit-note" hidden></p>
+      <div class="credit-packs">
+        <button type="button" id="credit-pack-small" class="credit-pack">
+          <span class="credit-pack-amt">100✦</span><span class="credit-pack-sub" data-i18n="credit.pack.small.sub">덤프 약 100회</span><span class="credit-pack-price">$3</span>
+        </button>
+        <button type="button" id="credit-pack-large" class="credit-pack best">
+          <span class="credit-pack-badge" data-i18n="credit.pack.badge">33% 절약</span>
+          <span class="credit-pack-amt">500✦</span><span class="credit-pack-sub" data-i18n="credit.pack.large.sub">덤프 약 500회</span><span class="credit-pack-price">$10</span>
+        </button>
+      </div>
+      <button type="button" id="credit-sheet-pro" class="btn btn-primary btn-block" data-i18n="credit.sheet.pro">Pro 구독 · $4.99/월 (매달 300✦)</button>
+      <p class="credit-micro" data-i18n="credit.sheet.micro">남은 크레딧은 이월돼요 · Paddle 안전결제</p>
+    </div>
+  </div>
 
   <script src="lib/icons.js?v=3"></script>
   <script src="lib/brand.js?v=48"></script>

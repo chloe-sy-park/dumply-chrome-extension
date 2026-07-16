@@ -1,0 +1,34 @@
+{
+ "brief": "dumply 크레딧 온보딩 구현 4-Phase (pricing-plan §3): 서버 보강 → 크레딧 코어 UX → 온보딩 여정 → 마무리",
+ "created": "2026-07-16T05:35:34.496439+00:00",
+ "goals": [
+  {
+   "id": "G001",
+   "title": "P1-server",
+   "objective": "get_monthly_usage RPC + Task4 환불 웹훅(revoke_credits, 플래그, 구독 강등)을 배포하고 시뮬레이터+DB 조회로 증명",
+   "status": "complete",
+   "evidence": "get_monthly_usage+revoke_credits 마이그레이션 success, webhook v6 배포, Paddle 시뮬레이터(실서명): 팩환불 -100(120→20)/재전달 already_refunded/pro환불 잔액부족→-20 클램프+abuse_flagged=true+plan free 강등, purchases.refunded_at 2건 — 전부 DB SELECT 관측. 발견: Paddle Billing에 transaction.refunded 없음 → adjustment.*(action=refund) 사용"
+  },
+  {
+   "id": "G002",
+   "title": "P2-credit-ux",
+   "objective": "확장에 헤더 크레딧 필, 소모량 뱃지, 크레딧 시트, 에러 매핑(402/429/503/403/TRUNCATED), 결제 복귀 갱신을 구현하고 스모크테스트 통과",
+   "status": "in_progress",
+   "evidence": null
+  },
+  {
+   "id": "G003",
+   "title": "P3-onboarding",
+   "objective": "onInstalled 분기 + 웰컴/샘플덤프/aha카드/가입게이트 구현, 스모크테스트 통과",
+   "status": "pending",
+   "evidence": null
+  },
+  {
+   "id": "G004",
+   "title": "P4-wrap",
+   "objective": "i18n en 카피 + 퍼널 SQL 3본 문서화 + 전체 커밋",
+   "status": "pending",
+   "evidence": null
+  }
+ ]
+}

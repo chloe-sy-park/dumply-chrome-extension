@@ -394,3 +394,44 @@
   font-size: var(--font-size-sm);
   color: var(--text-secondary);
 }
+
+/* ── 크레딧 UI (필 · 시트 · 팩) ─────────────────────────── */
+.credit-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  border: 1px solid var(--border); border-radius: 999px;
+  background: var(--bg-accent-soft); color: var(--text-primary);
+  font-size: var(--font-size-sm); font-weight: 700;
+  padding: 3px 11px; cursor: pointer; white-space: nowrap;
+}
+.credit-pill.warn { background: #FDF1E2; border-color: #EAC79A; color: #B45309; }
+.dump-cost-hint { color: var(--text-secondary); font-weight: 600; }
+
+.credit-balance-row { display: flex; align-items: baseline; gap: 8px; margin: 6px 0 12px; }
+.credit-balance-num { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; }
+.credit-balance-plan {
+  font-size: var(--font-size-sm); font-weight: 700; color: var(--text-secondary);
+  border: 1px solid var(--border); border-radius: 6px; padding: 1px 8px;
+}
+.credit-meter-labels {
+  display: flex; justify-content: space-between;
+  font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: 4px;
+}
+.credit-meter { height: 6px; border-radius: 999px; background: var(--bg-accent-soft); overflow: hidden; margin-bottom: 12px; }
+.credit-meter i { display: block; height: 100%; width: 0; background: var(--accent-gradient); border-radius: 999px; transition: width .3s; }
+.credit-note { font-size: var(--font-size-sm); color: var(--text-secondary); margin: 0 0 12px; }
+.credit-packs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.credit-pack {
+  position: relative; border: 1.5px solid var(--border); border-radius: 12px;
+  background: transparent; padding: 12px 8px 10px; text-align: center; cursor: pointer;
+  display: flex; flex-direction: column; gap: 2px; align-items: center;
+}
+.credit-pack.best { border-color: var(--accent); background: var(--bg-accent-soft); }
+.credit-pack-badge {
+  position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: var(--accent-text);
+  font-size: 10px; font-weight: 800; border-radius: 999px; padding: 1px 8px; white-space: nowrap;
+}
+.credit-pack-amt { font-size: 18px; font-weight: 800; }
+.credit-pack-sub { font-size: 11px; color: var(--text-secondary); }
+.credit-pack-price { font-size: var(--font-size-sm); font-weight: 700; margin-top: 2px; }
+.credit-micro { font-size: 11px; color: var(--text-secondary); text-align: center; margin: 8px 0 0; }

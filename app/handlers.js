@@ -304,6 +304,7 @@ async function makeSense() {
   let result = null;
   let usedAI = false;
   let aiError = false;
+  let aiErrorCode = '';
   const input = $('#dump-input');
 
   // 단순 입력(1~2문장·단일 의도)은 로컬 룰로 충분 — AI 호출 생략해 크레딧/토큰 절약
@@ -316,9 +317,11 @@ async function makeSense() {
       else aiError = true; // 키는 있는데 빈 응답
     } catch (e) {
       aiError = true;
-      console.warn('[Dumply] AI 추출 실패, 로컬 폴백:', e?.message || e);
+      aiErrorCode = String(e?.message || '');
+      console.warn('[Dumply] AI 추출 실패, 로컬 폴백:', aiErrorCode);
     }
     if (input) input.disabled = false;
+    refreshCreditPill(); // 크레딧 차감/환불 반영
   }
   if (!result) result = extractDumpLocal(text);
   makeSenseRunning = false;
@@ -349,8 +352,15 @@ async function makeSense() {
   };
 
   // AI를 켰는데 실패했으면 그 사실을 보이게 — 무음 폴백이 "AI가 안 된다"는 오해를 만듦
+  // 크레딧 유저는 원인별 안내 (402는 최고의 충전 접점 → 시트 오픈)
   if (aiError) {
-    toast(AlfredoI18n.lang() === 'en' ? '⚠️ AI failed — organized with basic rules (check API key & network)' : '⚠️ AI 정리 실패 — 기본 규칙으로 정리했어요 (API 키·네트워크 확인)');
+    if (aiErrorCode === 'NO_CREDITS') { toast(t('credit.err.no_credits')); openCreditSheet(); }
+    else if (aiErrorCode === 'RATE_LIMITED') toast(t('credit.err.rate'));
+    else if (aiErrorCode === 'service_busy') toast(t('credit.err.busy'));
+    else if (aiErrorCode === 'account_flagged') toast(t('credit.err.flagged'));
+    else if (aiErrorCode === 'OUTPUT_TRUNCATED') toast(t('credit.err.truncated'));
+    else if (usingDumplyCredits()) toast(t('credit.err.generic'));
+    else toast(AlfredoI18n.lang() === 'en' ? '⚠️ AI failed — organized with basic rules (check API key & network)' : '⚠️ AI 정리 실패 — 기본 규칙으로 정리했어요 (API 키·네트워크 확인)');
   } else {
     // 성공 시 '되돌리기' 제공 — 잘못 쪼개졌거나 지어냈을 때 원문째 복구 가능
     toastUndo(makeSenseToast(counts), restoreDump);
@@ -717,6 +727,80 @@ function applyTheme() {
   }
 }
 
+// ── 크레딧 UI (헤더 필 · 시트) ───────────────────────────────
+// "크레딧으로 결제 중"일 때만 과금 UI 노출 — BYO 키가 있으면 전부 숨김 (설계 원칙)
+function usingDumplyCredits() {
+  if (typeof DumplyAccount === 'undefined' || !DumplyAccount.isSignedIn()) return false;
+  const keys = state.settings.apiKeys || {};
+  return !(keys.anthropic || keys.openai || keys.google);
+}
+
+function refreshCreditPill() {
+  const pill = $('#credit-pill');
+  const costHint = $('#dump-cost-hint');
+  const active = usingDumplyCredits();
+  if (costHint) costHint.hidden = !active;
+  if (!pill) return;
+  pill.hidden = !active;
+  if (!active) return;
+  const bal = DumplyAccount.getBalance();
+  $('#credit-pill-num').textContent = bal === -1 ? '∞' : bal === null ? '…' : bal;
+  pill.classList.toggle('warn', typeof bal === 'number' && bal >= 0 && bal <= 5);
+}
+
+let creditUsageCache = null;
+
+function renderCreditSheet() {
+  const bal = DumplyAccount.getBalance();
+  const plan = DumplyAccount.getPlan() || 'free';
+  $('#credit-sheet-balance').textContent = bal === -1 ? '∞' : bal === null ? '…' : bal;
+  $('#credit-sheet-plan').textContent = t(`settings.dumply.plan.${plan}`);
+  const meterRow = $('#credit-meter-row');
+  const note = $('#credit-sheet-note');
+  if (plan === 'free') {
+    // Free = 월 20 top-up → "이번 달 사용 n/20" 미터가 성립
+    meterRow.hidden = creditUsageCache === null;
+    if (creditUsageCache !== null) {
+      $('#credit-meter-count').textContent = `${creditUsageCache} / 20✦`;
+      $('#credit-meter-fill').style.width = `${Math.min(100, (creditUsageCache / 20) * 100)}%`;
+    }
+    note.hidden = true;
+  } else {
+    // Pro = 결제 1:1 가산·이월 → 미터 대신 잔액 프레임
+    meterRow.hidden = true;
+    note.textContent = t('credit.sheet.note.pro');
+    note.hidden = plan !== 'pro';
+  }
+  const proBtn = $('#credit-sheet-pro');
+  if (proBtn) proBtn.hidden = plan === 'pro' || plan === 'unlimited';
+}
+
+async function openCreditSheet() {
+  const sheet = $('#credit-sheet');
+  if (!sheet || typeof DumplyAccount === 'undefined' || !DumplyAccount.isSignedIn()) return;
+  sheet.hidden = false;
+  renderCreditSheet(); // 캐시로 즉시 그린 뒤 서버값으로 갱신
+  try {
+    await DumplyAccount.fetchBalance();
+    creditUsageCache = await DumplyAccount.fetchUsage();
+  } catch (_e) { /* 오프라인 등 — 캐시 표시 유지 */ }
+  renderCreditSheet();
+  refreshCreditPill();
+}
+
+// 결제 새 탭에서 돌아왔을 때 잔액 재조회 — 늘었으면 충전 완료 토스트 (P8 패턴)
+async function onVisibleRefreshCredits() {
+  if (document.visibilityState !== 'visible' || !usingDumplyCredits()) return;
+  const before = DumplyAccount.getBalance();
+  try { await DumplyAccount.fetchBalance(); } catch (_e) { return; }
+  const after = DumplyAccount.getBalance();
+  if (typeof before === 'number' && typeof after === 'number' && after > before) {
+    toast(t('credit.topup.done', after - before));
+    if (!$('#credit-sheet')?.hidden) renderCreditSheet();
+  }
+  refreshCreditPill();
+}
+
 // Dumply 계정 섹션 — 로그인 상태·크레딧 잔액 반영
 function refreshDumplySettingsUI() {
   const status = $('#dumply-account-status');
@@ -749,6 +833,7 @@ function refreshDumplySettingsUI() {
     );
     const proBtn = $('#btn-dumply-buy-pro');
     if (proBtn) proBtn.hidden = plan === 'pro' || plan === 'unlimited';
+    refreshCreditPill();
   };
   render();
   DumplyAccount.fetchBalance().then(render).catch(() => {});
@@ -1554,6 +1639,17 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   $('#btn-dumply-buy-pro')?.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));
   $('#btn-dumply-buy-small')?.addEventListener('click', (e) => onDumplyBuy('small', e.currentTarget));
   $('#btn-dumply-buy-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));
+  // 크레딧 필·시트
+  $('#credit-pill')?.addEventListener('click', openCreditSheet);
+  $('#credit-sheet-close')?.addEventListener('click', () => { $('#credit-sheet').hidden = true; });
+  $('#credit-sheet')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.hidden = true; });
+  $('#credit-pack-small')?.addEventListener('click', (e) => onDumplyBuy('small', e.currentTarget));
+  $('#credit-pack-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));
+  $('#credit-sheet-pro')?.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));
+  // 결제 새 탭 복귀 시 잔액 갱신
+  document.addEventListener('visibilitychange', onVisibleRefreshCredits);
+  refreshCreditPill();
+  if (usingDumplyCredits()) DumplyAccount.fetchBalance().then(refreshCreditPill).catch(() => {});
   $('#btn-location-enable')?.addEventListener('click', enableDeviceLocation);
   $('#btn-reset-data')?.addEventListener('click', resetAllData);
   $('#btn-export')?.addEventListener('click', exportData);
