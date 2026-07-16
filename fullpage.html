@@ -273,6 +273,18 @@
           <span class="field-hint">aistudio.google.com/apikey</span>
         </label>
         <p id="settings-api-storage-notice" class="field-hint"></p>
+        <div class="field settings-dumply-field">
+          <span class="field-label" data-i18n="settings.dumply.label">Dumply 계정 · 크레딧</span>
+          <p id="dumply-account-status" class="field-hint settings-status"></p>
+          <input id="dumply-email" type="email" placeholder="you@email.com" autocomplete="off" />
+          <input id="dumply-otp" type="text" inputmode="numeric" placeholder="123456" autocomplete="off" hidden />
+          <button type="button" id="btn-dumply-otp" class="btn btn-secondary btn-block" data-i18n="settings.dumply.send">인증코드 보내기</button>
+          <button type="button" id="btn-dumply-signout" class="btn btn-secondary btn-block" hidden data-i18n="settings.dumply.signout">로그아웃</button>
+          <div class="dumply-topup" id="dumply-topup" hidden>
+            <button type="button" id="btn-dumply-buy-small" class="btn btn-secondary btn-block" data-i18n="settings.dumply.buy.small">크레딧 100개 · $3</button>
+            <button type="button" id="btn-dumply-buy-large" class="btn btn-secondary btn-block" data-i18n="settings.dumply.buy.large">크레딧 500개 · $10</button>
+          </div>
+        </div>
         <div class="field settings-google-field">
           <span class="field-label" data-i18n="settings.google.label">Google 계정 · 캘린더</span>
           <p id="google-account-status" class="field-hint settings-status">로그인하면 캘린더 일정을 가져와요</p>
@@ -515,6 +527,7 @@
   <script src="lib/storage.js?v=63"></script>
   <script src="lib/decisions.js?v=5"></script>
   <script src="lib/tags.js?v=80"></script>
+  <script src="lib/dumply.js?v=1"></script>
   <script src="lib/ai.js?v=71"></script>
   <script src="lib/calendar.js?v=52"></script>
   <script src="lib/weather.js?v=49"></script>

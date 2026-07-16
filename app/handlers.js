@@ -306,7 +306,8 @@ async function makeSense() {
   let aiError = false;
   const input = $('#dump-input');
 
-  if (AlfredoAI.hasKey(state.settings)) {
+  // 단순 입력(1~2문장·단일 의도)은 로컬 룰로 충분 — AI 호출 생략해 크레딧/토큰 절약
+  if (AlfredoAI.hasKey(state.settings) && !AlfredoTags.isSimpleDump(text)) {
     if (input) input.disabled = true;
     toast(AlfredoI18n.lang() === 'en' ? '🧠 Organizing…' : '🧠 정리하는 중…');
     try {
@@ -716,9 +717,92 @@ function applyTheme() {
   }
 }
 
+// Dumply 계정 섹션 — 로그인 상태·크레딧 잔액 반영
+function refreshDumplySettingsUI() {
+  const status = $('#dumply-account-status');
+  const email = $('#dumply-email');
+  const otp = $('#dumply-otp');
+  const otpBtn = $('#btn-dumply-otp');
+  const outBtn = $('#btn-dumply-signout');
+  if (!status || !otpBtn) return;
+  const signedIn = typeof DumplyAccount !== 'undefined' && DumplyAccount.isSignedIn();
+  const topup = $('#dumply-topup');
+  if (topup) topup.hidden = !signedIn;
+  email.hidden = signedIn;
+  otp.hidden = true;
+  otp.value = '';
+  otpBtn.hidden = signedIn;
+  otpBtn.textContent = t('settings.dumply.send');
+  outBtn.hidden = !signedIn;
+  if (!signedIn) {
+    status.textContent = t('settings.dumply.hint.signedout');
+    return;
+  }
+  const render = () => {
+    const bal = DumplyAccount.getBalance();
+    status.textContent = t(
+      'settings.dumply.status',
+      DumplyAccount.getEmail(),
+      bal === -1 ? '∞' : bal === null ? '…' : bal,
+    );
+  };
+  render();
+  DumplyAccount.fetchBalance().then(render).catch(() => {});
+}
+
+async function onDumplyOtpClick() {
+  const email = $('#dumply-email').value.trim();
+  const otp = $('#dumply-otp');
+  const btn = $('#btn-dumply-otp');
+  if (!email) { toast(t('settings.dumply.email.required')); return; }
+  btn.disabled = true;
+  try {
+    if (otp.hidden) {
+      await DumplyAccount.requestOtp(email);
+      otp.hidden = false;
+      btn.textContent = t('settings.dumply.verify');
+      toast(t('settings.dumply.sent'));
+    } else {
+      const code = otp.value.trim();
+      if (!code) { toast(t('settings.dumply.code.required')); return; }
+      await DumplyAccount.verifyOtp(email, code);
+      toast(t('settings.dumply.done'));
+      refreshDumplySettingsUI();
+      renderAll();
+    }
+  } catch (e) {
+    console.warn('[Dumply] 계정 인증 실패:', e?.message || e);
+    toast(t('settings.dumply.error'));
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function onDumplySignout() {
+  await DumplyAccount.signOut();
+  refreshDumplySettingsUI();
+  renderAll();
+}
+
+// 크레딧 팩 결제 — Stripe Checkout을 새 탭으로 (결제 완료 시 웹훅이 지급)
+async function onDumplyBuy(pack, btn) {
+  btn.disabled = true;
+  try {
+    const url = await DumplyAccount.createCheckout(pack);
+    chrome.tabs ? chrome.tabs.create({ url }) : window.open(url, '_blank');
+    toast(t('settings.dumply.buy.opened'));
+  } catch (e) {
+    console.warn('[Dumply] 결제 시작 실패:', e?.message || e);
+    toast(t('settings.dumply.error'));
+  } finally {
+    btn.disabled = false;
+  }
+}
+
 function refreshSettingsForm() {
   ensureSettingsHeader();
   applyI18n($('#route-settings'));
+  refreshDumplySettingsUI();
   // data-i18n-title 속성 처리 (title attribute)
   document.querySelectorAll('[data-i18n-title]').forEach((el) => {
     el.title = t(el.dataset.i18nTitle);
@@ -1461,6 +1545,10 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   $('#btn-save-settings')?.addEventListener('click', saveSettings);
   $('#btn-google-connect')?.addEventListener('click', connectGoogleAccount);
   $('#btn-google-disconnect')?.addEventListener('click', disconnectGoogleAccount);
+  $('#btn-dumply-otp')?.addEventListener('click', onDumplyOtpClick);
+  $('#btn-dumply-signout')?.addEventListener('click', onDumplySignout);
+  $('#btn-dumply-buy-small')?.addEventListener('click', (e) => onDumplyBuy('small', e.currentTarget));
+  $('#btn-dumply-buy-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));
   $('#btn-location-enable')?.addEventListener('click', enableDeviceLocation);
   $('#btn-reset-data')?.addEventListener('click', resetAllData);
   $('#btn-export')?.addEventListener('click', exportData);
