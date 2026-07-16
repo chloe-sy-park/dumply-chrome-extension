@@ -1,0 +1,23 @@
+name: Design token governance
+
+on:
+  pull_request:
+    paths:
+      - "pwa/**/*.css"
+      - ".stylelintrc.json"
+  push:
+    branches: [main]
+    paths:
+      - "pwa/**/*.css"
+      - ".stylelintrc.json"
+
+jobs:
+  stylelint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Lint PWA CSS against token governance rules
+        run: npx --yes stylelint@16 "pwa/**/*.css" --config .stylelintrc.json

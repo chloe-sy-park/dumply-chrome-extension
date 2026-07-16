@@ -14,4 +14,26 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
+# ChatGPT 검색·브라우징 (학습용 GPTBot과 별개)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Claude 검색·사용자 요청 크롤러
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity 사용자 요청 크롤러
+User-agent: Perplexity-User
+Allow: /
+
+# Common Crawl — 다수 LLM 학습 데이터 소스
+User-agent: CCBot
+Allow: /
+
 Sitemap: https://www.dumply.app/sitemap.xml

@@ -7,6 +7,7 @@
 
 Don't organize your tasks and schedule — just write them down. ✍️
 Dumply is a smart planner that turns whatever's on your mind into a clear MoSCoW priority list.
+Every dump is read with the 5W1H principle — who, when, where, what, how, why — so events come out with their people, places, and times already filled in.
 
 ✨ The Dumply Chrome extension is free.
 Instead of charging a monthly subscription, Dumply is designed so you connect your own API key from the AI model you already use (ChatGPT, Claude, or Gemini) and use Dumply without limits.

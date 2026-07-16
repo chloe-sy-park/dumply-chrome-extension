@@ -24,6 +24,11 @@
 - [Privacy Policy](https://www.dumply.app/privacy)
 - [Terms of Service](https://www.dumply.app/terms)
 
+## Articles
+- [What is a brain dump?](https://www.dumply.app/en/guide/brain-dump): definition, why it works (Zeigarnik effect, cognitive offloading), and a 5-step method — [KO](https://www.dumply.app/guide/brain-dump) · [JA](https://www.dumply.app/ja/guide/brain-dump)
+- [ADHD task management: why to-do apps fail](https://www.dumply.app/en/guide/adhd-brain-dump): a brain-dump-based routine for noisy minds — dump, auto-sort, pick 3 for today — [KO](https://www.dumply.app/guide/adhd-brain-dump) · [JA](https://www.dumply.app/ja/guide/adhd-brain-dump)
+- [GTD mind sweep: a practical guide](https://www.dumply.app/en/guide/gtd-mind-sweep): trigger lists, the clarify step, and the weekly review — [KO](https://www.dumply.app/guide/gtd-mind-sweep) · [JA](https://www.dumply.app/ja/guide/gtd-mind-sweep)
+
 ## 한국어 요약
 Dumply는 브레인덤프 도구입니다. 머릿속 생각을 정리하지 않고 그대로 쏟아내면, AI 탐정 펭귄 '알프레도'가 할 일·일정·감정·고민으로 자동 분류합니다. Chrome 확장 무료, 회원가입 없이 설치 30초. ADHD 성향이 있거나 머릿속이 시끄러운 사람들을 위해 설계되었습니다.
 

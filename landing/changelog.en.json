@@ -2,6 +2,14 @@
  "_comment": "English changelog — keep entries in sync with changelog.json",
  "entries": [
   {
+   "date": "2026-07-04",
+   "product": "extension",
+   "version": "2.2.0",
+   "type": "new",
+   "title": "Dumps are now read with the 5W1H principle",
+   "body": "When organizing a brain dump, Alfredo now also extracts who, when, where, what, how, and why. Events get their people and location filled in automatically, and you can check the 👥 📍 🔧 💡 chips in the inbox rationale line and the detail view. Works without an AI key too, powered by built-in rules."
+  },
+  {
    "date": "2026-07-03",
    "product": "prompts",
    "version": "0.1.0-beta",

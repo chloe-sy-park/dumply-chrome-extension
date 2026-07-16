@@ -57,21 +57,43 @@ const justLandedIds = new Set();
 const aiAppliedIds = new Set();
 let aiPulseTimer = null;
 
+// 육하원칙(5W1H) 추출값 정규화 — 하나라도 채워졌으면 { who, where, how, why }, 아니면 null
+function normalizeW5H1(w) {
+  if (!w) return null;
+  const out = {
+    who: w.who || null,
+    where: w.where || null,
+    how: w.how || null,
+    why: w.why || null,
+  };
+  return out.who || out.where || out.how || out.why ? out : null;
+}
+
 // 파서가 한 줄을 어떻게 읽었는지 사람이 읽을 근거 문구. 추출한 게 없으면 null.
 function buildParseRationale(kind, info) {
-  if (kind === 'feeling') return t('classify.feeling');
-  if (kind === 'ponder') return t('classify.ponder');
+  // 육하원칙 칩 — 누구와/어디서/어떻게/왜. 언제는 시간·날짜 칩이, 무엇을은 제목이 담당.
+  const w = info?.w5h1 || {};
+  const wParts = [];
+  if (w.who) wParts.push(`👥 ${w.who}`);
+  if (w.where) wParts.push(`📍 ${w.where}`);
+  if (w.how) wParts.push(`🔧 ${w.how}`);
+  if (w.why) wParts.push(`💡 ${w.why}`);
+  if (kind === 'feeling' || kind === 'ponder') {
+    const base = t(kind === 'feeling' ? 'classify.feeling' : 'classify.ponder');
+    return wParts.length ? `${base} · ${wParts.join(' · ')}` : base;
+  }
   const isEn = AlfredoI18n.lang() === 'en';
   const parts = [];
   if (info?.time) parts.push(`🕐 ${info.time}`);
   if (info?.dateHint) parts.push(`📅 ${info.dateHint}`);
   else if (info?.allDay && info?.date) parts.push(isEn ? '📅 All day' : '📅 하루 종일');
+  parts.push(...wParts);
   return parts.length ? (isEn ? `Recognized as: ${parts.join(' · ')}` : `${parts.join(' · ')}로 인식했어요`) : null;
 }
 
 // 메모에 추출 근거(parseRationale)와 판단용 스냅샷(parseSnapshot)을 붙인다.
-function attachParseTrace(memo, { kind, time = null, date = null, dateHint = null, allDay = false, original = '', source = 'local' }) {
-  memo.parseRationale = buildParseRationale(kind, { time, date, dateHint, allDay });
+function attachParseTrace(memo, { kind, time = null, date = null, dateHint = null, allDay = false, original = '', source = 'local', w5h1 = null }) {
+  memo.parseRationale = buildParseRationale(kind, { time, date, dateHint, allDay, w5h1 });
   memo.parseReasonSeen = false;
   memo.parseJudged = false;
   memo.parseSnapshot = {
@@ -80,6 +102,7 @@ function attachParseTrace(memo, { kind, time = null, date = null, dateHint = nul
     kind,
     time,
     date,
+    w5h1,
     original: (original || '').trim(),
     source,
     at: Date.now(),
@@ -119,13 +142,14 @@ function resolveDumpDate(raw) {
 }
 
 // 한 항목(할 일/감정/고민)을 메모로 만들어 state에 넣고, 근거·스냅샷을 붙인다.
-function pushDumpMemo({ title, kind, time = null, date = null, dateHint = null, allDay = false, original = '', source = 'local' }) {
+function pushDumpMemo({ title, kind, time = null, date = null, dateHint = null, allDay = false, original = '', source = 'local', w5h1 = null }) {
   const tags = AlfredoTags.mergeTags(AlfredoTags.extract(original || title));
+  w5h1 = normalizeW5H1(w5h1);
   let memo;
   if (kind === 'feeling' || kind === 'ponder') {
     memo = {
       id: AlfredoStorage.uid(), kind, content: title,
-      createdAt: Date.now(), completed: false, tags: tags.length ? tags : null,
+      createdAt: Date.now(), completed: false, tags: tags.length ? tags : null, w5h1,
     };
   } else {
     const suggest = suggestDurationLocal(title);
@@ -140,22 +164,27 @@ function pushDumpMemo({ title, kind, time = null, date = null, dateHint = null, 
       id: AlfredoStorage.uid(), kind: 'task', content: title, createdAt: Date.now(),
       completed: false, pinned: false, priority: null, suggestedPriority: null,
       suggestReason: null, loading: false, domain: null, tags: tags.length ? tags : null,
+      w5h1,
     };
   }
-  attachParseTrace(memo, { kind, time, date, dateHint, allDay, original, source });
+  attachParseTrace(memo, { kind, time, date, dateHint, allDay, original, source, w5h1 });
   state.memos.push(memo);
   if (kind === 'feeling') applyMoodFromTags(tags);
   return memo;
 }
 
 // 덤프 추출 결과의 event 항목을 타임라인 일정으로 생성
-function pushDumpEvent(title, date, time) {
+// 육하원칙 매핑: 누구와→with, 어디서→location, 어떻게/왜→notes
+function pushDumpEvent(title, date, time, w5h1 = null) {
   const [h, mi] = time.split(':').map(Number);
+  const extras = [];
+  if (w5h1?.how) extras.push(`🔧 ${w5h1.how}`);
+  if (w5h1?.why) extras.push(`💡 ${w5h1.why}`);
   const ev = {
-    id: AlfredoStorage.uid(), title, notes: null,
+    id: AlfredoStorage.uid(), title, notes: extras.length ? extras.join(' · ') : null,
     date: date || todayStr(), time, duration: 30, remindMinutes: 10,
     allDay: false, completed: false, domain: 'local', tags: null,
-    with: null, location: null, memoId: null, projectId: null,
+    with: w5h1?.who || null, location: w5h1?.where || null, memoId: null, projectId: null,
     sortOrder: h * 60 + (mi || 0),
   };
   state.timeline.push(ev);
@@ -189,12 +218,13 @@ function findDupRemember(title) {
 }
 
 // 항목 1개를 생성하되 같은 게 이미 있으면 건너뜀. { item, kind, created } 반환.
-function materializeDumpItem({ title, kind, time = null, date = null, dateHint = null, allDay = false, original = '', source = 'local' }) {
+function materializeDumpItem({ title, kind, time = null, date = null, dateHint = null, allDay = false, original = '', source = 'local', w5h1 = null }) {
+  w5h1 = normalizeW5H1(w5h1);
   if (kind === 'event' && time) {
     const d = date || todayStr();
     const dup = findDupEvent(title, d, time);
     if (dup) return { item: dup, kind: 'event', created: false };
-    return { item: pushDumpEvent(title, date, time), kind: 'event', created: true };
+    return { item: pushDumpEvent(title, date, time, w5h1), kind: 'event', created: true };
   }
   if (kind === 'remember') {
     const dup = findDupRemember(title);
@@ -206,7 +236,7 @@ function materializeDumpItem({ title, kind, time = null, date = null, dateHint =
     const dup = findDupTask(title);
     if (dup) return { item: dup, kind: 'task', created: false };
   }
-  const memo = pushDumpMemo({ title, kind: rk, time, date, dateHint, allDay, original, source });
+  const memo = pushDumpMemo({ title, kind: rk, time, date, dateHint, allDay, original, source, w5h1 });
   return { item: memo, kind: rk, created: true };
 }
 
@@ -222,8 +252,10 @@ function extractDumpLocal(text) {
       counts.done += 1;
       return;
     }
+    // 육하원칙(누구와/어디서/어떻게/왜) 규칙 추출 — 언제·무엇은 아래 파싱이 담당
+    const w5h1 = AlfredoTags.extractFiveW1H(line);
     if (kind === 'feeling' || kind === 'ponder') {
-      pushDumpMemo({ title: line.trim(), kind, original: line, source: 'local' });
+      pushDumpMemo({ title: line.trim(), kind, original: line, source: 'local', w5h1 });
       counts[kind] += 1;
       return;
     }
@@ -232,7 +264,7 @@ function extractDumpLocal(text) {
       title: parsed?.title || line, kind: 'task',
       time: parsed?.allDay ? null : (parsed?.time || null),
       date: parsed?.date || null, dateHint: parsed?.dateHint || null, allDay: parsed?.allDay,
-      original: line, source: 'local',
+      original: line, source: 'local', w5h1,
     });
     if (res.created) { counts.task += 1; created.push({ memo: res.item, line }); }
     else counts.dup += 1;
@@ -256,6 +288,7 @@ function buildMemosFromAI(items) {
     const res = materializeDumpItem({
       title: it.title, kind: it.kind, time: it.time || null,
       date, dateHint, original: it.title, source: 'ai',
+      w5h1: { who: it.who, where: it.where, how: it.how, why: it.why },
     });
     const item = res.item;
     byTitle[it.title] = {

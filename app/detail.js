@@ -273,6 +273,16 @@ function renderDetailSheet() {
     const aiReason = getDetailAiReason(m);
     if (aiReason) reasons.push(aiReason);
     if (m.durationReason) reasons.push(`⏱️ ${m.durationReason}`);
+    // 육하원칙 — 파서가 분류한 누구와/어디서/어떻게/왜
+    if (m.w5h1) {
+      const w = m.w5h1;
+      const wParts = [];
+      if (w.who) wParts.push(`👥 ${w.who}`);
+      if (w.where) wParts.push(`📍 ${w.where}`);
+      if (w.how) wParts.push(`🔧 ${w.how}`);
+      if (w.why) wParts.push(`💡 ${w.why}`);
+      if (wParts.length) reasons.push(wParts.join(' · '));
+    }
     const reasonEl = $('#detail-ai-reason');
     if (reasons.length) {
       reasonEl.textContent = reasons.join(' · ');

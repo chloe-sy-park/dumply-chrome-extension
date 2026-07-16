@@ -8,12 +8,32 @@
   <link rel="canonical" href="https://www.dumply.app/terms" />
   <meta name="robots" content="noindex, follow" />
 
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css" />
 
   <link rel="icon" type="image/png" href="icons/favicon.png" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="legal.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "홈",
+        "item": "https://www.dumply.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "이용약관",
+        "item": "https://www.dumply.app/terms"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div class="field" aria-hidden="true">
@@ -25,11 +45,11 @@
 
   <!-- ───────────── NAV ───────────── -->
   <header class="nav" id="nav">
-    <a class="brand" href="index.html" aria-label="Dumply 홈">
+    <a class="brand" href="/" aria-label="Dumply 홈">
       <img class="brand__mark" src="icons/icon-512.png" alt="" width="28" height="28" />
       <span class="brand__name">Dumply</span>
     </a>
-    <a class="btn btn--solid nav__cta" href="index.html#products">
+    <a class="btn btn--solid nav__cta" href="/#products">
       <span>Chrome에 추가</span>
       <span class="btn__tag">무료</span>
     </a>
@@ -139,7 +159,7 @@
       </ul>
     </article>
 
-    <a class="doc__back" href="index.html">← 홈으로 / Back to home</a>
+    <a class="doc__back" href="/">← 홈으로 / Back to home</a>
   </main>
 
   <script src="legal.js"></script>
