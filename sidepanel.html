@@ -68,6 +68,7 @@
             <p id="hdr-weather" class="hdr-weather" hidden aria-live="polite"></p>
           </div>
         </div>
+        <button id="credit-pill" type="button" class="credit-pill" hidden data-i18n-title="credit.pill.title" title="내 크레딧">✦ <span id="credit-pill-num">…</span></button>
         <div class="nav-rail-anchor"></div>
       </div>
     </header>
@@ -90,7 +91,7 @@
             <textarea id="dump-input" rows="4"
               data-i18n-placeholder="dump.input.placeholder"
               placeholder="엄마 오후 3시 생일 선물 구매. 이대표랑 미팅 앱 런칭 관련..."></textarea>
-            <p class="dump-hint" data-i18n="dump.input.hint">Enter로 정리 · Shift+Enter로 줄바꿈</p>
+            <p class="dump-hint"><span data-i18n="dump.input.hint">Enter로 정리 · Shift+Enter로 줄바꿈</span> <span id="dump-cost-hint" class="dump-cost-hint" hidden data-i18n="dump.cost.hint">· AI 정리 ✦1</span></p>
           </div>
         </div>
         </div>
@@ -205,6 +206,58 @@
       </div>
     </div>
 
+    <div id="route-credits" class="app-route">
+      <div class="route-scroll shell">
+        <div class="credits-page-head">
+          <button type="button" id="credits-back" class="link-btn" data-i18n="credits.back">← 설정</button>
+          <h2 class="credits-title" data-i18n="credits.title">크레딧 & 구독</h2>
+        </div>
+        <section class="credits-hero">
+          <div class="credit-balance-row"><span id="credits-balance" class="credit-balance-num">…</span><span id="credits-plan" class="credit-balance-plan"></span></div>
+          <div id="credits-gauge-wrap" hidden>
+            <div class="credit-meter-labels"><span id="credits-gauge-label"></span><span id="credits-gauge-count"></span></div>
+            <div class="credit-meter"><i id="credits-gauge-fill"></i></div>
+            <p id="credits-gauge-sub" class="credit-note"></p>
+          </div>
+        </section>
+        <section class="credits-plans">
+          <span class="field-label" data-i18n="credits.plans.label">플랜</span>
+          <div class="credits-plan-grid">
+            <div class="credits-plan-card" id="credits-plan-free">
+              <span class="credits-plan-name">Free</span>
+              <span class="credits-plan-price">$0</span>
+              <span class="credits-plan-desc" data-i18n="credits.plan.free.desc">매달 20✦ 무료</span>
+              <span class="credits-plan-current" id="credits-free-current" data-i18n="credits.plan.current" hidden>현재 플랜</span>
+            </div>
+            <div class="credits-plan-card is-pro" id="credits-plan-pro">
+              <span class="credits-plan-name">Pro</span>
+              <span class="credits-plan-price">$4.99<em data-i18n="credits.plan.month">/월</em></span>
+              <span class="credits-plan-desc" data-i18n="credits.plan.pro.desc">매달 300✦ · 크레딧당 최저가</span>
+              <button type="button" id="credits-pro-cta" class="btn btn-primary btn-block" data-i18n="credits.plan.pro.cta">Pro 시작하기</button>
+              <span class="credits-plan-current" id="credits-pro-current" data-i18n="credits.plan.current" hidden>현재 플랜</span>
+            </div>
+          </div>
+        </section>
+        <section class="credits-packs-sec">
+          <span class="field-label" data-i18n="credits.packs.label">크레딧 팩 (일회성)</span>
+          <div class="credit-packs">
+            <button type="button" id="credits-pack-small" class="credit-pack">
+              <span class="credit-pack-amt">100✦</span><span class="credit-pack-sub" data-i18n="credit.pack.small.sub">덤프 약 100회</span><span class="credit-pack-price">$3</span>
+            </button>
+            <button type="button" id="credits-pack-large" class="credit-pack best">
+              <span class="credit-pack-badge" data-i18n="credit.pack.badge">33% 절약</span>
+              <span class="credit-pack-amt">500✦</span><span class="credit-pack-sub" data-i18n="credit.pack.large.sub">덤프 약 500회</span><span class="credit-pack-price">$10</span>
+            </button>
+          </div>
+          <p class="credit-micro" data-i18n="credit.sheet.micro">남은 크레딧은 이월돼요 · Paddle 안전결제</p>
+        </section>
+        <section class="credits-history-sec">
+          <span class="field-label" data-i18n="credits.history.label">사용 내역</span>
+          <ul id="credits-history" class="credits-history"></ul>
+          <p id="credits-history-empty" class="credit-note" data-i18n="credits.history.empty" hidden>아직 내역이 없어요</p>
+        </section>
+      </div>
+    </div>
     <div id="route-settings" class="app-route">
       <div class="route-scroll shell">
         <label class="field">
@@ -274,6 +327,17 @@
           <span class="field-hint">aistudio.google.com/apikey</span>
         </label>
         <p id="settings-api-storage-notice" class="field-hint"></p>
+        <div class="field settings-dumply-field">
+          <span class="field-label" data-i18n="settings.dumply.label">Dumply 계정 · 크레딧</span>
+          <p id="dumply-account-status" class="field-hint settings-status"></p>
+          <input id="dumply-email" type="email" placeholder="you@email.com" autocomplete="off" />
+          <input id="dumply-otp" type="text" inputmode="numeric" placeholder="123456" autocomplete="off" hidden />
+          <button type="button" id="btn-dumply-otp" class="btn btn-secondary btn-block" data-i18n="settings.dumply.send">인증코드 보내기</button>
+          <button type="button" id="btn-dumply-signout" class="btn btn-secondary btn-block" hidden data-i18n="settings.dumply.signout">로그아웃</button>
+          <div class="dumply-topup" id="dumply-topup" hidden>
+            <button type="button" id="btn-dumply-manage" class="btn btn-primary btn-block" data-i18n="settings.dumply.manage">크레딧 & 구독 관리 →</button>
+          </div>
+        </div>
         <div class="field settings-google-field">
           <span class="field-label" data-i18n="settings.google.label">Google 계정 · 캘린더</span>
           <p id="google-account-status" class="field-hint settings-status">로그인하면 캘린더 일정을 가져와요</p>
@@ -510,12 +574,41 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
+  <!-- 크레딧 시트 — 잔액/미터/팩/Pro (Mimo P5 패턴) -->
+  <div id="credit-sheet" class="sheet" hidden>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="credit-sheet-title">
+      <div class="sheet-head">
+        <h2 id="credit-sheet-title" data-i18n="credit.sheet.title">내 크레딧</h2>
+        <button type="button" id="credit-sheet-close" class="link-btn" data-i18n="credit.sheet.close">닫기</button>
+      </div>
+      <div class="credit-balance-row"><span id="credit-sheet-balance" class="credit-balance-num">…</span><span id="credit-sheet-plan" class="credit-balance-plan"></span></div>
+      <div id="credit-meter-row" hidden>
+        <div class="credit-meter-labels"><span data-i18n="credit.meter.label">이번 달 사용</span><span id="credit-meter-count"></span></div>
+        <div class="credit-meter"><i id="credit-meter-fill"></i></div>
+      </div>
+      <p id="credit-sheet-note" class="credit-note" hidden></p>
+      <div class="credit-packs">
+        <button type="button" id="credit-pack-small" class="credit-pack">
+          <span class="credit-pack-amt">100✦</span><span class="credit-pack-sub" data-i18n="credit.pack.small.sub">덤프 약 100회</span><span class="credit-pack-price">$3</span>
+        </button>
+        <button type="button" id="credit-pack-large" class="credit-pack best">
+          <span class="credit-pack-badge" data-i18n="credit.pack.badge">33% 절약</span>
+          <span class="credit-pack-amt">500✦</span><span class="credit-pack-sub" data-i18n="credit.pack.large.sub">덤프 약 500회</span><span class="credit-pack-price">$10</span>
+        </button>
+      </div>
+      <button type="button" id="credit-sheet-pro" class="btn btn-primary btn-block" data-i18n="credit.sheet.pro">Pro 구독 · $4.99/월 (매달 300✦)</button>
+      <button type="button" id="credit-sheet-manage" class="link-btn btn-block" data-i18n="credit.sheet.manage">전체 관리 →</button>
+      <p class="credit-micro" data-i18n="credit.sheet.micro">남은 크레딧은 이월돼요 · Paddle 안전결제</p>
+    </div>
+  </div>
+
   <script src="lib/icons.js?v=3"></script>
   <script src="lib/brand.js?v=48"></script>
   <script src="lib/i18n.js?v=1"></script>
   <script src="lib/storage.js?v=63"></script>
   <script src="lib/decisions.js?v=5"></script>
   <script src="lib/tags.js?v=81"></script>
+  <script src="lib/dumply.js?v=1"></script>
   <script src="lib/ai.js?v=72"></script>
   <script src="lib/calendar.js?v=52"></script>
   <script src="lib/weather.js?v=49"></script>

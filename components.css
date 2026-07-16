@@ -394,3 +394,89 @@
   font-size: var(--font-size-sm);
   color: var(--text-secondary);
 }
+
+/* ── 크레딧 UI (필 · 시트 · 팩) ─────────────────────────── */
+.credit-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  border: 1px solid var(--border); border-radius: 999px;
+  background: var(--bg-accent-soft); color: var(--text-primary);
+  font-size: var(--font-size-sm); font-weight: 700;
+  padding: 3px 11px; cursor: pointer; white-space: nowrap;
+}
+.credit-pill.warn { background: #FDF1E2; border-color: #EAC79A; color: #B45309; }
+.dump-cost-hint { color: var(--text-secondary); font-weight: 600; }
+
+.credit-balance-row { display: flex; align-items: baseline; gap: 8px; margin: 6px 0 12px; }
+.credit-balance-num { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; }
+.credit-balance-plan {
+  font-size: var(--font-size-sm); font-weight: 700; color: var(--text-secondary);
+  border: 1px solid var(--border); border-radius: 6px; padding: 1px 8px;
+}
+.credit-meter-labels {
+  display: flex; justify-content: space-between;
+  font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: 4px;
+}
+.credit-meter { height: 6px; border-radius: 999px; background: var(--bg-accent-soft); overflow: hidden; margin-bottom: 12px; }
+.credit-meter i { display: block; height: 100%; width: 0; background: var(--accent-gradient); border-radius: 999px; transition: width .3s; }
+.credit-note { font-size: var(--font-size-sm); color: var(--text-secondary); margin: 0 0 12px; }
+.credit-packs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.credit-pack {
+  position: relative; border: 1.5px solid var(--border); border-radius: 12px;
+  background: transparent; padding: 12px 8px 10px; text-align: center; cursor: pointer;
+  display: flex; flex-direction: column; gap: 2px; align-items: center;
+}
+.credit-pack.best { border-color: var(--accent); background: var(--bg-accent-soft); }
+.credit-pack-badge {
+  position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: var(--accent-text);
+  font-size: 10px; font-weight: 800; border-radius: 999px; padding: 1px 8px; white-space: nowrap;
+}
+.credit-pack-amt { font-size: 18px; font-weight: 800; }
+.credit-pack-sub { font-size: 11px; color: var(--text-secondary); }
+.credit-pack-price { font-size: var(--font-size-sm); font-weight: 700; margin-top: 2px; }
+.credit-micro { font-size: 11px; color: var(--text-secondary); text-align: center; margin: 8px 0 0; }
+
+/* 온보딩 크레딧 게이트 */
+.ob-credit-gate { display: flex; flex-direction: column; gap: 8px; margin: 4px 0 6px; }
+.ob-credit-gate input {
+  border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+  font-size: var(--font-size-md); background: var(--bg-elevated, #fff); color: var(--text-primary);
+}
+.ob-credit-done {
+  background: var(--bg-accent-soft); border-radius: 10px; padding: 10px 12px;
+  font-size: var(--font-size-sm); font-weight: 700;
+}
+.ob-byo-divider { margin-top: 14px; }
+
+/* 크레딧 & 구독 페이지 */
+.credits-page-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.credits-title { font-size: var(--font-size-lg); font-weight: 800; margin: 0; }
+.credits-hero { margin-bottom: 20px; }
+.credits-plans, .credits-packs-sec, .credits-history-sec { margin-bottom: 22px; }
+.credits-plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.credits-plan-card {
+  position: relative; border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 12px; display: flex; flex-direction: column; gap: 3px;
+}
+.credits-plan-card.is-current { border-color: var(--accent); }
+.credits-plan-name { font-weight: 800; font-size: var(--font-size-md); }
+.credits-plan-price { font-size: 18px; font-weight: 800; }
+.credits-plan-price em { font-style: normal; font-size: var(--font-size-sm); color: var(--text-secondary); }
+.credits-plan-desc { font-size: var(--font-size-sm); color: var(--text-secondary); }
+.credits-plan-card .btn { margin-top: 8px; }
+.credits-plan-current {
+  margin-top: 8px; text-align: center; font-size: var(--font-size-sm); font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-accent-soft); border-radius: 8px; padding: 5px 0;
+}
+.credits-history { list-style: none; margin: 8px 0 0; padding: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.credits-history-row {
+  display: flex; align-items: center; gap: 8px; padding: 9px 12px;
+  font-size: var(--font-size-sm); border-top: 1px solid var(--border);
+}
+.credits-history-row:first-child { border-top: none; }
+.credits-history-label { flex: 1; }
+.credits-history-meta { color: var(--text-secondary); font-size: 11px; }
+.credits-history-delta { font-weight: 800; min-width: 36px; text-align: right; }
+.credits-history-delta.is-plus { color: #0A8A5F; }
+.credits-history-delta.is-minus { color: var(--text-secondary); }
+.ob-credit-pro-sub { font-size: var(--font-size-sm); color: var(--text-secondary); margin: 2px 0 0; }

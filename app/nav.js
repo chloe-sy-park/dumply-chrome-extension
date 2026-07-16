@@ -2,7 +2,7 @@
 
 'use strict';
 
-const NAV_ROUTES = ['home', 'calendar', 'projects', 'project-detail', 'settings'];
+const NAV_ROUTES = ['home', 'calendar', 'projects', 'project-detail', 'settings', 'credits'];
 
 function syncNavRail() {
   const rail = $('#nav-rail');
@@ -23,14 +23,14 @@ function syncNavRail() {
     if (target === 'home') active = state.ui.route === 'home';
     else if (target === 'calendar') active = state.ui.route === 'calendar';
     else if (target === 'projects') active = state.ui.route === 'projects' || state.ui.route === 'project-detail';
-    else if (target === 'settings') active = state.ui.route === 'settings';
+    else if (target === 'settings') active = state.ui.route === 'settings' || state.ui.route === 'credits';
     btn.classList.toggle('is-active', active);
   });
 }
 
 function syncRoutes() {
   if (!state?.ui) return;
-  const valid = ['home', 'calendar', 'projects', 'project-detail', 'settings'];
+  const valid = ['home', 'calendar', 'projects', 'project-detail', 'settings', 'credits'];
   let route = state.ui.route || 'home';
   if (!valid.includes(route)) {
     route = 'home';
@@ -78,6 +78,8 @@ function renderCurrentRoute() {
     renderProjectDetail(state.ui.projectId);
   } else if (route === 'settings') {
     refreshSettingsForm();
+  } else if (route === 'credits') {
+    renderCreditsPage();
   }
   mountNavRail();
 }

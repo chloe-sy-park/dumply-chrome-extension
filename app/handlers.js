@@ -337,9 +337,11 @@ async function makeSense() {
   let result = null;
   let usedAI = false;
   let aiError = false;
+  let aiErrorCode = '';
   const input = $('#dump-input');
 
-  if (AlfredoAI.hasKey(state.settings)) {
+  // 단순 입력(1~2문장·단일 의도)은 로컬 룰로 충분 — AI 호출 생략해 크레딧/토큰 절약
+  if (AlfredoAI.hasKey(state.settings) && !AlfredoTags.isSimpleDump(text)) {
     if (input) input.disabled = true;
     toast(AlfredoI18n.lang() === 'en' ? '🧠 Organizing…' : '🧠 정리하는 중…');
     try {
@@ -348,9 +350,11 @@ async function makeSense() {
       else aiError = true; // 키는 있는데 빈 응답
     } catch (e) {
       aiError = true;
-      console.warn('[Dumply] AI 추출 실패, 로컬 폴백:', e?.message || e);
+      aiErrorCode = String(e?.message || '');
+      console.warn('[Dumply] AI 추출 실패, 로컬 폴백:', aiErrorCode);
     }
     if (input) input.disabled = false;
+    refreshCreditPill(); // 크레딧 차감/환불 반영
   }
   if (!result) result = extractDumpLocal(text);
   makeSenseRunning = false;
@@ -381,8 +385,15 @@ async function makeSense() {
   };
 
   // AI를 켰는데 실패했으면 그 사실을 보이게 — 무음 폴백이 "AI가 안 된다"는 오해를 만듦
+  // 크레딧 유저는 원인별 안내 (402는 최고의 충전 접점 → 시트 오픈)
   if (aiError) {
-    toast(AlfredoI18n.lang() === 'en' ? '⚠️ AI failed — organized with basic rules (check API key & network)' : '⚠️ AI 정리 실패 — 기본 규칙으로 정리했어요 (API 키·네트워크 확인)');
+    if (aiErrorCode === 'NO_CREDITS') { toast(t('credit.err.no_credits')); openCreditSheet(); }
+    else if (aiErrorCode === 'RATE_LIMITED') toast(t('credit.err.rate'));
+    else if (aiErrorCode === 'service_busy') toast(t('credit.err.busy'));
+    else if (aiErrorCode === 'account_flagged') toast(t('credit.err.flagged'));
+    else if (aiErrorCode === 'OUTPUT_TRUNCATED') toast(t('credit.err.truncated'));
+    else if (usingDumplyCredits()) toast(t('credit.err.generic'));
+    else toast(AlfredoI18n.lang() === 'en' ? '⚠️ AI failed — organized with basic rules (check API key & network)' : '⚠️ AI 정리 실패 — 기본 규칙으로 정리했어요 (API 키·네트워크 확인)');
   } else {
     // 성공 시 '되돌리기' 제공 — 잘못 쪼개졌거나 지어냈을 때 원문째 복구 가능
     toastUndo(makeSenseToast(counts), restoreDump);
@@ -390,6 +401,20 @@ async function makeSense() {
 
   // AI 추출을 안 썼을 때만 백그라운드 태그 보강(감정/에너지) — 중복 호출 방지
   if (!usedAI) enrichDumpTags(created);
+
+  // 첫 로컬 정리 직후 1회성 AI 업셀 넛지 — aha 순간이 최적 접점 (벤치마크 STEP3)
+  // 되돌리기 토스트(5초)와 같은 슬롯을 쓰므로 그 뒤에 표시
+  if (!usedAI && !AlfredoAI.hasKey(state.settings) && !state.settings.aiNudgeShown) {
+    state.settings.aiNudgeShown = true;
+    persist();
+    setTimeout(() => {
+      toast(t('credit.nudge'), {
+        actionLabel: t('credit.nudge.action'),
+        duration: 8000,
+        onAction: () => document.querySelector('[data-nav="settings"]')?.click(),
+      });
+    }, 5600);
+  }
 }
 
 /** 분기 결과 토스트 — 할 일/마음/고민 갈래를 짧게 안내 */
@@ -749,9 +774,262 @@ function applyTheme() {
   }
 }
 
+// ── 크레딧 UI (헤더 필 · 시트) ───────────────────────────────
+// "크레딧으로 결제 중"일 때만 과금 UI 노출 — BYO 키가 있으면 전부 숨김 (설계 원칙)
+function usingDumplyCredits() {
+  if (typeof DumplyAccount === 'undefined' || !DumplyAccount.isSignedIn()) return false;
+  const keys = state.settings.apiKeys || {};
+  return !(keys.anthropic || keys.openai || keys.google);
+}
+
+function refreshCreditPill() {
+  const pill = $('#credit-pill');
+  const costHint = $('#dump-cost-hint');
+  const active = usingDumplyCredits();
+  if (costHint) costHint.hidden = !active;
+  if (!pill) return;
+  pill.hidden = !active;
+  if (!active) return;
+  const bal = DumplyAccount.getBalance();
+  $('#credit-pill-num').textContent = bal === -1 ? '∞' : bal === null ? '…' : bal;
+  pill.classList.toggle('warn', typeof bal === 'number' && bal >= 0 && bal <= 5);
+}
+
+let creditUsageCache = null;
+
+function renderCreditSheet() {
+  const bal = DumplyAccount.getBalance();
+  const plan = DumplyAccount.getPlan() || 'free';
+  $('#credit-sheet-balance').textContent = bal === -1 ? '∞' : bal === null ? '…' : bal;
+  $('#credit-sheet-plan').textContent = t(`settings.dumply.plan.${plan}`);
+  const meterRow = $('#credit-meter-row');
+  const note = $('#credit-sheet-note');
+  if (plan === 'free') {
+    // Free = 월 20 top-up → "이번 달 사용 n/20" 미터가 성립
+    meterRow.hidden = creditUsageCache === null;
+    if (creditUsageCache !== null) {
+      $('#credit-meter-count').textContent = `${creditUsageCache} / 20✦`;
+      $('#credit-meter-fill').style.width = `${Math.min(100, (creditUsageCache / 20) * 100)}%`;
+    }
+    note.hidden = true;
+  } else {
+    // Pro = 결제 1:1 가산·이월 → 미터 대신 잔액 프레임
+    meterRow.hidden = true;
+    note.textContent = t('credit.sheet.note.pro');
+    note.hidden = plan !== 'pro';
+  }
+  const proBtn = $('#credit-sheet-pro');
+  if (proBtn) proBtn.hidden = plan === 'pro' || plan === 'unlimited';
+}
+
+async function openCreditSheet() {
+  const sheet = $('#credit-sheet');
+  if (!sheet || typeof DumplyAccount === 'undefined' || !DumplyAccount.isSignedIn()) return;
+  sheet.hidden = false;
+  renderCreditSheet(); // 캐시로 즉시 그린 뒤 서버값으로 갱신
+  try {
+    await DumplyAccount.fetchBalance();
+    creditUsageCache = await DumplyAccount.fetchUsage();
+  } catch (_e) { /* 오프라인 등 — 캐시 표시 유지 */ }
+  renderCreditSheet();
+  refreshCreditPill();
+}
+
+// ── 크레딧 & 구독 페이지 (route-credits) — 클로드식 사용량 가시화 ──
+// 원장 reason → 사람이 읽는 라벨/아이콘
+function ledgerRowLabel(reason) {
+  if (reason.startsWith('ai_call')) return { icon: '🧠', key: 'credits.row.ai' };
+  if (reason === 'free_monthly_refresh') return { icon: '🔄', key: 'credits.row.monthly' };
+  if (reason.startsWith('purchase:pro_monthly')) return { icon: '⭐', key: 'credits.row.pro' };
+  if (reason.startsWith('purchase:')) return { icon: '🛒', key: 'credits.row.pack' };
+  if (reason === 'refund_ai_failure') return { icon: '↩️', key: 'credits.row.ai_refund' };
+  if (reason.startsWith('refund:')) return { icon: '💳', key: 'credits.row.refund' };
+  if (reason.startsWith('referral')) return { icon: '🎁', key: 'credits.row.referral' };
+  return { icon: '·', key: 'credits.row.etc' };
+}
+
+let creditLedgerCache = null;
+
+function renderCreditsPageBody() {
+  const bal = DumplyAccount.getBalance();
+  const plan = DumplyAccount.getPlan() || 'free';
+  $('#credits-balance').textContent = bal === -1 ? '∞' : bal === null ? '…' : bal;
+  $('#credits-plan').textContent = t(`settings.dumply.plan.${plan}`);
+
+  // 사용량 게이지 — Free는 n/20 + 리셋일, Pro는 이번 달 사용량 + 지급 안내
+  const wrap = $('#credits-gauge-wrap');
+  if (creditUsageCache !== null) {
+    wrap.hidden = false;
+    if (plan === 'free') {
+      $('#credits-gauge-label').textContent = t('credit.meter.label');
+      $('#credits-gauge-count').textContent = `${creditUsageCache} / 20✦`;
+      $('#credits-gauge-fill').style.width = `${Math.min(100, (creditUsageCache / 20) * 100)}%`;
+      $('#credits-gauge-sub').textContent = t('credits.gauge.reset.free');
+    } else {
+      $('#credits-gauge-label').textContent = t('credit.meter.label');
+      $('#credits-gauge-count').textContent = `${creditUsageCache}✦`;
+      $('#credits-gauge-fill').style.width = plan === 'pro' ? `${Math.min(100, (creditUsageCache / 300) * 100)}%` : '0%';
+      $('#credits-gauge-sub').textContent = plan === 'pro' ? t('credits.gauge.reset.pro') : '';
+    }
+  } else {
+    wrap.hidden = true;
+  }
+
+  // 플랜 카드 — 현재 플랜 표시 (Luma "Current" 패턴)
+  $('#credits-free-current').hidden = plan !== 'free';
+  $('#credits-pro-current').hidden = plan !== 'pro';
+  $('#credits-pro-cta').hidden = plan !== 'free';
+  $('#credits-plan-free').classList.toggle('is-current', plan === 'free');
+  $('#credits-plan-pro').classList.toggle('is-current', plan === 'pro');
+
+  // 사용 내역
+  const list = $('#credits-history');
+  const empty = $('#credits-history-empty');
+  list.replaceChildren();
+  const rows = creditLedgerCache || [];
+  empty.hidden = rows.length > 0;
+  const fmt = new Intl.DateTimeFormat(AlfredoI18n.lang() === 'en' ? 'en' : 'ko', { month: 'short', day: 'numeric' });
+  rows.forEach((r) => {
+    if (r.delta === 0 && r.reason === 'free_monthly_refresh') return; // 노이즈 (0델타 갱신 마커)
+    const { icon, key } = ledgerRowLabel(r.reason || '');
+    const li = document.createElement('li');
+    li.className = 'credits-history-row';
+    const label = document.createElement('span');
+    label.className = 'credits-history-label';
+    label.textContent = `${icon} ${t(key)}`;
+    const meta = document.createElement('span');
+    meta.className = 'credits-history-meta';
+    meta.textContent = fmt.format(new Date(r.created_at));
+    const delta = document.createElement('span');
+    delta.className = `credits-history-delta ${r.delta > 0 ? 'is-plus' : r.delta < 0 ? 'is-minus' : ''}`;
+    delta.textContent = r.delta > 0 ? `+${r.delta}` : String(r.delta);
+    li.append(label, meta, delta);
+    list.append(li);
+  });
+}
+
+async function renderCreditsPage() {
+  if (typeof DumplyAccount === 'undefined' || !DumplyAccount.isSignedIn()) {
+    navigateTo('settings'); // 미로그인 → 설정에서 가입 유도
+    return;
+  }
+  renderCreditsPageBody(); // 캐시로 즉시
+  try {
+    await DumplyAccount.fetchBalance();
+    [creditUsageCache, creditLedgerCache] = await Promise.all([
+      DumplyAccount.fetchUsage(),
+      DumplyAccount.fetchLedger(20),
+    ]);
+  } catch (_e) { /* 오프라인 — 캐시 유지 */ }
+  if (state.ui.route !== 'credits') return; // 기다리는 사이 이동했으면 중단
+  renderCreditsPageBody();
+  refreshCreditPill();
+}
+
+// 결제 새 탭에서 돌아왔을 때 잔액 재조회 — 늘었으면 충전 완료 토스트 (P8 패턴)
+async function onVisibleRefreshCredits() {
+  if (document.visibilityState !== 'visible' || !usingDumplyCredits()) return;
+  const before = DumplyAccount.getBalance();
+  try { await DumplyAccount.fetchBalance(); } catch (_e) { return; }
+  const after = DumplyAccount.getBalance();
+  if (typeof before === 'number' && typeof after === 'number' && after > before) {
+    toast(t('credit.topup.done', after - before));
+    if (!$('#credit-sheet')?.hidden) renderCreditSheet();
+  }
+  refreshCreditPill();
+}
+
+// Dumply 계정 섹션 — 로그인 상태·크레딧 잔액 반영
+function refreshDumplySettingsUI() {
+  const status = $('#dumply-account-status');
+  const email = $('#dumply-email');
+  const otp = $('#dumply-otp');
+  const otpBtn = $('#btn-dumply-otp');
+  const outBtn = $('#btn-dumply-signout');
+  if (!status || !otpBtn) return;
+  const signedIn = typeof DumplyAccount !== 'undefined' && DumplyAccount.isSignedIn();
+  const topup = $('#dumply-topup');
+  if (topup) topup.hidden = !signedIn;
+  email.hidden = signedIn;
+  otp.hidden = true;
+  otp.value = '';
+  otpBtn.hidden = signedIn;
+  otpBtn.textContent = t('settings.dumply.send');
+  outBtn.hidden = !signedIn;
+  if (!signedIn) {
+    status.textContent = t('settings.dumply.hint.signedout');
+    return;
+  }
+  const render = () => {
+    const bal = DumplyAccount.getBalance();
+    const plan = DumplyAccount.getPlan();
+    status.textContent = t(
+      'settings.dumply.status',
+      DumplyAccount.getEmail(),
+      plan ? t(`settings.dumply.plan.${plan}`) : '…',
+      bal === -1 ? '∞' : bal === null ? '…' : bal,
+    );
+    const proBtn = $('#btn-dumply-buy-pro');
+    if (proBtn) proBtn.hidden = plan === 'pro' || plan === 'unlimited';
+    refreshCreditPill();
+  };
+  render();
+  DumplyAccount.fetchBalance().then(render).catch(() => {});
+}
+
+async function onDumplyOtpClick() {
+  const email = $('#dumply-email').value.trim();
+  const otp = $('#dumply-otp');
+  const btn = $('#btn-dumply-otp');
+  if (!email) { toast(t('settings.dumply.email.required')); return; }
+  btn.disabled = true;
+  try {
+    if (otp.hidden) {
+      await DumplyAccount.requestOtp(email);
+      otp.hidden = false;
+      btn.textContent = t('settings.dumply.verify');
+      toast(t('settings.dumply.sent'));
+    } else {
+      const code = otp.value.trim();
+      if (!code) { toast(t('settings.dumply.code.required')); return; }
+      await DumplyAccount.verifyOtp(email, code);
+      toast(t('settings.dumply.done'));
+      refreshDumplySettingsUI();
+      renderAll();
+    }
+  } catch (e) {
+    console.warn('[Dumply] 계정 인증 실패:', e?.message || e);
+    toast(t('settings.dumply.error'));
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function onDumplySignout() {
+  await DumplyAccount.signOut();
+  refreshDumplySettingsUI();
+  renderAll();
+}
+
+// 크레딧 팩 결제 — Stripe Checkout을 새 탭으로 (결제 완료 시 웹훅이 지급)
+async function onDumplyBuy(pack, btn) {
+  btn.disabled = true;
+  try {
+    const url = await DumplyAccount.createCheckout(pack);
+    chrome.tabs ? chrome.tabs.create({ url }) : window.open(url, '_blank');
+    toast(t('settings.dumply.buy.opened'));
+  } catch (e) {
+    console.warn('[Dumply] 결제 시작 실패:', e?.message || e);
+    toast(t('settings.dumply.error'));
+  } finally {
+    btn.disabled = false;
+  }
+}
+
 function refreshSettingsForm() {
   ensureSettingsHeader();
   applyI18n($('#route-settings'));
+  refreshDumplySettingsUI();
   // data-i18n-title 속성 처리 (title attribute)
   document.querySelectorAll('[data-i18n-title]').forEach((el) => {
     el.title = t(el.dataset.i18nTitle);
@@ -1494,6 +1772,29 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   $('#btn-save-settings')?.addEventListener('click', saveSettings);
   $('#btn-google-connect')?.addEventListener('click', connectGoogleAccount);
   $('#btn-google-disconnect')?.addEventListener('click', disconnectGoogleAccount);
+  $('#btn-dumply-otp')?.addEventListener('click', onDumplyOtpClick);
+  $('#btn-dumply-signout')?.addEventListener('click', onDumplySignout);
+  $('#btn-dumply-buy-pro')?.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));
+  $('#btn-dumply-buy-small')?.addEventListener('click', (e) => onDumplyBuy('small', e.currentTarget));
+  $('#btn-dumply-buy-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));
+  // 크레딧 필 → 전체 페이지 (클로드식: 한 번에 사용량 상세로), 402 순간엔 시트가 뜸
+  $('#credit-pill')?.addEventListener('click', () => navigateTo('credits'));
+  $('#credit-sheet-close')?.addEventListener('click', () => { $('#credit-sheet').hidden = true; });
+  $('#credit-sheet')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.hidden = true; });
+  $('#credit-sheet-manage')?.addEventListener('click', () => { $('#credit-sheet').hidden = true; navigateTo('credits'); });
+  $('#credit-pack-small')?.addEventListener('click', (e) => onDumplyBuy('small', e.currentTarget));
+  $('#credit-pack-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));
+  $('#credit-sheet-pro')?.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));
+  // 크레딧 & 구독 페이지
+  $('#btn-dumply-manage')?.addEventListener('click', () => navigateTo('credits'));
+  $('#credits-back')?.addEventListener('click', () => navigateTo('settings'));
+  $('#credits-pro-cta')?.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));
+  $('#credits-pack-small')?.addEventListener('click', (e) => onDumplyBuy('small', e.currentTarget));
+  $('#credits-pack-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));
+  // 결제 새 탭 복귀 시 잔액 갱신
+  document.addEventListener('visibilitychange', onVisibleRefreshCredits);
+  refreshCreditPill();
+  if (usingDumplyCredits()) DumplyAccount.fetchBalance().then(refreshCreditPill).catch(() => {});
   $('#btn-location-enable')?.addEventListener('click', enableDeviceLocation);
   $('#btn-reset-data')?.addEventListener('click', resetAllData);
   $('#btn-export')?.addEventListener('click', exportData);
