@@ -740,11 +740,15 @@ function refreshDumplySettingsUI() {
   }
   const render = () => {
     const bal = DumplyAccount.getBalance();
+    const plan = DumplyAccount.getPlan();
     status.textContent = t(
       'settings.dumply.status',
       DumplyAccount.getEmail(),
+      plan ? t(`settings.dumply.plan.${plan}`) : '…',
       bal === -1 ? '∞' : bal === null ? '…' : bal,
     );
+    const proBtn = $('#btn-dumply-buy-pro');
+    if (proBtn) proBtn.hidden = plan === 'pro' || plan === 'unlimited';
   };
   render();
   DumplyAccount.fetchBalance().then(render).catch(() => {});
@@ -1547,6 +1551,7 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   $('#btn-google-disconnect')?.addEventListener('click', disconnectGoogleAccount);
   $('#btn-dumply-otp')?.addEventListener('click', onDumplyOtpClick);
   $('#btn-dumply-signout')?.addEventListener('click', onDumplySignout);
+  $('#btn-dumply-buy-pro')?.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));
   $('#btn-dumply-buy-small')?.addEventListener('click', (e) => onDumplyBuy('small', e.currentTarget));
   $('#btn-dumply-buy-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));
   $('#btn-location-enable')?.addEventListener('click', enableDeviceLocation);
