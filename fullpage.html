@@ -205,6 +205,58 @@
       </div>
     </div>
 
+    <div id="route-credits" class="app-route">
+      <div class="route-scroll shell">
+        <div class="credits-page-head">
+          <button type="button" id="credits-back" class="link-btn" data-i18n="credits.back">← 설정</button>
+          <h2 class="credits-title" data-i18n="credits.title">크레딧 & 구독</h2>
+        </div>
+        <section class="credits-hero">
+          <div class="credit-balance-row"><span id="credits-balance" class="credit-balance-num">…</span><span id="credits-plan" class="credit-balance-plan"></span></div>
+          <div id="credits-gauge-wrap" hidden>
+            <div class="credit-meter-labels"><span id="credits-gauge-label"></span><span id="credits-gauge-count"></span></div>
+            <div class="credit-meter"><i id="credits-gauge-fill"></i></div>
+            <p id="credits-gauge-sub" class="credit-note"></p>
+          </div>
+        </section>
+        <section class="credits-plans">
+          <span class="field-label" data-i18n="credits.plans.label">플랜</span>
+          <div class="credits-plan-grid">
+            <div class="credits-plan-card" id="credits-plan-free">
+              <span class="credits-plan-name">Free</span>
+              <span class="credits-plan-price">$0</span>
+              <span class="credits-plan-desc" data-i18n="credits.plan.free.desc">매달 20✦ 무료</span>
+              <span class="credits-plan-current" id="credits-free-current" data-i18n="credits.plan.current" hidden>현재 플랜</span>
+            </div>
+            <div class="credits-plan-card is-pro" id="credits-plan-pro">
+              <span class="credits-plan-name">Pro</span>
+              <span class="credits-plan-price">$4.99<em data-i18n="credits.plan.month">/월</em></span>
+              <span class="credits-plan-desc" data-i18n="credits.plan.pro.desc">매달 300✦ · 크레딧당 최저가</span>
+              <button type="button" id="credits-pro-cta" class="btn btn-primary btn-block" data-i18n="credits.plan.pro.cta">Pro 시작하기</button>
+              <span class="credits-plan-current" id="credits-pro-current" data-i18n="credits.plan.current" hidden>현재 플랜</span>
+            </div>
+          </div>
+        </section>
+        <section class="credits-packs-sec">
+          <span class="field-label" data-i18n="credits.packs.label">크레딧 팩 (일회성)</span>
+          <div class="credit-packs">
+            <button type="button" id="credits-pack-small" class="credit-pack">
+              <span class="credit-pack-amt">100✦</span><span class="credit-pack-sub" data-i18n="credit.pack.small.sub">덤프 약 100회</span><span class="credit-pack-price">$3</span>
+            </button>
+            <button type="button" id="credits-pack-large" class="credit-pack best">
+              <span class="credit-pack-badge" data-i18n="credit.pack.badge">33% 절약</span>
+              <span class="credit-pack-amt">500✦</span><span class="credit-pack-sub" data-i18n="credit.pack.large.sub">덤프 약 500회</span><span class="credit-pack-price">$10</span>
+            </button>
+          </div>
+          <p class="credit-micro" data-i18n="credit.sheet.micro">남은 크레딧은 이월돼요 · Paddle 안전결제</p>
+        </section>
+        <section class="credits-history-sec">
+          <span class="field-label" data-i18n="credits.history.label">사용 내역</span>
+          <ul id="credits-history" class="credits-history"></ul>
+          <p id="credits-history-empty" class="credit-note" data-i18n="credits.history.empty" hidden>아직 내역이 없어요</p>
+        </section>
+      </div>
+    </div>
     <div id="route-settings" class="app-route">
       <div class="route-scroll shell">
         <label class="field">
@@ -282,9 +334,7 @@
           <button type="button" id="btn-dumply-otp" class="btn btn-secondary btn-block" data-i18n="settings.dumply.send">인증코드 보내기</button>
           <button type="button" id="btn-dumply-signout" class="btn btn-secondary btn-block" hidden data-i18n="settings.dumply.signout">로그아웃</button>
           <div class="dumply-topup" id="dumply-topup" hidden>
-            <button type="button" id="btn-dumply-buy-pro" class="btn btn-primary btn-block" data-i18n="settings.dumply.buy.pro">Pro 구독 · $4.99/월</button>
-            <button type="button" id="btn-dumply-buy-small" class="btn btn-secondary btn-block" data-i18n="settings.dumply.buy.small">크레딧 100개 · $3</button>
-            <button type="button" id="btn-dumply-buy-large" class="btn btn-secondary btn-block" data-i18n="settings.dumply.buy.large">크레딧 500개 · $10</button>
+            <button type="button" id="btn-dumply-manage" class="btn btn-primary btn-block" data-i18n="settings.dumply.manage">크레딧 & 구독 관리 →</button>
           </div>
         </div>
         <div class="field settings-google-field">
@@ -546,6 +596,7 @@
         </button>
       </div>
       <button type="button" id="credit-sheet-pro" class="btn btn-primary btn-block" data-i18n="credit.sheet.pro">Pro 구독 · $4.99/월 (매달 300✦)</button>
+      <button type="button" id="credit-sheet-manage" class="link-btn btn-block" data-i18n="credit.sheet.manage">전체 관리 →</button>
       <p class="credit-micro" data-i18n="credit.sheet.micro">남은 크레딧은 이월돼요 · Paddle 안전결제</p>
     </div>
   </div>

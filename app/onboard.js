@@ -316,6 +316,15 @@ function creditGateBlock() {
   const signedIn = typeof DumplyAccount !== 'undefined' && DumplyAccount.isSignedIn();
   if (signedIn) {
     wrap.append(el('p', 'ob-credit-done', t('ob.credits.done', DumplyAccount.getEmail())));
+    // 가입 완료 직후 = 구독 제안의 최적 시점. 무료 계속이 기본, Pro는 선택지로.
+    if (DumplyAccount.getPlan() !== 'pro') {
+      const pro = document.createElement('button');
+      pro.type = 'button';
+      pro.className = 'btn btn-secondary btn-block';
+      pro.textContent = t('ob.credits.pro');
+      pro.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));
+      wrap.append(pro, el('p', 'ob-credit-pro-sub', t('ob.credits.pro.sub')));
+    }
     return wrap;
   }
   const email = document.createElement('input');

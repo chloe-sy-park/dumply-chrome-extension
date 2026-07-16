@@ -802,6 +802,97 @@ async function openCreditSheet() {
   refreshCreditPill();
 }
 
+// ── 크레딧 & 구독 페이지 (route-credits) — 클로드식 사용량 가시화 ──
+// 원장 reason → 사람이 읽는 라벨/아이콘
+function ledgerRowLabel(reason) {
+  if (reason.startsWith('ai_call')) return { icon: '🧠', key: 'credits.row.ai' };
+  if (reason === 'free_monthly_refresh') return { icon: '🔄', key: 'credits.row.monthly' };
+  if (reason.startsWith('purchase:pro_monthly')) return { icon: '⭐', key: 'credits.row.pro' };
+  if (reason.startsWith('purchase:')) return { icon: '🛒', key: 'credits.row.pack' };
+  if (reason === 'refund_ai_failure') return { icon: '↩️', key: 'credits.row.ai_refund' };
+  if (reason.startsWith('refund:')) return { icon: '💳', key: 'credits.row.refund' };
+  if (reason.startsWith('referral')) return { icon: '🎁', key: 'credits.row.referral' };
+  return { icon: '·', key: 'credits.row.etc' };
+}
+
+let creditLedgerCache = null;
+
+function renderCreditsPageBody() {
+  const bal = DumplyAccount.getBalance();
+  const plan = DumplyAccount.getPlan() || 'free';
+  $('#credits-balance').textContent = bal === -1 ? '∞' : bal === null ? '…' : bal;
+  $('#credits-plan').textContent = t(`settings.dumply.plan.${plan}`);
+
+  // 사용량 게이지 — Free는 n/20 + 리셋일, Pro는 이번 달 사용량 + 지급 안내
+  const wrap = $('#credits-gauge-wrap');
+  if (creditUsageCache !== null) {
+    wrap.hidden = false;
+    if (plan === 'free') {
+      $('#credits-gauge-label').textContent = t('credit.meter.label');
+      $('#credits-gauge-count').textContent = `${creditUsageCache} / 20✦`;
+      $('#credits-gauge-fill').style.width = `${Math.min(100, (creditUsageCache / 20) * 100)}%`;
+      $('#credits-gauge-sub').textContent = t('credits.gauge.reset.free');
+    } else {
+      $('#credits-gauge-label').textContent = t('credit.meter.label');
+      $('#credits-gauge-count').textContent = `${creditUsageCache}✦`;
+      $('#credits-gauge-fill').style.width = plan === 'pro' ? `${Math.min(100, (creditUsageCache / 300) * 100)}%` : '0%';
+      $('#credits-gauge-sub').textContent = plan === 'pro' ? t('credits.gauge.reset.pro') : '';
+    }
+  } else {
+    wrap.hidden = true;
+  }
+
+  // 플랜 카드 — 현재 플랜 표시 (Luma "Current" 패턴)
+  $('#credits-free-current').hidden = plan !== 'free';
+  $('#credits-pro-current').hidden = plan !== 'pro';
+  $('#credits-pro-cta').hidden = plan !== 'free';
+  $('#credits-plan-free').classList.toggle('is-current', plan === 'free');
+  $('#credits-plan-pro').classList.toggle('is-current', plan === 'pro');
+
+  // 사용 내역
+  const list = $('#credits-history');
+  const empty = $('#credits-history-empty');
+  list.replaceChildren();
+  const rows = creditLedgerCache || [];
+  empty.hidden = rows.length > 0;
+  const fmt = new Intl.DateTimeFormat(AlfredoI18n.lang() === 'en' ? 'en' : 'ko', { month: 'short', day: 'numeric' });
+  rows.forEach((r) => {
+    if (r.delta === 0 && r.reason === 'free_monthly_refresh') return; // 노이즈 (0델타 갱신 마커)
+    const { icon, key } = ledgerRowLabel(r.reason || '');
+    const li = document.createElement('li');
+    li.className = 'credits-history-row';
+    const label = document.createElement('span');
+    label.className = 'credits-history-label';
+    label.textContent = `${icon} ${t(key)}`;
+    const meta = document.createElement('span');
+    meta.className = 'credits-history-meta';
+    meta.textContent = fmt.format(new Date(r.created_at));
+    const delta = document.createElement('span');
+    delta.className = `credits-history-delta ${r.delta > 0 ? 'is-plus' : r.delta < 0 ? 'is-minus' : ''}`;
+    delta.textContent = r.delta > 0 ? `+${r.delta}` : String(r.delta);
+    li.append(label, meta, delta);
+    list.append(li);
+  });
+}
+
+async function renderCreditsPage() {
+  if (typeof DumplyAccount === 'undefined' || !DumplyAccount.isSignedIn()) {
+    navigateTo('settings'); // 미로그인 → 설정에서 가입 유도
+    return;
+  }
+  renderCreditsPageBody(); // 캐시로 즉시
+  try {
+    await DumplyAccount.fetchBalance();
+    [creditUsageCache, creditLedgerCache] = await Promise.all([
+      DumplyAccount.fetchUsage(),
+      DumplyAccount.fetchLedger(20),
+    ]);
+  } catch (_e) { /* 오프라인 — 캐시 유지 */ }
+  if (state.ui.route !== 'credits') return; // 기다리는 사이 이동했으면 중단
+  renderCreditsPageBody();
+  refreshCreditPill();
+}
+
 // 결제 새 탭에서 돌아왔을 때 잔액 재조회 — 늘었으면 충전 완료 토스트 (P8 패턴)
 async function onVisibleRefreshCredits() {
   if (document.visibilityState !== 'visible' || !usingDumplyCredits()) return;
@@ -1653,13 +1744,20 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   $('#btn-dumply-buy-pro')?.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));
   $('#btn-dumply-buy-small')?.addEventListener('click', (e) => onDumplyBuy('small', e.currentTarget));
   $('#btn-dumply-buy-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));
-  // 크레딧 필·시트
-  $('#credit-pill')?.addEventListener('click', openCreditSheet);
+  // 크레딧 필 → 전체 페이지 (클로드식: 한 번에 사용량 상세로), 402 순간엔 시트가 뜸
+  $('#credit-pill')?.addEventListener('click', () => navigateTo('credits'));
   $('#credit-sheet-close')?.addEventListener('click', () => { $('#credit-sheet').hidden = true; });
   $('#credit-sheet')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.hidden = true; });
+  $('#credit-sheet-manage')?.addEventListener('click', () => { $('#credit-sheet').hidden = true; navigateTo('credits'); });
   $('#credit-pack-small')?.addEventListener('click', (e) => onDumplyBuy('small', e.currentTarget));
   $('#credit-pack-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));
   $('#credit-sheet-pro')?.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));
+  // 크레딧 & 구독 페이지
+  $('#btn-dumply-manage')?.addEventListener('click', () => navigateTo('credits'));
+  $('#credits-back')?.addEventListener('click', () => navigateTo('settings'));
+  $('#credits-pro-cta')?.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));
+  $('#credits-pack-small')?.addEventListener('click', (e) => onDumplyBuy('small', e.currentTarget));
+  $('#credits-pack-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));
   // 결제 새 탭 복귀 시 잔액 갱신
   document.addEventListener('visibilitychange', onVisibleRefreshCredits);
   refreshCreditPill();
