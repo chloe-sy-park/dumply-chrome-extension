@@ -435,3 +435,15 @@
 .credit-pack-sub { font-size: 11px; color: var(--text-secondary); }
 .credit-pack-price { font-size: var(--font-size-sm); font-weight: 700; margin-top: 2px; }
 .credit-micro { font-size: 11px; color: var(--text-secondary); text-align: center; margin: 8px 0 0; }
+
+/* 온보딩 크레딧 게이트 */
+.ob-credit-gate { display: flex; flex-direction: column; gap: 8px; margin: 4px 0 6px; }
+.ob-credit-gate input {
+  border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+  font-size: var(--font-size-md); background: var(--bg-elevated, #fff); color: var(--text-primary);
+}
+.ob-credit-done {
+  background: var(--bg-accent-soft); border-radius: 10px; padding: 10px 12px;
+  font-size: var(--font-size-sm); font-weight: 700;
+}
+.ob-byo-divider { margin-top: 14px; }

@@ -183,9 +183,12 @@ function renderOnboardStep() {
     }
     $('#ob-cal-connect')?.addEventListener('click', connectCalendarFromOb);
   } else if (step === 'api') {
+    // 크레딧 우선 게이트 — "가입 = 무료 20✦ 선물" 프레이밍, BYO 키는 아래 보조 경로 (벤치마크 P1·STEP4)
     body.append(
-      el('h1', 'onboard-title', t('ob.api.title')),
-      el('p', 'onboard-desc', t('ob.api.desc')),
+      el('h1', 'onboard-title', t('ob.credits.title')),
+      el('p', 'onboard-desc', t('ob.credits.desc')),
+      creditGateBlock(),
+      el('p', 'onboard-desc onboard-desc-sub ob-byo-divider', t('ob.credits.byo.divider')),
       apiSubscriptionNotice(),
       fieldSelect('ob-provider', t('ob.api.provider'), [
         { v: 'anthropic', l: 'Claude (Anthropic)', sel: state.settings.aiProvider === 'anthropic' },
@@ -305,6 +308,59 @@ function fieldHintLink(text, url, linkLabel) {
   a.textContent = linkLabel;
   p.append(a);
   return p;
+}
+
+// 온보딩 크레딧 게이트 — 이메일 OTP 가입 시 무료 20✦ (요구가 아니라 지급으로 프레이밍)
+function creditGateBlock() {
+  const wrap = el('div', 'ob-credit-gate');
+  const signedIn = typeof DumplyAccount !== 'undefined' && DumplyAccount.isSignedIn();
+  if (signedIn) {
+    wrap.append(el('p', 'ob-credit-done', t('ob.credits.done', DumplyAccount.getEmail())));
+    return wrap;
+  }
+  const email = document.createElement('input');
+  email.id = 'ob-dumply-email';
+  email.type = 'email';
+  email.placeholder = 'you@email.com';
+  email.autocomplete = 'off';
+  const otp = document.createElement('input');
+  otp.id = 'ob-dumply-otp';
+  otp.type = 'text';
+  otp.inputMode = 'numeric';
+  otp.placeholder = '123456';
+  otp.autocomplete = 'off';
+  otp.hidden = true;
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn btn-primary btn-block';
+  btn.textContent = t('ob.credits.send');
+  btn.addEventListener('click', async () => {
+    btn.disabled = true;
+    try {
+      if (otp.hidden) {
+        const addr = email.value.trim();
+        if (!addr) { toast(t('settings.dumply.email.required')); return; }
+        await DumplyAccount.requestOtp(addr);
+        otp.hidden = false;
+        btn.textContent = t('settings.dumply.verify');
+        toast(t('settings.dumply.sent'));
+      } else {
+        const code = otp.value.trim();
+        if (!code) { toast(t('settings.dumply.code.required')); return; }
+        await DumplyAccount.verifyOtp(email.value.trim(), code);
+        toast(t('ob.credits.granted'));
+        DumplyAccount.fetchBalance().then(() => refreshCreditPill?.()).catch(() => {});
+        renderOnboardStep(); // 가입 완료 상태로 다시 그림
+      }
+    } catch (e) {
+      console.warn('[Dumply] 온보딩 가입 실패:', e?.message || e);
+      toast(t('settings.dumply.error'));
+    } finally {
+      btn.disabled = false;
+    }
+  });
+  wrap.append(email, otp, btn);
+  return wrap;
 }
 
 function apiSubscriptionNotice() {

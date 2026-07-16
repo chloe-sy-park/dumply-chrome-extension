@@ -368,6 +368,20 @@ async function makeSense() {
 
   // AI 추출을 안 썼을 때만 백그라운드 태그 보강(감정/에너지) — 중복 호출 방지
   if (!usedAI) enrichDumpTags(created);
+
+  // 첫 로컬 정리 직후 1회성 AI 업셀 넛지 — aha 순간이 최적 접점 (벤치마크 STEP3)
+  // 되돌리기 토스트(5초)와 같은 슬롯을 쓰므로 그 뒤에 표시
+  if (!usedAI && !AlfredoAI.hasKey(state.settings) && !state.settings.aiNudgeShown) {
+    state.settings.aiNudgeShown = true;
+    persist();
+    setTimeout(() => {
+      toast(t('credit.nudge'), {
+        actionLabel: t('credit.nudge.action'),
+        duration: 8000,
+        onAction: () => document.querySelector('[data-nav="settings"]')?.click(),
+      });
+    }, 5600);
+  }
 }
 
 /** 분기 결과 토스트 — 할 일/마음/고민 갈래를 짧게 안내 */

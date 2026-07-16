@@ -1,4 +1,0 @@
-{"ts": "2026-07-16T05:35:34.496893+00:00", "event": "plan_created", "brief": "dumply 크레딧 온보딩 구현 4-Phase (pricing-plan §3): 서버 보강 → 크레딧 코어 UX → 온보딩 여정 → 마무리", "count": 4}
-{"ts": "2026-07-16T05:55:17.731397+00:00", "event": "story_started", "id": "G001", "title": "P1-server"}
-{"ts": "2026-07-16T05:55:17.765341+00:00", "event": "checkpoint", "id": "G001", "status": "complete", "evidence": "get_monthly_usage+revoke_credits 마이그레이션 success, webhook v6 배포, Paddle 시뮬레이터(실서명): 팩환불 -100(120→20)/재전달 already_refunded/pro환불 잔액부족→-20 클램프+abuse_flagged=true+plan free 강등, purchases.refunded_at 2건 — 전부 DB SELECT 관측. 발견: Paddle Billing에 transaction.refunded 없음 → adjustment.*(action=refund) 사용", "verify_cmd": "", "verify_evidence": ""}
-{"ts": "2026-07-16T05:55:17.797206+00:00", "event": "story_started", "id": "G002", "title": "P2-credit-ux"}
