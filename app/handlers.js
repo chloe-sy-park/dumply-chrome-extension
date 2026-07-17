@@ -811,9 +811,31 @@ function refreshCreditPill() {
   // 헤더 배지 — 드로어가 있으면 저잔액 경고일 때만 조건부 노출 (없으면 기존 상시 노출)
   const hasDrawer = Boolean(drawerCard);
   pill.hidden = hasDrawer ? !(active && isLow) : !active;
-  if (pill.hidden) return;
-  $('#credit-pill-num').textContent = bal === -1 ? '∞' : bal === null ? '…' : bal;
-  pill.classList.toggle('warn', isLow);
+  if (!pill.hidden) {
+    $('#credit-pill-num').textContent = bal === -1 ? '∞' : bal === null ? '…' : bal;
+    pill.classList.toggle('warn', isLow);
+  }
+  refreshSettingsCreditHero();
+}
+
+// 설정 크레딧 히어로 — 잔액/플랜/CTA (미로그인이면 가입 CTA)
+function refreshSettingsCreditHero() {
+  const hero = $('#settings-credit-hero');
+  if (!hero) return;
+  const signedIn = typeof DumplyAccount !== 'undefined' && DumplyAccount.isSignedIn();
+  const cta = $('#chc-cta');
+  const planEl = $('#chc-plan');
+  if (!signedIn) {
+    $('#chc-balance').textContent = '20';
+    if (planEl) planEl.hidden = true;
+    if (cta) cta.textContent = t('settings.credit.hero.signin');
+    return;
+  }
+  const bal = DumplyAccount.getBalance();
+  $('#chc-balance').textContent = bal === -1 ? '∞' : bal === null ? '…' : bal;
+  const plan = DumplyAccount.getPlan?.() || 'free';
+  if (planEl) { planEl.hidden = false; planEl.textContent = plan; }
+  if (cta) cta.textContent = t('settings.dumply.manage');
 }
 
 let creditUsageCache = null;
@@ -1050,7 +1072,13 @@ async function onDumplyBuy(pack, btn) {
 function refreshSettingsForm() {
   ensureSettingsHeader();
   applyI18n($('#route-settings'));
+  applyI18n($('#route-byok'));
   refreshDumplySettingsUI();
+  // BYOK 진입 행 상태 — 키가 하나라도 있으면 '연결됨'
+  const keys = state.settings.apiKeys || {};
+  const byokStatus = $('#byok-status');
+  if (byokStatus) byokStatus.textContent = (keys.anthropic || keys.openai || keys.google) ? t('byok.status.on') : '';
+  refreshSettingsCreditHero();
   // data-i18n-title 속성 처리 (title attribute)
   document.querySelectorAll('[data-i18n-title]').forEach((el) => {
     el.title = t(el.dataset.i18nTitle);
@@ -1822,6 +1850,16 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   // 크레딧 & 구독 페이지
   $('#btn-dumply-manage')?.addEventListener('click', () => navigateTo('credits'));
   $('#credits-back')?.addEventListener('click', () => navigateTo('settings'));
+  $('#btn-open-byok')?.addEventListener('click', () => navigateTo('byok'));
+  $('#byok-back')?.addEventListener('click', () => navigateTo('settings'));
+  $('#btn-save-byok')?.addEventListener('click', saveSettings);
+  $('#chc-cta')?.addEventListener('click', () => {
+    const signedIn = typeof DumplyAccount !== 'undefined' && DumplyAccount.isSignedIn();
+    if (signedIn) { navigateTo('credits'); return; }
+    const email = $('#dumply-email');
+    email?.scrollIntoView({ block: 'center' });
+    email?.focus();
+  });
   $('#credits-pro-cta')?.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));
   $('#credits-pack-small')?.addEventListener('click', (e) => onDumplyBuy('small', e.currentTarget));
   $('#credits-pack-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));

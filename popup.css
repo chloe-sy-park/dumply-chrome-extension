@@ -3865,3 +3865,23 @@ button.proj-card {
 .settings-group .field input,
 .settings-group .field select,
 .settings-group .field textarea { background: var(--bg-base); } /* 카드 위 인풋 = 들어간 트랙 (톤 사다리) */
+
+/* ── 설정 위계: 크레딧 히어로 · 진입 행 · 구분선 · 여백 ── */
+#route-settings .route-page-header { margin-bottom: var(--dumply-gap-md); } /* 헤더↔카드 여백 통일 (16px) */
+.credit-hero-card { background: var(--accent); color: var(--accent-text); border-radius: var(--radius-card);
+  padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow-md); }
+.credit-hero-card .chc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.credit-hero-card .chc-label { font-size: var(--font-size-caption); font-weight: 600; opacity: 0.75; }
+.credit-hero-card .chc-plan { font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--accent-text) 18%, transparent); }
+.credit-hero-card .chc-bal { display: flex; align-items: baseline; gap: 6px; margin-bottom: 12px;
+  font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.credit-hero-card .chc-bal small { font-size: 11px; font-weight: 500; opacity: 0.75; }
+.credit-hero-card .btn { background: var(--accent-text); color: var(--accent); box-shadow: none; }
+.settings-row { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 48px; padding: 0 2px;
+  border: 0; background: transparent; font-family: inherit; cursor: pointer; text-align: left; border-radius: var(--radius-sm); }
+.settings-row:hover { background: var(--bg-base); }
+.settings-row .sr-label { flex: 1; min-width: 0; font-size: var(--font-size-body); font-weight: 600; color: var(--text-primary); }
+.settings-row .sr-value { font-size: var(--font-size-caption); color: var(--text-secondary); }
+.settings-row .sr-chev { width: 15px; height: 15px; stroke: var(--text-placeholder); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+.settings-group .field ~ .field { border-top: 1px solid var(--bg-input); padding-top: 14px; } /* 항목 구분선 — 행 위계 */
