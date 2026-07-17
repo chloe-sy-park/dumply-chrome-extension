@@ -1,0 +1,33 @@
+/* ── DS 갤러리 정합 프리뷰 (임시 — 승인 시 본 CSS로 이관 후 삭제) ── */
+
+/* ② 그레이 축: 갤러리 3단 (#656D76 / #7D8189) + placeholder 유지 */
+:root { --dumply-text-body: #656D76; --dumply-text-secondary: #7D8189; }
+
+/* ⑤ 행간 */
+body { line-height: 1.5; }
+
+/* ① 버튼: 갤러리 48pt / 15.5 / radius 14 / shadow-btn */
+.btn { min-height: 48px; font-size: 15.5px; border-radius: 14px; box-shadow: 0 1px 2px rgba(9, 9, 11, 0.12); }
+.btn-sm, .btn-xs { min-height: 38px; font-size: 13.5px; border-radius: 12px; box-shadow: none; }
+
+/* ③ 본문/입력 스케일 */
+#dump-input { font-size: 15.5px; }
+.dump-hint, .flow-hint { font-size: 12.5px; }
+
+/* ⑦ 배지: 화이트 + 헤어라인 + 그림자 (떠 있는 필) */
+.a-card-badge, .section-badge {
+  background: var(--bg-surface); border: 1px solid var(--card-line);
+  box-shadow: var(--dumply-shadow-sm); color: #656D76;
+  font-size: 12.5px; font-weight: 600; padding: 4px 10px;
+}
+
+/* ⑥ 칩: 위계 = 잉크 농도 (갤러리 Micro 10.5/800) */
+.inbox-suggest-pill {
+  border: none !important; background: rgba(8, 9, 10, 0.72) !important; color: var(--bg-base) !important;
+  font-size: 10.5px !important; font-weight: 800 !important; letter-spacing: 0.02em;
+  border-radius: 7px !important; padding: 4px 9px !important; box-shadow: none !important;
+}
+.inbox-suggest-pill.is-must { background: var(--accent) !important; color: var(--accent-text) !important; }
+.inbox-suggest-pill .priority-dot { display: none !important; }
+.inbox-row-chips .bucket-chip { border: none; background: rgba(8, 9, 10, 0.06); color: var(--text-secondary); font-size: 10.5px; font-weight: 800; letter-spacing: 0.02em; border-radius: 7px; padding: 4px 9px; box-shadow: none; }
+.inbox-row-chips .bucket-chip.is-suggested { background: var(--accent); color: var(--accent-text); }
