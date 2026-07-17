@@ -1401,6 +1401,7 @@ body {
   min-height: 320px;
   max-height: 420px;
 }
+.timeline-block[hidden] { display: none !important; } /* 빈 날 스마트 윈도우 — display가 hidden을 이기는 함정 가드 */
 /* 시 레이블 + 그리드를 한 스크롤 컨테이너에 두어 함께 스크롤(정렬 유지) */
 .tb-scroll {
   flex: 1;
