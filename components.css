@@ -480,3 +480,9 @@
 .credits-history-delta.is-plus { color: #0A8A5F; }
 .credits-history-delta.is-minus { color: var(--text-secondary); }
 .ob-credit-pro-sub { font-size: var(--font-size-sm); color: var(--text-secondary); margin: 2px 0 0; }
+
+/* ── 액센트 스와처 (설정 · data-accent 직교 축) ── */
+.accent-swatches { display: flex; gap: 8px; align-items: center; padding: 4px 0; }
+.accent-sw { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--border); padding: 0; cursor: pointer; }
+.accent-sw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--bg-base), 0 0 0 3.5px var(--text-secondary); }
+.accent-sw:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

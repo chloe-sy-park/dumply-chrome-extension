@@ -5,10 +5,10 @@
   /* ── 톤온톤 서피스 사다리 (웜 · 순백/순흑 미사용) ──
      들어감(soft·track) < 바닥(page) < 올라옴(card)
      L: 90 ───────── 95.7 ───────── 98.4  (모두 같은 웜 온도) */
-  --dumply-bg: #F3F1EB;                 /* 바닥 — 페이지·시트 배경 */
-  --dumply-sheet: #F3F1EB;              /* 본문 영역 배경 */
-  --dumply-surface: #FBFAF6;            /* 올라온 카드 — 웜 오프화이트 (순백 X) */
-  --dumply-card: #FBFAF6;               /* empty-card · dump-card 등 */
+  --dumply-bg: #F6F7F9;                 /* 바닥 — 매트 모노 (Zinc, 2026-07-16 갤러리 DS 확정) */
+  --dumply-sheet: #F6F7F9;              /* 본문 영역 배경 */
+  --dumply-surface: #FFFFFF;            /* 올라온 카드 */
+  --dumply-card: #FFFFFF;               /* empty-card · dump-card 등 */
   --dumply-padding-x: 16px;             /* 가장자리 패딩 (가변 너비 대응) */
   --dumply-content-max: 520px;          /* 넓은 패널 대비 콘텐츠 최대 폭 */
   --dumply-safe-top: 24px;
@@ -38,24 +38,24 @@
   --dumply-font-weight-bold: 700;
 
   /* ── Typography — color (4단계) ── */
-  --dumply-text-primary: #36312B;       /* 가장 중요한 텍스트 (웜 소프트 먹색 — 순흑 회피) */
-  --dumply-text-body: #5E574E;          /* 일반 설명 · 소제목 */
-  --dumply-text-secondary: #928B80;     /* 보조 텍스트 (웜 그레이) */
-  --dumply-text-placeholder: #B7B0A4;   /* 플레이스홀더 · 비활성 */
+  --dumply-text-primary: #08090A;       /* 잉크 — 가장 중요한 텍스트 */
+  --dumply-text-body: #3F3F46;          /* 일반 설명 · 소제목 */
+  --dumply-text-secondary: #6B6F76;     /* 보조 텍스트 */
+  --dumply-text-placeholder: #B0B5BD;   /* 플레이스홀더 · 비활성 */
 
   /* ── Surface & UI (모노톤) ── */
-  --dumply-input: #E6E1D8;              /* 들어간 트랙·태그칩 (바닥보다 어둡게) */
-  --dumply-tag-bg: #E6E1D8;
-  --dumply-tag-text: #5E574E;
-  --dumply-active: #DFD9CF;             /* hover·active (한 계단 더 깊게) */
-  --dumply-border: #EAE7E1;             /* 웜 보더 */
-  --dumply-border-strong: #DDD8D0;
-  --dumply-accent: #262019;            /* 모노톤 Primary (웜 에스프레소 차콜) */
-  --dumply-accent-dark: #1A1510;
-  --dumply-accent-soft: #EAE6DE;       /* 들어간 소프트 웰 — 빈상태·배지·세그먼트 트랙 */
+  --dumply-input: #EDEDF0;              /* 들어간 트랙·태그칩 (바닥보다 어둡게) */
+  --dumply-tag-bg: #EDEDF0;
+  --dumply-tag-text: #6B6F76;
+  --dumply-active: #E4E4E7;             /* hover·active (한 계단 더 깊게) */
+  --dumply-border: #E4E4E7;             /* Zinc 보더 */
+  --dumply-border-strong: #D4D4D8;
+  --dumply-accent: #08090A;            /* 잉크 Primary (매트 모노 기본) */
+  --dumply-accent-dark: #27272A;
+  --dumply-accent-soft: #EDEDF0;       /* 들어간 소프트 웰 — 빈상태·배지·세그먼트 트랙 */
   --dumply-cal-range-bg: rgba(8, 9, 10, 0.10);
-  --dumply-accent-gradient: linear-gradient(to right, #2E2820, #262019);
-  --dumply-accent-text: #FBFAF8;
+  --dumply-accent-gradient: linear-gradient(to right, #1B1B1F, #08090A);
+  --dumply-accent-text: #FFFFFF;
   --dumply-success: #34C759;
   --dumply-warning: #FF9500;
   --dumply-error: #FF3B30;
@@ -90,15 +90,16 @@
 
   /* ── Radius ── */
   --dumply-radius-card: 16px;
+  --dumply-radius-lg: 14px;            /* 버튼 (갤러리 DS) */
   --dumply-radius-md: 10px;
   --dumply-radius-sm: 8px;
   --dumply-radius-sheet: 12px;         /* 본문 곡선 시트 (4모서리) */
   --dumply-radius-sheet-top: 12px;     /* 하위 호환 */
 
   /* ── Shadow ── */
-  --dumply-shadow-sm: 0 1px 2px rgba(52, 40, 24, 0.05), 0 1px 1px rgba(52, 40, 24, 0.04);
-  --dumply-shadow-md: 0 6px 20px rgba(52, 40, 24, 0.09), 0 1px 2px rgba(52, 40, 24, 0.05);
-  --dumply-overlay: rgba(38, 32, 25, 0.54);
+  --dumply-shadow-sm: 0 1px 2px rgba(9, 9, 11, 0.05), 0 1px 1px rgba(9, 9, 11, 0.04);
+  --dumply-shadow-md: 0 4px 14px rgba(9, 9, 11, 0.05), 0 1px 2px rgba(9, 9, 11, 0.05);
+  --dumply-overlay: rgba(18, 18, 22, 0.5);
 
   /* ── Spacing ── */
   --dumply-gap-xs: 6px;
@@ -168,11 +169,92 @@
   --shadow-md: var(--dumply-shadow-md);
   --shadow-glass: var(--dumply-shadow-md);
   --radius-card: var(--dumply-radius-card);
+  --radius-lg: var(--dumply-radius-lg);
   --radius-md: var(--dumply-radius-md);
   --radius-sm: var(--dumply-radius-sm);
   --radius-sheet-top: var(--dumply-radius-sheet-top);
   --radius-sheet: var(--dumply-radius-sheet);
 }
+
+/* ─────────────────────────────────────────────
+   다크 모노 (갤러리 DS 기본 다크 · 그림자 대신 라이트 보더로 분리)
+   ───────────────────────────────────────────── */
+:root[data-theme="dark"] {
+  --dumply-bg: #09090B;
+  --dumply-sheet: #09090B;
+  --dumply-surface: #18181B;
+  --dumply-card: #18181B;
+  --dumply-input: #27272A;
+  --dumply-tag-bg: #27272A;
+  --dumply-tag-text: #A1A1AA;
+  --dumply-active: #2E2E33;
+  --dumply-border: rgba(255, 255, 255, 0.07);
+  --dumply-border-strong: #3F3F46;
+  --dumply-accent: #FAFAFA;
+  --dumply-accent-dark: #E4E4E7;
+  --dumply-accent-soft: #27272A;
+  --dumply-accent-gradient: linear-gradient(to right, #FFFFFF, #FAFAFA);
+  --dumply-accent-text: #09090B;
+  --dumply-text-primary: #FAFAFA;
+  --dumply-text-body: #A1A1AA;
+  --dumply-text-secondary: #8B8B94;
+  --dumply-text-placeholder: #5E5E68;
+  --dumply-cal-range-bg: rgba(250, 250, 250, 0.10);
+  --dumply-shadow-sm: none;
+  --dumply-shadow-md: none;
+  --dumply-overlay: rgba(0, 0, 0, 0.55);
+  --dumply-cal-a: #253040;
+  --dumply-cal-b: #3A2830;
+  --dumply-cal-c: #3A3520;
+  --dumply-cal-d: #283A30;
+  --dumply-cal-gcal: #2A3040;
+  --dumply-cal-tl: #3A3028;
+  --dumply-cal-memo: #302840;
+}
+
+/* ─────────────────────────────────────────────
+   크래프트 — 구 기본(웜 톤온톤) 보존 테마 (2026-07-16 Zinc 전환 전 값)
+   ───────────────────────────────────────────── */
+:root[data-theme="craft"] {
+  --dumply-bg: #F3F1EB;
+  --dumply-sheet: #F3F1EB;
+  --dumply-surface: #FBFAF6;
+  --dumply-card: #FBFAF6;
+  --dumply-input: #E6E1D8;
+  --dumply-tag-bg: #E6E1D8;
+  --dumply-tag-text: #5E574E;
+  --dumply-active: #DFD9CF;
+  --dumply-border: #EAE7E1;
+  --dumply-border-strong: #DDD8D0;
+  --dumply-accent: #262019;
+  --dumply-accent-dark: #1A1510;
+  --dumply-accent-soft: #EAE6DE;
+  --dumply-accent-gradient: linear-gradient(to right, #2E2820, #262019);
+  --dumply-accent-text: #FBFAF8;
+  --dumply-text-primary: #36312B;
+  --dumply-text-body: #5E574E;
+  --dumply-text-secondary: #928B80;
+  --dumply-text-placeholder: #B7B0A4;
+  --dumply-shadow-sm: 0 1px 2px rgba(52, 40, 24, 0.05), 0 1px 1px rgba(52, 40, 24, 0.04);
+  --dumply-shadow-md: 0 6px 20px rgba(52, 40, 24, 0.09), 0 1px 2px rgba(52, 40, 24, 0.05);
+  --dumply-overlay: rgba(38, 32, 25, 0.54);
+}
+
+/* ─────────────────────────────────────────────
+   액센트 테마 (갤러리 DS · data-theme와 직교 축)
+   모노 베이스는 그대로, 액센트만 물든다 — CTA·선택 칩·완료 체크.
+   다크(data-theme="dark")와 조합 시 iOS 다크 변형값 사용.
+   ───────────────────────────────────────────── */
+:root[data-accent="blue"]   { --dumply-accent: #007AFF; --dumply-accent-dark: #0062CC; --dumply-accent-gradient: linear-gradient(to right, #1A88FF, #007AFF); --dumply-accent-text: #FFFFFF; }
+:root[data-accent="indigo"] { --dumply-accent: #5856D6; --dumply-accent-dark: #4644B8; --dumply-accent-gradient: linear-gradient(to right, #6866DE, #5856D6); --dumply-accent-text: #FFFFFF; }
+:root[data-accent="green"]  { --dumply-accent: #34C759; --dumply-accent-dark: #1B7A38; --dumply-accent-gradient: linear-gradient(to right, #44D169, #34C759); --dumply-accent-text: #FFFFFF; }
+:root[data-accent="amber"]  { --dumply-accent: #FF9500; --dumply-accent-dark: #A05A00; --dumply-accent-gradient: linear-gradient(to right, #FFA31A, #FF9500); --dumply-accent-text: #FFFFFF; }
+:root[data-accent="rose"]   { --dumply-accent: #FF2D55; --dumply-accent-dark: #D70036; --dumply-accent-gradient: linear-gradient(to right, #FF4368, #FF2D55); --dumply-accent-text: #FFFFFF; }
+:root[data-theme="dark"][data-accent="blue"]   { --dumply-accent: #0A84FF; --dumply-accent-dark: #6EB5FF; --dumply-accent-text: #FFFFFF; }
+:root[data-theme="dark"][data-accent="indigo"] { --dumply-accent: #5E5CE6; --dumply-accent-dark: #B3B1FF; --dumply-accent-text: #FFFFFF; }
+:root[data-theme="dark"][data-accent="green"]  { --dumply-accent: #30D158; --dumply-accent-dark: #4CD97B; --dumply-accent-text: #FFFFFF; }
+:root[data-theme="dark"][data-accent="amber"]  { --dumply-accent: #FF9F0A; --dumply-accent-dark: #FFB340; --dumply-accent-text: #FFFFFF; }
+:root[data-theme="dark"][data-accent="rose"]   { --dumply-accent: #FF375F; --dumply-accent-dark: #FF7A96; --dumply-accent-text: #FFFFFF; }
 
 /* ─────────────────────────────────────────────
    컬러 테마 (Linear 팀 팔레트 기반 · 톤온톤 사다리 동일 구조)

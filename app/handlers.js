@@ -759,19 +759,31 @@ function closePanel() {
 
 let __themeMqlBound = false;
 // 설정값을 실제 data-theme로 환원해 적용.
-// 'system' → OS 라이트=System(중립 그레이) / OS 다크=Midnight, 그 외는 지정 테마 그대로.
+// 'system' → OS 라이트=Mono(기본 Zinc, :root) / OS 다크=Mono Dark, 그 외는 지정 테마 그대로.
 function applyTheme() {
   const pref = state?.settings?.theme || 'system';
   const resolved = pref === 'system'
-    ? (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'midnight' : 'system')
+    ? (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
     : pref;
   document.documentElement.setAttribute('data-theme', resolved);
+  // 액센트 (직교 축) — ''=모노, blue|indigo|green|amber|rose
+  const accent = state?.settings?.accent || '';
+  if (accent) document.documentElement.setAttribute('data-accent', accent);
+  else document.documentElement.removeAttribute('data-accent');
   if (!__themeMqlBound && window.matchMedia) {
     __themeMqlBound = true;
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
     const onChange = () => { if ((state?.settings?.theme || 'system') === 'system') applyTheme(); };
     mql.addEventListener ? mql.addEventListener('change', onChange) : mql.addListener?.(onChange);
   }
+}
+
+// 설정 화면 액센트 스와처 선택 표시 동기화
+function refreshAccentSwatches() {
+  const cur = state?.settings?.accent || '';
+  document.querySelectorAll('#accent-swatches .accent-sw').forEach((b) => {
+    b.setAttribute('aria-pressed', String((b.dataset.accentValue || '') === cur));
+  });
 }
 
 // ── 크레딧 UI (헤더 필 · 시트) ───────────────────────────────
@@ -1039,6 +1051,7 @@ function refreshSettingsForm() {
   $('#weather-city').placeholder = t('settings.weather.placeholder');
   if ($('#language-select')) $('#language-select').value = state.settings.language || 'auto';
   if ($('#theme-select')) $('#theme-select').value = state.settings.theme || 'system';
+  refreshAccentSwatches();
   $('#weather-city').value = state.settings.weatherCity || t('settings.weather.default');
   const savedProvider = state.settings.aiProvider || 'anthropic';
   $('#ai-provider').value = savedProvider;
@@ -1766,6 +1779,14 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
     state.settings.theme = $('#theme-select').value;
     applyTheme();
     await persist();
+  });
+  document.querySelectorAll('#accent-swatches .accent-sw').forEach((b) => {
+    b.addEventListener('click', async () => {
+      state.settings.accent = b.dataset.accentValue || '';
+      applyTheme();
+      refreshAccentSwatches();
+      await persist();
+    });
   });
   $('#ai-provider')?.addEventListener('change', onProviderChange);
   $('#ai-model')?.addEventListener('change', onModelChange);
