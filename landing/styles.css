@@ -613,6 +613,69 @@ html[lang="ja"] .phero .hero__title { font-size: clamp(28px, 3.8vw, 46px); }
 .faq__item[open] summary::after { content: "−"; }
 .faq__item p { padding: 0 22px 18px; color: var(--text-body); font-size: 15.5px; line-height: 1.7; }
 
+/* ───────────── pricing: 플랜 카드 ───────────── */
+.plans { padding: clamp(30px, 6vh, 70px) 0; }
+.plan-grid {
+  max-width: var(--max); margin: 0 auto; padding: 0 clamp(20px, 5vw, 52px);
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch;
+}
+.plan {
+  position: relative; display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 30px 28px; box-shadow: var(--shadow-sm);
+  transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out);
+}
+.plan:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+.plan--hero { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+.plan__badge {
+  position: absolute; top: -13px; left: 26px;
+  font-size: 11px; font-weight: 600; letter-spacing: .02em;
+  padding: 5px 11px; border-radius: var(--radius-pill);
+  background: var(--accent); color: var(--accent-text); box-shadow: var(--shadow-sm);
+}
+.plan h3 { font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
+.plan__price {
+  margin: 12px 0 2px; font-family: var(--serif-en);
+  font-size: 38px; font-weight: 500; letter-spacing: -.02em; color: var(--text);
+  font-feature-settings: "tnum";
+}
+.plan__price em { font-family: var(--sans); font-style: normal; font-size: 14px; font-weight: 500; color: var(--text-2); }
+.plan__note { font-size: 13px; color: var(--text-2); min-height: 1.5em; }
+.plan ul { list-style: none; margin: 20px 0 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.plan li { display: flex; align-items: baseline; gap: 9px; font-size: 14.5px; color: var(--text-body); }
+.plan li::before { content: "✓"; flex: 0 0 auto; color: var(--task); font-weight: 700; }
+.plan li b { font-weight: 600; color: var(--text); white-space: nowrap; }
+.plan .btn { justify-content: center; }
+
+/* pricing: 일회성 크레딧 팩 */
+.packs { padding: clamp(30px, 6vh, 70px) 0; }
+.pack-row {
+  max-width: 780px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 52px);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
+}
+.pack {
+  position: relative; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 26px 28px; box-shadow: var(--shadow-sm);
+}
+.pack--best { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+.pack__badge {
+  position: absolute; top: -12px; right: 20px;
+  font-size: 11px; font-weight: 600; padding: 5px 11px;
+  border-radius: var(--radius-pill); background: var(--feel-soft); color: #8A4F40;
+}
+.pack__amt { font-family: var(--serif-en); font-size: 30px; color: var(--text); font-feature-settings: "tnum"; }
+.pack__sub { font-size: 13px; color: var(--text-2); margin-right: auto; }
+.pack__price { font-size: 20px; font-weight: 600; color: var(--text); }
+.packs__note {
+  max-width: 780px; margin: 16px auto 0; padding: 0 clamp(20px, 5vw, 52px);
+  font-size: 13px; color: var(--text-2); text-align: center;
+}
+
+@media (max-width: 900px) {
+  .plan-grid, .pack-row { grid-template-columns: 1fr; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
   [data-reveal], .manifesto .w { opacity: 1 !important; transform: none !important; }
