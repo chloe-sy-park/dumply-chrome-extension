@@ -116,7 +116,7 @@ button { font-family: inherit; cursor: pointer; }
 /* ── 고스트 퀵애드 행 + kbd 칩 (Superlist: New task ⌃N) — 데스크톱 전용 ── */
 .quick-add {
   display: none;
-  display: flex; align-items: center; gap: var(--sp-3);
+  align-items: center; gap: var(--sp-3);
   width: 100%; text-align: left;
   padding: var(--sp-2) var(--card-pad); min-height: var(--touch-target);
   border: none; border-radius: var(--dumply-radius-control);
