@@ -1072,13 +1072,13 @@ body {
 .moscow-board {
   display: flex;
   flex-direction: column;
-  gap: var(--dumply-gap-md);
+  gap: var(--dumply-gap-sm); /* 버킷 4개는 한 보드의 그룹 — 섹션 간격(md)보다 좁게 */
 }
 .bucket {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
-  padding: var(--dumply-gap-md) var(--dumply-gap-lg);
+  padding: 12px var(--dumply-gap-md);
 }
 .bucket-head { display: flex; align-items: center; gap: var(--dumply-gap-sm); margin-bottom: var(--dumply-gap-sm); flex-wrap: wrap; }
 .bucket-dot { width: var(--dot-size-sm); height: var(--dot-size-sm); border-radius: 50%; flex-shrink: 0; }
@@ -1090,7 +1090,7 @@ body {
 .bucket-list { list-style: none; min-height: 8px; }
 .bucket-item {
   display: flex; align-items: center; gap: var(--dumply-gap-sm);
-  padding: 6px 8px;
+  padding: 5px 8px;
   border-radius: var(--radius-sm);
   background: var(--bg-base);
   margin-bottom: var(--dumply-gap-xs);
@@ -1101,6 +1101,8 @@ body {
 .bucket-item:last-child { margin-bottom: 0; border-bottom: none; }
 .bucket-item .bucket-text { flex: 1; min-width: 0; }
 .bucket-actions { display: flex; gap: 2px; flex-shrink: 0; }
+/* 행 높이를 hover 전용 버튼이 강제하지 않게 — 히트 영역은 ::before(-7px)가 보전 */
+.bucket-actions .mini-btn { width: 24px; height: 24px; font-size: 13px; }
 .bucket-item.dragging { opacity: 0.5; }
 .bucket-empty { font-size: 11px; color: var(--text-placeholder); padding: var(--dumply-gap-sm) 0; }
 .mini-btn {
