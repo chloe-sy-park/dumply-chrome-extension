@@ -541,7 +541,7 @@ body {
 }
 .dash-header .shell { width: 100%; }
 .dash-greet { margin-bottom: 0; }
-.hdr-greeting { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; color: var(--text-primary); }
+.hdr-greeting { font-size: var(--font-size-title); font-weight: var(--font-weight-bold); letter-spacing: -0.03em; line-height: 1.25; color: var(--text-primary); } /* 페이지 대제목 스케일 (갤러리 DS) */
 .hdr-meta-row {
   display: flex;
   align-items: center;
@@ -602,8 +602,8 @@ body {
 .tabs {
   display: flex;
   gap: 2px;
-  width: calc(100% - 2 * var(--dumply-padding-x));
-  max-width: calc(var(--dumply-content-max) - 2 * var(--dumply-padding-x));
+  width: fit-content;                 /* 컴팩트 세그먼트 — 전폭 점유 금지 (갤러리 DS) */
+  max-width: calc(100% - 2 * var(--dumply-padding-x));
   margin: 0 auto var(--dumply-gap-lg);
   flex-shrink: 0;
   background: var(--bg-accent-soft);
@@ -611,8 +611,9 @@ body {
   padding: 3px;
 }
 .tab {
-  flex: 1;
-  min-height: 44px;
+  flex: 0 0 auto;
+  padding: 0 18px;
+  min-height: 36px;
   border: none;
   background: transparent;
   color: var(--text-secondary);
