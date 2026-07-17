@@ -25,6 +25,7 @@ function getDetailItem() {
 
 function closeDetailDatePopover() {
   detailState.dateField = null;
+  detailState.timeField = null;
   const pop = $('#detail-popover');
   if (pop) {
     pop.hidden = true;
@@ -34,11 +35,64 @@ function closeDetailDatePopover() {
 
 function openDetailDatePopover(field) {
   detailState.dateField = field;
+  detailState.timeField = null;
   detailState.calendarMonth = null;
   const pop = $('#detail-popover');
   if (!pop) return;
   renderDetailDatePopover();
   pop.hidden = false;
+}
+
+function openDetailTimePopover(inputId) {
+  detailState.dateField = null;
+  detailState.timeField = inputId;
+  const pop = $('#detail-popover');
+  if (!pop) return;
+  renderDetailTimePopover();
+  pop.hidden = false;
+}
+
+function renderDetailTimePopover() {
+  const pop = $('#detail-popover');
+  if (!pop) return;
+  pop.replaceChildren();
+  const inputId = detailState.timeField;
+  const startLabelIds = ['detail-start-time', 'detail-time'];
+  const lbl = document.createElement('p');
+  lbl.className = 'compose-pop-label';
+  lbl.textContent = startLabelIds.includes(inputId)
+    ? t('detail.field.start.time')
+    : t('detail.field.deadline.time');
+  pop.append(lbl);
+  fillTimePickerPopover(pop, {
+    value: $(`#${inputId}`)?.value || '',
+    onChange: (v) => {
+      setDetailTimeBtn(inputId, v);
+      if (detailState.kind === 'memo') syncDetailDurationFromTimes();
+      scheduleDetailSave();
+    },
+  });
+  // 일정 시작 시간은 비우면 저장 시 기본값이 들어가므로 지우기 미노출
+  if (inputId !== 'detail-time') {
+    const clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
+    clearBtn.className = 'compose-pop-link';
+    clearBtn.textContent = t('compose.time.none');
+    clearBtn.addEventListener('click', () => {
+      setDetailTimeBtn(inputId, '');
+      if (detailState.kind === 'memo') syncDetailDurationFromTimes();
+      scheduleDetailSave();
+      closeDetailDatePopover();
+    });
+    pop.append(clearBtn);
+  }
+}
+
+function setDetailTimeBtn(inputId, value) {
+  const btn = $(`#${inputId}`);
+  if (!btn) return;
+  btn.value = value || '';
+  btn.textContent = formatComposeTimeLabel(value || null);
 }
 
 function getDetailSelectedDate() {
@@ -174,21 +228,21 @@ async function switchDetailType(toKind) {
   await flushDetailSave();
 
   if (kind === 'event' && toKind === 'memo') {
-    const t = state.timeline.find((x) => x.id === id);
-    if (!t) return;
+    const ev = state.timeline.find((x) => x.id === id);
+    if (!ev) return;
     const newId = AlfredoStorage.uid();
     state.timeline = state.timeline.filter((x) => x.id !== id);
     const bucket = 'must';
     state.memos.push({
       id: newId,
-      content: t.title,
-      notes: t.notes || null,
+      content: ev.title,
+      notes: ev.notes || null,
       priority: bucket,
       completed: false,
-      startDate: t.date || null,
-      startTime: t.allDay ? null : (t.time || null),
-      durationMinutes: t.duration || null,
-      tags: t.tags || null,
+      startDate: ev.date || null,
+      startTime: ev.allDay ? null : (ev.time || null),
+      durationMinutes: ev.duration || null,
+      tags: ev.tags || null,
     });
     const order = getBucketOrder(bucket);
     if (!order.includes(newId)) order.push(newId);
@@ -255,7 +309,7 @@ function renderDetailSheet() {
       ),
     );
     syncDetailDateButton('remember-deadline', r.deadline);
-    $('#detail-remember-time').value = r.deadlineTime || '';
+    setDetailTimeBtn('detail-remember-time', r.deadlineTime);
     return;
   }
 
@@ -321,8 +375,8 @@ function renderDetailSheet() {
     fillDetailBucketSelect(m.priority);
     syncDetailDateButton('startDate', m.startDate);
     syncDetailDateButton('deadline', m.deadline);
-    $('#detail-start-time').value = m.startTime || '';
-    $('#detail-deadline-time').value = m.deadlineTime || '';
+    setDetailTimeBtn('detail-start-time', m.startTime);
+    setDetailTimeBtn('detail-deadline-time', m.deadlineTime);
     syncDetailDurationFromTimes();
     renderDetailTags(m.tags);
     renderDetailSteps(m);
@@ -330,15 +384,16 @@ function renderDetailSheet() {
   }
 
   if (kind === 'event') {
-    const t = state.timeline.find((x) => x.id === id);
-    if (!t) { closeDetail(); return; }
+    // ev — i18n 함수 t()를 가리지 않도록 (기존 const t 섀도잉이 렌더 크래시 원인)
+    const ev = state.timeline.find((x) => x.id === id);
+    if (!ev) { closeDetail(); return; }
     $('#detail-notes').hidden = false;
-    $('#detail-title').value = t.title || '';
-    $('#detail-notes').value = t.notes || '';
-    bindDetailComplete(completeEl, t);
+    $('#detail-title').value = ev.title || '';
+    $('#detail-notes').value = ev.notes || '';
+    bindDetailComplete(completeEl, ev);
     // 역방향 연결: 이 일정을 준비하는 할 일 목록
     const preps = (state.memos || []).filter(
-      (m) => !m.completed && (m.relatedId === t.id || m.relatedHint === t.title),
+      (m) => !m.completed && (m.relatedId === ev.id || m.relatedHint === ev.title),
     );
     const reasonEl = $('#detail-ai-reason');
     if (preps.length) {
@@ -347,7 +402,7 @@ function renderDetailSheet() {
     } else {
       reasonEl.hidden = true;
     }
-    renderDetailSource(t);
+    renderDetailSource(ev);
 
     rows.append(
       createDetailRowGroup(
@@ -363,18 +418,18 @@ function renderDetailSheet() {
         createDetailTimeRow('', t('detail.field.start.time'), 'detail-time'),
       ),
       createDetailRowGroup(
-        createDetailEventDurationRow(t),
-        createDetailAllDayField(t),
+        createDetailEventDurationRow(ev),
+        createDetailAllDayField(ev),
       ),
     );
-    $('#detail-with').value = t.with || '';
-    $('#detail-location').value = t.location || '';
-    fillDetailMemoLinkSelect(t.memoId);
+    $('#detail-with').value = ev.with || '';
+    $('#detail-location').value = ev.location || '';
+    fillDetailMemoLinkSelect(ev.memoId);
     const memoLink = $('#detail-memo-link');
-    if (memoLink) memoLink.disabled = isGcalEvent(t);
+    if (memoLink) memoLink.disabled = isGcalEvent(ev);
     $('#detail-with').placeholder = t('detail.placeholder.with');
     $('#detail-location').placeholder = t('detail.placeholder.location');
-    if (isGcalEvent(t)) {
+    if (isGcalEvent(ev)) {
       $('#detail-with').readOnly = true;
       $('#detail-location').readOnly = true;
       $('#detail-title').readOnly = true;
@@ -387,18 +442,18 @@ function renderDetailSheet() {
       $('#detail-time').readOnly = false;
       $('#detail-event-duration')?.removeAttribute('disabled');
     }
-    syncDetailDateButton('date', t.date || todayStr());
-    $('#detail-time').value = t.allDay ? '' : (t.time || '');
-    $('#detail-time').disabled = Boolean(t.allDay);
-    fillDetailRemindSelect(t.remindMinutes ?? 10);
-    renderDetailTags(t.tags);
+    syncDetailDateButton('date', ev.date || todayStr());
+    setDetailTimeBtn('detail-time', ev.allDay ? '' : (ev.time || ''));
+    $('#detail-time').disabled = Boolean(ev.allDay);
+    fillDetailRemindSelect(ev.remindMinutes ?? 10);
+    renderDetailTags(ev.tags);
   }
 }
 
-function renderDetailSource(t) {
+function renderDetailSource(ev) {
   const el = $('#detail-source');
   if (!el) return;
-  const label = getEventSourceLabel(t);
+  const label = getEventSourceLabel(ev);
   if (label) {
     el.textContent = t('detail.source.sync', label);
     el.hidden = false;
@@ -444,16 +499,20 @@ function createDetailDateRow(_icon, label, field) {
   return createDetailField(label, btn);
 }
 
+// DS 타임피커 버튼 — 네이티브 input[type=time] 금지 (DESIGN_SYSTEM.md §2)
 function createDetailTimeRow(_icon, label, inputId) {
-  const input = document.createElement('input');
-  input.type = 'time';
-  input.id = inputId;
-  input.className = 'detail-row-input';
-  input.addEventListener('change', () => {
-    if (detailState.kind === 'memo') syncDetailDurationFromTimes();
-    scheduleDetailSave();
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.id = inputId;
+  btn.className = 'detail-date-btn';
+  btn.value = '';
+  btn.textContent = formatComposeTimeLabel(null);
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (btn.readOnly) return; // gcal 동기화 일정
+    openDetailTimePopover(inputId);
   });
-  return createDetailField(label, input);
+  return createDetailField(label, btn);
 }
 
 function syncDetailDurationFromTimes() {
@@ -500,7 +559,7 @@ function createDetailDurationRow(m) {
   return createDetailField(t('detail.field.duration.task'), wrap);
 }
 
-function createDetailEventDurationRow(t) {
+function createDetailEventDurationRow(ev) {
   const wrap = document.createElement('div');
   wrap.className = 'detail-duration-wrap';
   const sel = document.createElement('select');
@@ -510,25 +569,25 @@ function createDetailEventDurationRow(t) {
     const opt = document.createElement('option');
     opt.value = String(p.minutes);
     opt.textContent = p.label;
-    if (getEventDuration(t) === p.minutes) opt.selected = true;
+    if (getEventDuration(ev) === p.minutes) opt.selected = true;
     sel.append(opt);
   });
   sel.addEventListener('change', scheduleDetailSave);
   const endLbl = document.createElement('span');
   endLbl.className = 'detail-end-hint';
   endLbl.id = 'detail-end-hint';
-  endLbl.textContent = t.time ? formatTimeRange(t.time, getEventDuration(t)) : '';
+  endLbl.textContent = ev.time ? formatTimeRange(ev.time, getEventDuration(ev)) : '';
   wrap.append(sel, endLbl);
   return createDetailField(t('detail.field.duration.event'), wrap);
 }
 
-function createDetailAllDayField(t) {
+function createDetailAllDayField(ev) {
   const wrap = document.createElement('label');
   wrap.className = 'detail-allday-check';
   const chk = document.createElement('input');
   chk.type = 'checkbox';
   chk.id = 'detail-allday';
-  chk.checked = Boolean(t.allDay);
+  chk.checked = Boolean(ev.allDay);
   chk.addEventListener('change', () => {
     $('#detail-time').disabled = chk.checked;
     scheduleDetailSave();
