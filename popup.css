@@ -3836,3 +3836,13 @@ button.proj-card {
 .dash-header.mini .hdr-greeting { font-size: 15px; }
 .dash-header.mini .hdr-meta-row { max-height: 0; opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .dash-header .hdr-greeting, .dash-header .hdr-meta-row { transition: none; } }
+
+/* ── 공통 크롬 바 (전역) vs 페이지 헤더 분리 ── */
+.app-chrome { display: flex; align-items: center; gap: 2px; flex-shrink: 0;
+  padding: calc(var(--dumply-chrome-safe-top, 12px)) var(--dumply-padding-x) 4px;
+  background: color-mix(in srgb, var(--bg-base) 88%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  position: relative; z-index: 7; }
+.chrome-spacer { flex: 1; }
+/* display 유틸이 hidden 속성을 이기는 함정 방지 */
+.rail-btn[hidden], .credit-pill[hidden], .hdr-notif-dot[hidden] { display: none !important; }
