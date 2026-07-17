@@ -677,10 +677,8 @@ function fillDatePickerPopover(pop, opts) {
 const TB_START_HOUR = 6;
 const TB_END_HOUR = 24;
 const TB_PX_PER_HOUR = 72;
-// 스마트 윈도우 (홈 타임라인) — 이벤트 구간 ±1h ∪ 현재 −1h/+2h, 최소 4h. 펼치면 풀레인지
 let tbWinStartHour = TB_START_HOUR;
 let tbWinEndHour = TB_END_HOUR;
-const tbWinExpanded = { top: false, bottom: false, date: null };
 const TB_SNAP_MIN = 15;
 
 const DURATION_PRESETS = [

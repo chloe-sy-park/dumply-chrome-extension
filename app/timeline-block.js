@@ -67,52 +67,6 @@ function scrollTimelineToNow(nowMin) {
 
 // 홈의 "오늘 타임라인" — 일반화된 renderDayTimeline의 얇은 래퍼
 
-// ── 스마트 윈도우 (홈) — 이벤트 구간 ±1h ∪ 현재 −1h/+2h, 최소 4h ──
-function computeTbWindow(items, isToday) {
-  let lo = null;
-  let hi = null;
-  items.forEach((it) => {
-    const st = timeToMinutes(it.time || '00:00');
-    const en = st + getEventDuration(it);
-    lo = lo === null ? st : Math.min(lo, st);
-    hi = hi === null ? en : Math.max(hi, en);
-  });
-  if (isToday) {
-    const d = new Date();
-    const nowMin = d.getHours() * 60 + d.getMinutes();
-    lo = lo === null ? nowMin - 60 : Math.min(lo, nowMin - 60);
-    hi = hi === null ? nowMin + 120 : Math.max(hi, nowMin + 120);
-  }
-  if (lo === null) { lo = 9 * 60; hi = 18 * 60; }
-  let startH = Math.floor(lo / 60) - 1;
-  let endH = Math.ceil(hi / 60) + 1;
-  if (endH - startH < 4) { const pad = 4 - (endH - startH); startH -= Math.floor(pad / 2); endH += Math.ceil(pad / 2); }
-  tbWinStartHour = tbWinExpanded.top ? TB_START_HOUR : Math.max(TB_START_HOUR, startH);
-  tbWinEndHour = tbWinExpanded.bottom ? TB_END_HOUR : Math.min(TB_END_HOUR, endH);
-}
-
-// 접힌 가장자리 스텁 — 탭하면 해당 방향 풀레인지로 펼침
-function renderTbStubs(ctx, dateStr, show = true) {
-  const block = ctx.wrap?.querySelector('.timeline-block');
-  if (!block) return;
-  block.querySelectorAll('.tb-stub').forEach((el) => el.remove());
-  if (!show || ctx.scope !== 'home') return;
-  const mk = (pos, label) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = `tb-stub tb-stub-${pos}`;
-    btn.textContent = label;
-    btn.addEventListener('click', () => {
-      tbWinExpanded[pos] = true;
-      renderDayTimeline(dateStr, ctx);
-    });
-    return btn;
-  };
-  const fmt = (h) => formatTimeLabel(`${String(h).padStart(2, '0')}:00`);
-  if (tbWinStartHour > TB_START_HOUR) block.prepend(mk('top', t('timeline.stub.before', fmt(tbWinStartHour))));
-  if (tbWinEndHour < TB_END_HOUR) block.append(mk('bottom', t('timeline.stub.after', fmt(tbWinEndHour))));
-}
-
 function renderTimeBlockTimeline() {
   renderDayTimeline(todayStr(), {
     scope: 'home',
@@ -201,14 +155,9 @@ function renderDayTimeline(dateStr, ctx) {
       }
     }
   }
-  // 스마트 윈도우 — 홈만. 다른 표면(캘린더 드로어)은 풀레인지 유지
-  if (ctx.scope === 'home') {
-    if (tbWinExpanded.date !== dateStr) { tbWinExpanded.top = false; tbWinExpanded.bottom = false; tbWinExpanded.date = dateStr; }
-    computeTbWindow(items, isToday);
-  } else {
-    tbWinStartHour = TB_START_HOUR;
-    tbWinEndHour = TB_END_HOUR;
-  }
+  // 풀레인지 고정 — 스마트 윈도우(접기/펼치기)는 사용자 결정으로 제거 (2026-07-17)
+  tbWinStartHour = TB_START_HOUR;
+  tbWinEndHour = TB_END_HOUR;
 
   // 일정 0개인 날(홈) — 그리드 대신 빈 상태 카드
   const tlBlock = wrap ? wrap.querySelector('.timeline-block') : null;
@@ -285,7 +234,6 @@ function renderDayTimeline(dateStr, ctx) {
   }
 
   bindTimeBlockGrid(grid, blockCtx);
-  renderTbStubs(ctx, dateStr);
   if (ctx.scope === 'home') {
     updateTimelineSyncBtn();
     scrollTimelineToNow(nowMin);

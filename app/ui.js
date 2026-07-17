@@ -91,13 +91,11 @@ function createRowDeleteButton(id) {
 }
 
 function buildPrioMetaText(m) {
+  /* 우선순위 카드 메타 다이어트 — 태그 나열·AI 근거는 상세에서만 (텍스트 덩어리 방지) */
   const tag = getBucketByKey(m.priority)?.label || '';
-  const tagLabels = (m.tags || []).map((t) => (typeof t === 'string' ? t : t.label)).filter(Boolean);
   const parts = [tag];
   if (m.deadline) parts.push(formatComposeDateWithWeekday(m.deadline));
   if (m.durationMinutes) parts.push(formatDurationLabel(m.durationMinutes));
-  if (tagLabels.length) parts.push(tagLabels.join(' · '));
-  if (m.placementSource === 'ai' && m.placementReason) parts.push(m.placementReason);
   return parts.filter(Boolean).join(' · ');
 }
 
