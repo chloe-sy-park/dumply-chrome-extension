@@ -3832,6 +3832,57 @@ button.proj-card {
 /* ── 공통 헤더: 아이콘 버튼 · 알림 도트(앰버) · 스크롤 축소 ── */
 .hdr-ic { width: 38px; height: 38px; position: relative; }
 .hdr-notif-dot { position: absolute; top: 8px; right: 8px; width: 7px; height: 7px; border-radius: 50%; background: var(--warning); border: 1.5px solid var(--bg-base); }
+
+/* ── 검색·알림 패널 (크롬 바) ── */
+.qp-search-input {
+  width: 100%;
+  border: none;
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text-primary);
+  outline: none;
+}
+.qp-search-input::placeholder { color: var(--text-placeholder); }
+.qp-search-input:focus { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent); }
+.qp-results {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: var(--dumply-gap-sm);
+  max-height: 55vh;
+  overflow-y: auto;
+}
+.qp-group-label { margin: var(--dumply-gap-sm) 2px 4px; }
+.qp-row {
+  display: flex;
+  align-items: center;
+  gap: var(--dumply-gap-sm);
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  min-width: 0;
+}
+.qp-row:hover { background: var(--bg-active); }
+.qp-row-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.qp-row-text.is-done { text-decoration: line-through; color: var(--text-placeholder); }
+.qp-row-meta { flex-shrink: 0; font-size: 11px; color: var(--text-secondary); }
+.qp-row-meta.is-overdue { color: var(--warning); } /* 경고 = 앰버 (레드는 위험 액션 전용) */
+.qp-empty { font-size: 12px; color: var(--text-placeholder); text-align: center; padding: var(--dumply-gap-lg) 0; }
 .dash-header .dash-greet { overflow: hidden; max-height: 96px; opacity: 1;
   transition: max-height 0.2s ease-out, opacity 0.2s ease-out; }
 .dash-header.mini .dash-greet { max-height: 0; opacity: 0; }

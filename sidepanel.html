@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="fonts.css?v=48" />
   <link rel="stylesheet" href="tokens.css?v=60" />
   <link rel="stylesheet" href="components.css?v=64" />
-  <link rel="stylesheet" href="popup.css?v=110" />
+  <link rel="stylesheet" href="popup.css?v=111" />
   <link rel="stylesheet" href="surface.css?v=48" />
 </head>
 <body class="surface-sidepanel">
@@ -39,10 +39,10 @@
       </button>
       <span id="chrome-title" class="chrome-title" aria-hidden="true"></span>
       <span class="chrome-spacer"></span>
-      <button id="btn-hdr-search" type="button" class="rail-btn hdr-ic" data-feature="search" hidden aria-label="검색">
+      <button id="btn-hdr-search" type="button" class="rail-btn hdr-ic" data-feature="search" aria-label="검색">
         <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="5.6"/><path d="M19.5 19.5l-4.4-4.4"/></svg>
       </button>
-      <button id="btn-hdr-notif" type="button" class="rail-btn hdr-ic" data-feature="notifications" hidden aria-label="알림">
+      <button id="btn-hdr-notif" type="button" class="rail-btn hdr-ic" data-feature="notifications" aria-label="알림">
         <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 16H6c1.2-1.4 1.8-2.7 1.8-5.2a4.2 4.2 0 0 1 8.4 0c0 2.5.6 3.8 1.8 5.2z"/><path d="M10.3 19a1.9 1.9 0 0 0 3.4 0"/></svg>
         <span class="hdr-notif-dot" hidden></span>
       </button>
@@ -428,6 +428,27 @@
     </div>
   </div>
 
+  <div id="search-sheet" class="sheet" hidden>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+      <div class="sheet-head">
+        <h2 id="search-title" data-i18n="search.title">검색</h2>
+        <button id="btn-close-search" class="icon-btn" data-i18n-aria="close.btn" aria-label="닫기"><div data-icon="x"></div></button>
+      </div>
+      <input id="search-input" class="qp-search-input" type="search" data-i18n-placeholder="search.placeholder" placeholder="할 일 · 잊지 말 것 · 프로젝트 · 캘린더 검색" autocomplete="off" />
+      <div id="search-results" class="qp-results"></div>
+    </div>
+  </div>
+
+  <div id="notif-sheet" class="sheet" hidden>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="notif-title">
+      <div class="sheet-head">
+        <h2 id="notif-title" data-i18n="notif.title">알림</h2>
+        <button id="btn-close-notif" class="icon-btn" data-i18n-aria="close.btn" aria-label="닫기"><div data-icon="x"></div></button>
+      </div>
+      <div id="notif-list" class="qp-results"></div>
+    </div>
+  </div>
+
   <div id="ai-moscow-sheet" class="sheet" hidden>
     <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="ai-moscow-title">
       <div class="sheet-head">
@@ -686,7 +707,7 @@
 
   <script src="lib/icons.js?v=3"></script>
   <script src="lib/brand.js?v=48"></script>
-  <script src="lib/i18n.js?v=9"></script>
+  <script src="lib/i18n.js?v=10"></script>
   <script src="lib/storage.js?v=64"></script>
   <script src="lib/decisions.js?v=5"></script>
   <script src="lib/tags.js?v=81"></script>
@@ -694,17 +715,18 @@
   <script src="lib/ai.js?v=72"></script>
   <script src="lib/calendar.js?v=52"></script>
   <script src="lib/weather.js?v=49"></script>
-  <script src="app/core.js?v=86"></script>
+  <script src="app/core.js?v=87"></script>
   <script src="app/ui.js?v=66"></script>
   <script src="app/onboard.js?v=58"></script>
   <script src="app/timeline-block.js?v=66"></script>
   <script src="app/render.js?v=72"></script>
   <script src="app/compose.js?v=54"></script>
   <script src="app/detail.js?v=61"></script>
-  <script src="app/nav.js?v=54"></script>
+  <script src="app/nav.js?v=55"></script>
+  <script src="app/quickpanel.js?v=1"></script>
   <script src="app/calendar-view.js?v=77"></script>
   <script src="app/projects.js?v=52"></script>
-  <script src="app/handlers.js?v=101"></script>
+  <script src="app/handlers.js?v=102"></script>
   <script src="popup.js?v=49"></script>
   <script src="lib/icons-init.js?v=1"></script>
 </body>

@@ -193,6 +193,8 @@ const SHEET_CLOSERS = {
   'compose-sheet': () => closeCompose?.(),
   'proj-sheet': () => closeProjectSheet?.(),
   'ai-moscow-sheet': () => closeAiMoscow?.(),
+  'search-sheet': () => closeSearchSheet?.(),
+  'notif-sheet': () => closeNotifSheet?.(),
 };
 
 let lastSheetTrigger = null;

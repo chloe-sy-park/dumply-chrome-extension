@@ -64,6 +64,7 @@ function navigateTo(route, opts = {}) {
 
 function renderCurrentRoute() {
   if (typeof applyI18n === 'function') applyI18n(document);
+  if (typeof updateNotifDot === 'function') updateNotifDot();
   const route = state?.ui?.route || 'home';
   if (route === 'home') {
     renderHeader();
