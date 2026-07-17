@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="fonts.css?v=48" />
   <link rel="stylesheet" href="tokens.css?v=59" />
   <link rel="stylesheet" href="components.css?v=64" />
-  <link rel="stylesheet" href="popup.css?v=107" />
+  <link rel="stylesheet" href="popup.css?v=108" />
   <link rel="stylesheet" href="surface.css?v=48" />
 </head>
 <body class="surface-sidepanel">
@@ -251,141 +251,153 @@
     </div>
     <div id="route-settings" class="app-route">
       <div class="route-scroll shell">
-        <div class="route-page-head">
-          <h2 class="route-title" data-i18n="settings.title">설정</h2>
-        </div>
-        <label class="field">
-          <span class="field-label" data-i18n="settings.name">이름</span>
-          <input id="user-name" type="text" placeholder="닉네임" autocomplete="off" />
-        </label>
-        <label class="field">
-          <span class="field-label" data-i18n="settings.language">언어</span>
-          <select id="language-select">
-            <option value="auto" data-i18n="settings.language.auto">자동 (브라우저)</option>
-            <option value="ko">한국어</option>
-            <option value="en">English</option>
-          </select>
-        </label>
-        <label class="field">
-          <span class="field-label" data-i18n="settings.theme">테마</span>
-          <select id="theme-select">
-            <option value="system">System</option>
-            <option value="light">Mono</option>
-            <option value="dark">Mono Dark</option>
-            <option value="craft">Craft (Warm)</option>
-            <option value="ash">Ash</option>
-            <option value="barbie">Barbie Dreamhouse</option>
-            <option value="midnight">Midnight</option>
-            <option value="dawn">Dawn</option>
-            <option value="pale">Pale</option>
-          </select>
-          <span class="field-hint" data-i18n="settings.theme.hint">System은 라이트=Mono · 다크=Mono Dark로 자동 전환돼요</span>
-        </label>
-        <div class="field">
-          <span class="field-label" data-i18n="settings.accent">액센트</span>
-          <div class="accent-swatches" id="accent-swatches" role="group" aria-label="액센트 색상">
-            <button type="button" class="accent-sw" data-accent-value="" style="background:var(--dumply-text-primary)" title="Mono" aria-pressed="false"></button>
-            <button type="button" class="accent-sw" data-accent-value="blue" style="background:#007AFF" title="Blue" aria-pressed="false"></button>
-            <button type="button" class="accent-sw" data-accent-value="indigo" style="background:#5856D6" title="Indigo" aria-pressed="false"></button>
-            <button type="button" class="accent-sw" data-accent-value="green" style="background:#34C759" title="Green" aria-pressed="false"></button>
-            <button type="button" class="accent-sw" data-accent-value="amber" style="background:#FF9500" title="Amber" aria-pressed="false"></button>
-            <button type="button" class="accent-sw" data-accent-value="rose" style="background:#FF2D55" title="Rose" aria-pressed="false"></button>
+        <section class="settings-group">
+          <h3 class="settings-group-title" data-i18n="settings.group.profile">프로필</h3>
+          <label class="field">
+            <span class="field-label" data-i18n="settings.name">이름</span>
+            <input id="user-name" type="text" placeholder="닉네임" autocomplete="off" />
+          </label>
+          <label class="field">
+            <span class="field-label" data-i18n="settings.language">언어</span>
+            <select id="language-select">
+              <option value="auto" data-i18n="settings.language.auto">자동 (브라우저)</option>
+              <option value="ko">한국어</option>
+              <option value="en">English</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field-label" data-i18n="settings.theme">테마</span>
+            <select id="theme-select">
+              <option value="system">System</option>
+              <option value="light">Mono</option>
+              <option value="dark">Mono Dark</option>
+              <option value="craft">Craft (Warm)</option>
+              <option value="ash">Ash</option>
+              <option value="barbie">Barbie Dreamhouse</option>
+              <option value="midnight">Midnight</option>
+              <option value="dawn">Dawn</option>
+              <option value="pale">Pale</option>
+            </select>
+            <span class="field-hint" data-i18n="settings.theme.hint">System은 라이트=Mono · 다크=Mono Dark로 자동 전환돼요</span>
+          </label>
+          <div class="field">
+            <span class="field-label" data-i18n="settings.accent">액센트</span>
+            <div class="accent-swatches" id="accent-swatches" role="group" aria-label="액센트 색상">
+              <button type="button" class="accent-sw" data-accent-value="" style="background:var(--dumply-text-primary)" title="Mono" aria-pressed="false"></button>
+              <button type="button" class="accent-sw" data-accent-value="blue" style="background:#007AFF" title="Blue" aria-pressed="false"></button>
+              <button type="button" class="accent-sw" data-accent-value="indigo" style="background:#5856D6" title="Indigo" aria-pressed="false"></button>
+              <button type="button" class="accent-sw" data-accent-value="green" style="background:#34C759" title="Green" aria-pressed="false"></button>
+              <button type="button" class="accent-sw" data-accent-value="amber" style="background:#FF9500" title="Amber" aria-pressed="false"></button>
+              <button type="button" class="accent-sw" data-accent-value="rose" style="background:#FF2D55" title="Rose" aria-pressed="false"></button>
+            </div>
+            <span class="field-hint" data-i18n="settings.accent.hint">CTA와 선택 상태에만 물드는 포인트 색이에요</span>
           </div>
-          <span class="field-hint" data-i18n="settings.accent.hint">CTA와 선택 상태에만 물드는 포인트 색이에요</span>
-        </div>
-        <label class="field">
-          <span class="field-label" data-i18n="settings.weather.city">날씨 도시</span>
-          <input id="weather-city" type="text" placeholder="예: 서울" autocomplete="off" />
-          <span class="field-hint" data-i18n="settings.weather.hint">GPS 또는 도시 이름으로 날씨를 가져와요</span>
-        </label>
-        <div class="field settings-location-field">
-          <span class="field-label" data-i18n="settings.location">위치 · 날씨</span>
-          <p id="location-status" class="field-hint settings-status">위치를 허용하면 헤더에 날씨가 표시돼요</p>
-          <button type="button" id="btn-location-enable" class="btn btn-secondary btn-block" data-i18n="settings.location.btn">위치 허용하기</button>
-        </div>
-        <div class="api-notice" id="settings-api-notice">
-          <p data-i18n="settings.api.notice">Claude Pro / ChatGPT Plus / Gemini Advanced 구독은 확장에서 공식 연동되지 않아요. AI 기능은 API 키(BYOK)가 필요합니다.</p>
-        </div>
-        <div class="field">
-          <span class="field-label" data-i18n="settings.ai.provider">AI 제공자</span>
-          <select id="ai-provider">
-            <option value="anthropic">🟣 Claude (Anthropic)</option>
-            <option value="openai">🟢 OpenAI</option>
-            <option value="gemini">🔵 Gemini (Google)</option>
-          </select>
-        </div>
-        <div class="field">
-          <span class="field-label" data-i18n="settings.ai.model">모델</span>
-          <select id="ai-model"></select>
-          <span class="field-hint" id="ai-model-hint"></span>
-        </div>
-        <label class="field">
-          <span class="field-label" data-i18n="settings.api.anthropic">Anthropic API 키</span>
-          <input id="api-key-anthropic" type="password" placeholder="sk-ant-..." autocomplete="off" />
-          <span class="field-hint">console.anthropic.com/settings/keys</span>
-        </label>
-        <label class="field">
-          <span class="field-label" data-i18n="settings.api.openai">OpenAI API 키</span>
-          <input id="api-key-openai" type="password" placeholder="sk-..." autocomplete="off" />
-          <span class="field-hint">platform.openai.com/api-keys</span>
-        </label>
-        <label class="field">
-          <span class="field-label" data-i18n="settings.api.google.label">Google API 키 (Gemini)</span>
-          <input id="api-key-google" type="password" placeholder="AIza..." autocomplete="off" />
-          <span class="field-hint">aistudio.google.com/apikey</span>
-        </label>
-        <p id="settings-api-storage-notice" class="field-hint"></p>
-        <div class="field settings-dumply-field">
-          <span class="field-label" data-i18n="settings.dumply.label">Dumply 계정 · 크레딧</span>
-          <p id="dumply-account-status" class="field-hint settings-status"></p>
-          <input id="dumply-email" type="email" placeholder="you@email.com" autocomplete="off" />
-          <input id="dumply-otp" type="text" inputmode="numeric" placeholder="123456" autocomplete="off" hidden />
-          <button type="button" id="btn-dumply-otp" class="btn btn-secondary btn-block" data-i18n="settings.dumply.send">인증코드 보내기</button>
-          <button type="button" id="btn-dumply-signout" class="btn btn-secondary btn-block" hidden data-i18n="settings.dumply.signout">로그아웃</button>
-          <div class="dumply-topup" id="dumply-topup" hidden>
-            <button type="button" id="btn-dumply-manage" class="btn btn-primary btn-block" data-i18n="settings.dumply.manage">크레딧 & 구독 관리 →</button>
+        </section>
+
+        <section class="settings-group">
+          <h3 class="settings-group-title" data-i18n="settings.group.ai">AI</h3>
+          <div class="api-notice" id="settings-api-notice">
+            <p data-i18n="settings.api.notice">Claude Pro / ChatGPT Plus / Gemini Advanced 구독은 확장에서 공식 연동되지 않아요. AI 기능은 API 키(BYOK)가 필요합니다.</p>
           </div>
-        </div>
-        <div class="field settings-google-field">
-          <span class="field-label" data-i18n="settings.google.label">Google 계정 · 캘린더</span>
-          <p id="google-account-status" class="field-hint settings-status">로그인하면 캘린더 일정을 가져와요</p>
-          <button type="button" id="btn-google-connect" class="btn btn-secondary btn-block" data-i18n="settings.google.connect">Google로 로그인 · 캘린더 연동</button>
-          <button type="button" id="btn-google-disconnect" class="btn btn-secondary btn-block" hidden data-i18n="settings.google.disconnect">연결 해제</button>
-        </div>
-        <div class="field" id="settings-cal-field" hidden>
-          <span class="field-label" data-i18n="settings.cal.sync">동기화 캘린더</span>
-          <button id="btn-settings-cal-select" type="button" class="btn btn-secondary btn-block" aria-label="캘린더 선택"></button>
-          <select id="cal-sync-dir">
-            <option value="both" data-i18n="settings.cal.sync.both">양방향 동기화</option>
-            <option value="read" data-i18n="settings.cal.sync.read">읽기만</option>
-            <option value="write" data-i18n="settings.cal.sync.write">쓰기만</option>
-          </select>
-        </div>
-        <div class="field">
-          <span class="field-label" data-i18n="settings.dictionary.label">내 단어장</span>
-          <p class="field-hint" data-i18n="settings.dictionary.hint">덤프에서 직접 등록한 고유명사예요. 탭하면 삭제돼요.</p>
-          <div id="dictionary-list" class="dictionary-list"></div>
-        </div>
-        <div class="field">
-          <span class="field-label" data-i18n="settings.decisions.label">AI 판단 기록</span>
-          <p class="field-hint" data-i18n="settings.decisions.hint">덤플리의 우선순위 제안을 그대로 썼는지, 바꿨는지 모아 봤어요.</p>
-          <div id="decision-stats" class="decision-stats"></div>
-        </div>
-        <div class="field">
-          <span class="field-label" data-i18n="settings.backup.label">데이터 백업</span>
-          <p class="field-hint" data-i18n="settings.backup.hint">데이터는 이 기기의 브라우저에만 저장돼요. 기기를 바꾸거나 Chrome을 재설치할 경우 백업 파일로 복원할 수 있어요. API 키는 보안상 파일에 포함되지 않아요.</p>
-          <div class="data-actions">
-            <button type="button" id="btn-export" class="btn btn-secondary" data-i18n="settings.backup.export">내보내기</button>
-            <label class="btn btn-secondary import-label"><span data-i18n="settings.backup.import">가져오기</span>
-              <input type="file" id="import-file" accept="application/json,.json" hidden />
-            </label>
+          <div class="field">
+            <span class="field-label" data-i18n="settings.ai.provider">AI 제공자</span>
+            <select id="ai-provider">
+              <option value="anthropic">Claude (Anthropic)</option>
+              <option value="openai">OpenAI</option>
+              <option value="gemini">Gemini (Google)</option>
+            </select>
           </div>
-        </div>
-        <div class="field settings-danger-field">
-          <span class="field-label" data-i18n="settings.reset.label">데이터 초기화</span>
-          <p class="field-hint" data-i18n="settings.reset.hint">모든 할 일·프로젝트·연동 설정을 삭제하고 처음부터 시작해요.</p>
-          <button type="button" id="btn-reset-data" class="btn btn-danger btn-block" data-i18n="settings.reset.btn">데이터 초기화하기</button>
-        </div>
+          <div class="field">
+            <span class="field-label" data-i18n="settings.ai.model">모델</span>
+            <select id="ai-model"></select>
+            <span class="field-hint" id="ai-model-hint"></span>
+          </div>
+          <label class="field">
+            <span class="field-label" data-i18n="settings.api.anthropic">Anthropic API 키</span>
+            <input id="api-key-anthropic" type="password" placeholder="sk-ant-..." autocomplete="off" />
+            <span class="field-hint">console.anthropic.com/settings/keys</span>
+          </label>
+          <label class="field">
+            <span class="field-label" data-i18n="settings.api.openai">OpenAI API 키</span>
+            <input id="api-key-openai" type="password" placeholder="sk-..." autocomplete="off" />
+            <span class="field-hint">platform.openai.com/api-keys</span>
+          </label>
+          <label class="field">
+            <span class="field-label" data-i18n="settings.api.google.label">Google API 키 (Gemini)</span>
+            <input id="api-key-google" type="password" placeholder="AIza..." autocomplete="off" />
+            <span class="field-hint">aistudio.google.com/apikey</span>
+          </label>
+          <p id="settings-api-storage-notice" class="field-hint"></p>
+        </section>
+
+        <section class="settings-group">
+          <h3 class="settings-group-title" data-i18n="settings.group.connect">계정 · 연동</h3>
+          <div class="field settings-dumply-field">
+            <span class="field-label" data-i18n="settings.dumply.label">Dumply 계정 · 크레딧</span>
+            <p id="dumply-account-status" class="field-hint settings-status"></p>
+            <input id="dumply-email" type="email" placeholder="you@email.com" autocomplete="off" />
+            <input id="dumply-otp" type="text" inputmode="numeric" placeholder="123456" autocomplete="off" hidden />
+            <button type="button" id="btn-dumply-otp" class="btn btn-secondary btn-block" data-i18n="settings.dumply.send">인증코드 보내기</button>
+            <button type="button" id="btn-dumply-signout" class="btn btn-secondary btn-block" hidden data-i18n="settings.dumply.signout">로그아웃</button>
+            <div class="dumply-topup" id="dumply-topup" hidden>
+              <button type="button" id="btn-dumply-manage" class="btn btn-primary btn-block" data-i18n="settings.dumply.manage">크레딧 & 구독 관리 →</button>
+            </div>
+          </div>
+          <div class="field settings-google-field">
+            <span class="field-label" data-i18n="settings.google.label">Google 계정 · 캘린더</span>
+            <p id="google-account-status" class="field-hint settings-status">로그인하면 캘린더 일정을 가져와요</p>
+            <button type="button" id="btn-google-connect" class="btn btn-secondary btn-block" data-i18n="settings.google.connect">Google로 로그인 · 캘린더 연동</button>
+            <button type="button" id="btn-google-disconnect" class="btn btn-secondary btn-block" hidden data-i18n="settings.google.disconnect">연결 해제</button>
+          </div>
+          <div class="field" id="settings-cal-field" hidden>
+            <span class="field-label" data-i18n="settings.cal.sync">동기화 캘린더</span>
+            <button id="btn-settings-cal-select" type="button" class="btn btn-secondary btn-block" aria-label="캘린더 선택"></button>
+            <select id="cal-sync-dir">
+              <option value="both" data-i18n="settings.cal.sync.both">양방향 동기화</option>
+              <option value="read" data-i18n="settings.cal.sync.read">읽기만</option>
+              <option value="write" data-i18n="settings.cal.sync.write">쓰기만</option>
+            </select>
+          </div>
+          <label class="field">
+            <span class="field-label" data-i18n="settings.weather.city">날씨 도시</span>
+            <input id="weather-city" type="text" placeholder="예: 서울" autocomplete="off" />
+            <span class="field-hint" data-i18n="settings.weather.hint">GPS 또는 도시 이름으로 날씨를 가져와요</span>
+          </label>
+          <div class="field settings-location-field">
+            <span class="field-label" data-i18n="settings.location">위치 · 날씨</span>
+            <p id="location-status" class="field-hint settings-status">위치를 허용하면 헤더에 날씨가 표시돼요</p>
+            <button type="button" id="btn-location-enable" class="btn btn-secondary btn-block" data-i18n="settings.location.btn">위치 허용하기</button>
+          </div>
+        </section>
+
+        <section class="settings-group">
+          <h3 class="settings-group-title" data-i18n="settings.group.data">데이터</h3>
+          <div class="field">
+            <span class="field-label" data-i18n="settings.dictionary.label">내 단어장</span>
+            <p class="field-hint" data-i18n="settings.dictionary.hint">덤프에서 직접 등록한 고유명사예요. 탭하면 삭제돼요.</p>
+            <div id="dictionary-list" class="dictionary-list"></div>
+          </div>
+          <div class="field">
+            <span class="field-label" data-i18n="settings.decisions.label">AI 판단 기록</span>
+            <p class="field-hint" data-i18n="settings.decisions.hint">덤플리의 우선순위 제안을 그대로 썼는지, 바꿨는지 모아 봤어요.</p>
+            <div id="decision-stats" class="decision-stats"></div>
+          </div>
+          <div class="field">
+            <span class="field-label" data-i18n="settings.backup.label">데이터 백업</span>
+            <p class="field-hint" data-i18n="settings.backup.hint">데이터는 이 기기의 브라우저에만 저장돼요. 기기를 바꾸거나 Chrome을 재설치할 경우 백업 파일로 복원할 수 있어요. API 키는 보안상 파일에 포함되지 않아요.</p>
+            <div class="data-actions">
+              <button type="button" id="btn-export" class="btn btn-secondary" data-i18n="settings.backup.export">내보내기</button>
+              <label class="btn btn-secondary import-label"><span data-i18n="settings.backup.import">가져오기</span>
+                <input type="file" id="import-file" accept="application/json,.json" hidden />
+              </label>
+            </div>
+          </div>
+          <div class="field settings-danger-field">
+            <span class="field-label" data-i18n="settings.reset.label">데이터 초기화</span>
+            <p class="field-hint" data-i18n="settings.reset.hint">모든 할 일·프로젝트·연동 설정을 삭제하고 처음부터 시작해요.</p>
+            <button type="button" id="btn-reset-data" class="btn btn-danger btn-block" data-i18n="settings.reset.btn">데이터 초기화하기</button>
+          </div>
+        </section>
         <button id="btn-save-settings" type="button" class="btn btn-primary btn-block" data-i18n="settings.save">저장</button>
       </div>
     </div>
@@ -651,7 +663,7 @@
 
   <script src="lib/icons.js?v=3"></script>
   <script src="lib/brand.js?v=48"></script>
-  <script src="lib/i18n.js?v=7"></script>
+  <script src="lib/i18n.js?v=8"></script>
   <script src="lib/storage.js?v=64"></script>
   <script src="lib/decisions.js?v=5"></script>
   <script src="lib/tags.js?v=81"></script>
