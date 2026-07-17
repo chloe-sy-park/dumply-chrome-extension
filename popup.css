@@ -2604,10 +2604,11 @@ body {
   flex-direction: column;
   align-items: stretch;
   gap: 2px;
-  padding: 6px 8px;
-  background: var(--bg-base);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--dumply-shadow-md);
+  padding: 6px;
+  background: var(--bg-surface);            /* 떠 있는 메뉴 = 서피스 카드 (갤러리 DS) */
+  border: 1px solid var(--card-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--dumply-shadow-md), 0 8px 24px rgba(9, 9, 11, 0.08);
 }
 .nav-rail.is-expanded .nav-rail-menu {
   display: flex;
@@ -2635,12 +2636,12 @@ body {
   justify-content: flex-start;
   width: 100%;
   min-width: 0;
-  height: 32px;
-  padding: 0 4px;
+  height: 36px;
+  padding: 0 8px;
   gap: 8px;
 }
 .rail-btn:hover { background: var(--bg-active); color: var(--text-primary); }
-.rail-btn.is-active { background: var(--accent-soft); color: var(--text-primary); }
+.rail-btn.is-active { background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent-dark); } /* 선택 = 액센트 틴트 */
 .nav-rail-body {
   display: flex;
   flex-direction: column;
@@ -2663,7 +2664,7 @@ body {
   stroke-width: 1.75;
 }
 .nav-label {
-  font-size: 10px;
+  font-size: var(--font-size-caption);
   font-weight: 600;
   line-height: 1.2;
   color: inherit;
