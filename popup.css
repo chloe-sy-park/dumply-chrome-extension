@@ -677,7 +677,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--accent);
+  color: var(--text-primary); /* 구조 아이콘은 모노 (a-card-icon과 동일) */
 }
 .dump-card-icon svg { width: 14px; height: 14px; }
 .dump-label { font-size: 12px; font-weight: 600; letter-spacing: -0.01em; color: var(--text-secondary); flex: 1; }
@@ -801,12 +801,9 @@ body {
   border-radius: 999px;
   margin-right: auto;
 }
+/* 인박스 목록 — a-card 안에 살므로 셸 없음(a-card 문법 통일), 첫 구분선만 소유 */
 .inbox-card {
-  background: var(--bg-card);
-  border: 1px solid var(--card-line);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
+  border-top: 1px solid var(--border);
 }
 .inbox-row {
   display: grid;
@@ -1054,7 +1051,6 @@ body {
 
 /* ── MoSCoW ── */
 .moscow-section { margin-top: var(--dumply-section-gap); }
-.moscow-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--dumply-gap-sm); }
 .section-label {
   font-size: 11px;
   font-weight: 500;
@@ -1062,17 +1058,14 @@ body {
   text-transform: uppercase;
   color: var(--text-secondary);
 }
-.moscow-guide { font-size: 11px; color: var(--text-secondary); margin-bottom: var(--dumply-gap-md); }
+/* 보드가 a-card 안에 살므로 버킷은 카드가 아닌 그룹 — 구분선으로 층위 (설정 그룹 문법) */
 .moscow-board {
   display: flex;
   flex-direction: column;
-  gap: var(--dumply-gap-sm); /* 버킷 4개는 한 보드의 그룹 — 섹션 간격(md)보다 좁게 */
 }
 .bucket {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
-  padding: 12px var(--dumply-gap-md);
+  border-top: 1px solid var(--border);
+  padding: 12px var(--dumply-gap-md); /* 캐논 a-card-row 좌우선(16) */
 }
 .bucket-head { display: flex; align-items: center; gap: var(--dumply-gap-sm); margin-bottom: var(--dumply-gap-sm); flex-wrap: wrap; }
 .bucket-dot { width: var(--dot-size-sm); height: var(--dot-size-sm); border-radius: 50%; flex-shrink: 0; }
@@ -1223,7 +1216,7 @@ body {
   stroke-linejoin: round;
 }
 .prio-row {
-  padding: var(--dumply-gap-md) var(--dumply-gap-lg);
+  padding: 12px var(--dumply-gap-md); /* 캐논 a-card-row: 12px 16px */
   border-bottom: 1px solid var(--border);
 }
 .prio-row:last-child { border-bottom: none; }
@@ -1231,24 +1224,24 @@ body {
   cursor: pointer;
 }
 .prio-row.row-clickable:hover, .bucket-item.row-clickable:hover, .inbox-row.row-clickable:hover, .tl-row.row-clickable:hover {
-  background: var(--bg-base);
+  background: var(--bg-accent-soft); /* 캐논 a-card-row hover */
 }
-/* 더보기 — 카드 안 전폭 리스트 행 (보더 필 아님, radius는 카드 overflow가 처리) */
+/* 더보기 — 캐논 a-card-foot 문법 (accent-soft 바닥 + 상단 구분선) */
 .prio-expand-btn {
   display: block;
   width: 100%;
-  min-height: 44px;
   border: none;
   border-top: 1px solid var(--border);
   border-radius: 0;
-  background: transparent;
+  background: var(--bg-accent-soft);
+  padding: 10px 16px;
   font-family: inherit;
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 600;
-  color: var(--text-body);
+  color: var(--text-secondary);
   cursor: pointer;
 }
-.prio-expand-btn:hover { background: var(--bg-base); }
+.prio-expand-btn:hover { color: var(--text-primary); }
 .prio-expand-btn[hidden] { display: none !important; }
 .prio-row-head { display: flex; align-items: flex-start; gap: var(--dumply-gap-sm); }
 .prio-row-head .memo-check { flex-shrink: 0; margin-top: 1px; }

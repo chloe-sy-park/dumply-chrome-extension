@@ -282,12 +282,12 @@
   overflow: hidden;
 }
 
-/* Step 2 — 헤더 행 — 좌우 20px: 행(.prio-row 등) 패딩과 같은 세로 정렬선 */
+/* Step 2 — 헤더 행 (캐논: 8px 14px) */
 .a-card-head {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 20px;
+  padding: 8px 14px;
   min-height: 44px;
   box-sizing: border-box;
 }

@@ -6,8 +6,8 @@
   <title>Dumply</title>
   <link rel="stylesheet" href="fonts.css?v=48" />
   <link rel="stylesheet" href="tokens.css?v=60" />
-  <link rel="stylesheet" href="components.css?v=65" />
-  <link rel="stylesheet" href="popup.css?v=114" />
+  <link rel="stylesheet" href="components.css?v=66" />
+  <link rel="stylesheet" href="popup.css?v=116" />
   <link rel="stylesheet" href="surface.css?v=48" />
 </head>
 <body class="surface-sidepanel">
@@ -89,24 +89,32 @@
         <div id="live-tags" class="live-tags"></div>
 
         <div class="inbox-section">
-          <div class="section-head">
-            <span class="section-label">Inbox</span>
-            <span id="inbox-count" class="section-badge">0</span>
-            <div class="section-actions">
-              <button id="btn-ai-moscow" type="button" class="link-btn inbox-ai-link" data-i18n-title="inbox.ai.title" title="AI가 하나씩 질문하며 분류해요" data-i18n="inbox.ai.label">AI 문답</button>
+          <div class="a-card">
+            <div class="a-card-head">
+              <div class="a-card-title">
+                <span class="a-card-title-main">Inbox</span>
+                <span class="a-card-title-sub" data-i18n="inbox.flow.hint">Enter로 덤프 → 추천 확인 → 버킷 탭 → MoSCoW에 반영</span>
+              </div>
+              <span id="inbox-count" class="a-card-badge">0</span>
+              <div class="section-actions">
+                <button id="btn-ai-moscow" type="button" class="link-btn inbox-ai-link" data-i18n-title="inbox.ai.title" title="AI가 하나씩 질문하며 분류해요" data-i18n="inbox.ai.label">AI 문답</button>
+              </div>
             </div>
+            <div id="inbox-card" class="inbox-card"></div>
           </div>
-          <p class="flow-hint" data-i18n="inbox.flow.hint">Enter로 덤프 → 추천 확인 → 버킷 탭 → MoSCoW에 반영</p>
-          <div id="inbox-card" class="inbox-card"></div>
           <button id="btn-apply-suggestions" type="button" class="btn btn-primary btn-block commit-bar" hidden data-i18n="inbox.classify.btn">추천대로 분류</button>
         </div>
 
         <div class="moscow-section">
-          <div class="moscow-head">
-            <span class="section-label" data-i18n="moscow.title">MoSCoW 분류</span>
+          <div class="a-card">
+            <div class="a-card-head">
+              <div class="a-card-title">
+                <span class="a-card-title-main" data-i18n="moscow.title">MoSCoW 분류</span>
+                <span class="a-card-title-sub" data-i18n="moscow.guide">Must는 3개 이하 · 드래그로 순서·버킷 변경</span>
+              </div>
+            </div>
+            <div id="moscow-board" class="moscow-board"></div>
           </div>
-          <p class="moscow-guide" data-i18n="moscow.guide">Must는 3개 이하 · 드래그로 순서·버킷 변경</p>
-          <div id="moscow-board" class="moscow-board"></div>
         </div>
 
         <div class="mind-section" id="ponders-section" hidden>
