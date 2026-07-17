@@ -168,8 +168,8 @@ function renderOnboardStep() {
       el('p', 'onboard-desc onboard-desc-sub', t('ob.calendar.desc')),
       renderObLearnGauge(),
       onboardConnectCard(t('ob.calendar.google'), t('ob.calendar.google.sub'), 'ob-cal-connect'),
-      onboardSoonCard('✉️', 'Email', t('ob.calendar.email.sub')),
-      onboardSoonCard('💬', 'Slack / Messenger', t('ob.calendar.slack.sub')),
+      onboardSoonCard('mail', 'Email', t('ob.calendar.email.sub')),
+      onboardSoonCard('message-circle', 'Slack / Messenger', t('ob.calendar.slack.sub')),
       fieldHint(t('ob.calendar.hint')),
     );
     const cals = state.settings.calendar.calendars || [];
@@ -433,7 +433,7 @@ function onboardSoonCard(icon, title, sub) {
   card.className = 'onboard-card onboard-card--soon';
   const ic = document.createElement('span');
   ic.className = 'card-icon';
-  ic.textContent = icon;
+  ic.append(DumplyIcons.icon(icon, { size: 22 })); /* DS: 이모지 금지 → lucide 스트로크 */
   const body = document.createElement('div');
   body.className = 'card-body';
   const titleEl = document.createElement('div');
@@ -447,38 +447,6 @@ function onboardSoonCard(icon, title, sub) {
   st.className = 'card-action';
   st.textContent = 'Coming soon';
   card.append(ic, body, st);
-  return card;
-}
-
-function onboardCard(icon, title, sub, actionText, actionId, statusText) {
-  const card = document.createElement('div');
-  card.className = 'onboard-card';
-  const ic = document.createElement('span');
-  ic.className = 'card-icon';
-  ic.textContent = icon;
-  const body = document.createElement('div');
-  body.className = 'card-body';
-  const titleEl = document.createElement('div');
-  titleEl.className = 'card-title';
-  titleEl.textContent = title;
-  const s = document.createElement('div');
-  s.className = 'card-sub';
-  s.textContent = sub;
-  body.append(titleEl, s);
-  card.append(ic, body);
-  if (actionId) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'btn btn-secondary btn-sm';
-    btn.id = actionId;
-    btn.textContent = actionText;
-    card.append(btn);
-  } else if (statusText) {
-    const st = document.createElement('span');
-    st.className = 'card-action';
-    st.textContent = statusText;
-    card.append(st);
-  }
   return card;
 }
 
