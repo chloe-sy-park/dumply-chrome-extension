@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="fonts.css?v=48" />
   <link rel="stylesheet" href="tokens.css?v=59" />
   <link rel="stylesheet" href="components.css?v=63" />
-  <link rel="stylesheet" href="popup.css?v=104" />
+  <link rel="stylesheet" href="popup.css?v=105" />
   <link rel="stylesheet" href="surface.css?v=48" />
 </head>
 <body class="surface-sidepanel">
@@ -33,6 +33,7 @@
     <div class="app-sheet">
     <!-- 공통 크롬 바 — 전역: 좌 햄버거 / 우 검색·알림·저잔액 배지 -->
     <header class="app-chrome">
+      <div class="shell chrome-shell">
       <button id="btn-drawer-open" type="button" class="rail-btn hdr-ic" data-i18n-title="nav.menu" title="메뉴" aria-haspopup="dialog">
         <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
@@ -45,6 +46,7 @@
         <span class="hdr-notif-dot" hidden></span>
       </button>
       <button id="credit-pill" type="button" class="credit-pill" hidden data-i18n-title="credit.pill.title" title="내 크레딧"><span id="credit-pill-num">…</span></button>
+      </div>
     </header>
     <div id="route-home" class="app-route is-active">
     <header class="dash-header home-only">
@@ -59,10 +61,12 @@
       </div>
     </header>
 
-    <nav class="tabs home-only" role="tablist">
+    <div class="shell tabs-shell home-only">
+    <nav class="tabs" role="tablist">
       <button class="tab is-active" data-tab="dump" role="tab" data-i18n="dump.tab">브레인 덤프</button>
       <button class="tab" data-tab="dashboard" role="tab" data-i18n="dashboard.tab">대시보드</button>
     </nav>
+    </div>
 
     <main class="content">
       <section id="view-dump" class="view is-active">

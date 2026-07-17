@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="fonts.css?v=48" />
   <link rel="stylesheet" href="tokens.css?v=59" />
   <link rel="stylesheet" href="components.css?v=63" />
-  <link rel="stylesheet" href="popup.css?v=104" />
+  <link rel="stylesheet" href="popup.css?v=105" />
   <link rel="stylesheet" href="surface.css?v=48" />
   <link rel="stylesheet" href="fullpage.css?v=1" />
 </head>
@@ -72,10 +72,12 @@
       </div>
     </header>
 
-    <nav class="tabs home-only" role="tablist">
+    <div class="shell tabs-shell home-only">
+    <nav class="tabs" role="tablist">
       <button class="tab is-active" data-tab="dump" role="tab" data-i18n="dump.tab">브레인 덤프</button>
       <button class="tab" data-tab="dashboard" role="tab" data-i18n="dashboard.tab">대시보드</button>
     </nav>
+    </div>
 
     <main class="content">
       <section id="view-dump" class="view is-active">
