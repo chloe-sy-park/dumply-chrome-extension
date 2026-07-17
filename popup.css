@@ -661,9 +661,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
-  background: var(--bg-accent-soft);
-  border-bottom: 1px solid var(--border);
+  padding: 14px 20px 0; /* 회색 밴드 제거 — 타이틀은 카드 안 텍스트 (갤러리 Note 카드 문법) */
 }
 .dump-card-head .link-btn {
   min-height: unset;
