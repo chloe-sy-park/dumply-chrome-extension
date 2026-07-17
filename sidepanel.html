@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="fonts.css?v=48" />
   <link rel="stylesheet" href="tokens.css?v=59" />
   <link rel="stylesheet" href="components.css?v=63" />
-  <link rel="stylesheet" href="popup.css?v=102" />
+  <link rel="stylesheet" href="popup.css?v=103" />
   <link rel="stylesheet" href="surface.css?v=48" />
 </head>
 <body class="surface-sidepanel">
@@ -32,31 +32,9 @@
     <div class="app-shell">
     <div class="app-sheet">
     <nav id="nav-rail" class="nav-rail" aria-label="주요 메뉴">
-      <button id="btn-nav-toggle" type="button" class="rail-btn nav-toggle" aria-expanded="false" data-i18n-title="nav.toggle.expand" title="메뉴 펼치기">
-        <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4l8 8-8 8" stroke="currentColor" fill="none" stroke-width="1.75"/></svg>
-        <span class="nav-label nav-toggle-label" hidden>펼치기</span>
+      <button id="btn-drawer-open" type="button" class="rail-btn" data-i18n-title="nav.menu" title="메뉴" aria-haspopup="dialog">
+        <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
-      <div class="nav-rail-menu">
-        <div class="nav-rail-body">
-          <button type="button" class="rail-btn" data-nav="home" data-i18n-title="nav.home" title="메인">
-            <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V19a1 1 0 01-1 1h-5v-6H10v6H5a1 1 0 01-1-1v-8.5z" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linejoin="round"/></svg>
-            <span class="nav-label" data-i18n="nav.home">메인</span>
-          </button>
-          <button type="button" class="rail-btn" data-nav="calendar" data-i18n-title="nav.calendar" title="캘린더">
-            <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" fill="none" stroke-width="1.75"/><path d="M3 10h18M8 2v4M16 2v4" stroke="currentColor" fill="none" stroke-width="1.75"/></svg>
-            <span class="nav-label" data-i18n="nav.calendar">캘린더</span>
-          </button>
-          <button type="button" class="rail-btn" data-nav="projects" data-i18n-title="nav.projects" title="프로젝트">
-            <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 012-2h5l2 2h9a1 1 0 011 1v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" fill="none" stroke-width="1.75"/></svg>
-            <span class="nav-label" data-i18n="nav.projects">프로젝트</span>
-          </button>
-        </div>
-        <button type="button" class="rail-btn nav-btn-bottom" data-nav="settings" title="설정" data-i18n-title="settings.title">
-          <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" stroke="currentColor" fill="none" stroke-width="1.75"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" fill="none" stroke-width="1.75"/></svg>
-          <span class="nav-label" data-i18n="settings.title">설정</span>
-        </button>
-
-      </div>
     </nav>
     <div id="route-home" class="app-route is-active">
     <header class="dash-header home-only">
@@ -68,6 +46,14 @@
             <p id="hdr-weather" class="hdr-weather" hidden aria-live="polite"></p>
           </div>
         </div>
+        <!-- 검색·알림 — 기능 배포 전까지 hidden (data-feature 플래그) -->
+        <button id="btn-hdr-search" type="button" class="rail-btn hdr-ic" data-feature="search" hidden aria-label="검색">
+          <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="5.6"/><path d="M19.5 19.5l-4.4-4.4"/></svg>
+        </button>
+        <button id="btn-hdr-notif" type="button" class="rail-btn hdr-ic" data-feature="notifications" hidden aria-label="알림">
+          <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 16H6c1.2-1.4 1.8-2.7 1.8-5.2a4.2 4.2 0 0 1 8.4 0c0 2.5.6 3.8 1.8 5.2z"/><path d="M10.3 19a1.9 1.9 0 0 0 3.4 0"/></svg>
+          <span class="hdr-notif-dot" hidden></span>
+        </button>
         <button id="credit-pill" type="button" class="credit-pill" hidden data-i18n-title="credit.pill.title" title="내 크레딧"><span id="credit-pill-num">…</span></button>
         <div class="nav-rail-anchor"></div>
       </div>
@@ -498,6 +484,45 @@
     </div>
   </div>
 
+  <!-- 네비게이션 드로어 (미니 페이지 톤 사다리) -->
+  <div id="nav-drawer-dim" class="dr-dim">
+    <aside class="drawer" role="dialog" aria-modal="true" aria-label="메뉴">
+      <div class="dr-head">
+        <img src="icons/icon-48.png" alt="" width="34" height="34">
+        <b>Dumply</b>
+        <button id="btn-drawer-close" type="button" class="rail-btn" aria-label="닫기">
+          <svg class="rail-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="dr-group">
+        <button type="button" class="dr-item" data-nav="home">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V19a1 1 0 01-1 1h-5v-6H10v6H5a1 1 0 01-1-1v-8.5z"/></svg>
+          <span data-i18n="nav.home">메인</span>
+        </button>
+        <button type="button" class="dr-item" data-nav="calendar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+          <span data-i18n="nav.calendar">캘린더</span>
+        </button>
+        <button type="button" class="dr-item" data-nav="projects">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 012-2h5l2 2h9a1 1 0 011 1v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
+          <span data-i18n="nav.projects">프로젝트</span>
+        </button>
+      </div>
+      <div class="dr-sep"></div>
+      <div class="dr-group">
+        <button type="button" class="dr-item" data-nav="settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <span data-i18n="settings.title">설정</span>
+        </button>
+      </div>
+      <div class="dr-credit" id="drawer-credit" hidden>
+        <div class="n"><span id="drawer-credit-num">…</span><small data-i18n="credit.drawer.sub">크레딧</small></div>
+        <button type="button" id="btn-drawer-charge" class="btn-charge" data-i18n="credit.drawer.charge">충전하기</button>
+      </div>
+      <div class="dr-foot">Dumply</div>
+    </aside>
+  </div>
+
   <div id="compose-sheet" class="sheet" hidden>
     <div class="sheet-panel compose-panel" role="dialog" aria-modal="true" aria-label="새 항목 작성">
       <div class="compose-tabs tabs" role="tablist" aria-label="입력 유형">
@@ -618,7 +643,7 @@
 
   <script src="lib/icons.js?v=3"></script>
   <script src="lib/brand.js?v=48"></script>
-  <script src="lib/i18n.js?v=5"></script>
+  <script src="lib/i18n.js?v=6"></script>
   <script src="lib/storage.js?v=64"></script>
   <script src="lib/decisions.js?v=5"></script>
   <script src="lib/tags.js?v=81"></script>
@@ -633,10 +658,10 @@
   <script src="app/render.js?v=72"></script>
   <script src="app/compose.js?v=54"></script>
   <script src="app/detail.js?v=61"></script>
-  <script src="app/nav.js?v=51"></script>
+  <script src="app/nav.js?v=52"></script>
   <script src="app/calendar-view.js?v=77"></script>
   <script src="app/projects.js?v=52"></script>
-  <script src="app/handlers.js?v=99"></script>
+  <script src="app/handlers.js?v=100"></script>
   <script src="popup.js?v=49"></script>
   <script src="lib/icons-init.js?v=1"></script>
 </body>

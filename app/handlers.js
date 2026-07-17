@@ -797,14 +797,23 @@ function usingDumplyCredits() {
 function refreshCreditPill() {
   const pill = $('#credit-pill');
   const costHint = $('#dump-cost-hint');
+  const drawerCard = $('#drawer-credit');
   const active = usingDumplyCredits();
   if (costHint) costHint.hidden = !active;
+  const bal = active ? DumplyAccount.getBalance() : null;
+  const isLow = typeof bal === 'number' && bal >= 0 && bal <= 5;
+  // 드로어 잔액 카드 — 크레딧 사용 중이면 상시 노출
+  if (drawerCard) {
+    drawerCard.hidden = !active;
+    if (active) $('#drawer-credit-num').textContent = bal === -1 ? '∞' : bal === null ? '…' : bal;
+  }
   if (!pill) return;
-  pill.hidden = !active;
-  if (!active) return;
-  const bal = DumplyAccount.getBalance();
+  // 헤더 배지 — 드로어가 있으면 저잔액 경고일 때만 조건부 노출 (없으면 기존 상시 노출)
+  const hasDrawer = Boolean(drawerCard);
+  pill.hidden = hasDrawer ? !(active && isLow) : !active;
+  if (pill.hidden) return;
   $('#credit-pill-num').textContent = bal === -1 ? '∞' : bal === null ? '…' : bal;
-  pill.classList.toggle('warn', typeof bal === 'number' && bal >= 0 && bal <= 5);
+  pill.classList.toggle('warn', isLow);
 }
 
 let creditUsageCache = null;
@@ -1800,6 +1809,10 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   $('#btn-dumply-buy-large')?.addEventListener('click', (e) => onDumplyBuy('large', e.currentTarget));
   // 크레딧 필 → 전체 페이지 (클로드식: 한 번에 사용량 상세로), 402 순간엔 시트가 뜸
   $('#credit-pill')?.addEventListener('click', () => navigateTo('credits'));
+  $('#btn-drawer-charge')?.addEventListener('click', () => {
+    if (typeof closeNavDrawer === 'function') closeNavDrawer();
+    navigateTo('credits');
+  });
   $('#credit-sheet-close')?.addEventListener('click', () => { $('#credit-sheet').hidden = true; });
   $('#credit-sheet')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.hidden = true; });
   $('#credit-sheet-manage')?.addEventListener('click', () => { $('#credit-sheet').hidden = true; navigateTo('credits'); });
