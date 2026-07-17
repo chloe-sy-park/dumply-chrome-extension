@@ -71,7 +71,8 @@ function renderCurrentRoute() {
     renderLiveTags($('#dump-input')?.value || state.dumpDraft || '');
     renderInbox();
     renderMoscow();
-    if ($('#view-dashboard')?.classList.contains('is-active')) renderDashboard();
+    /* fullpage는 대시보드 컬럼이 탭 없이 항상 노출 — is-active와 무관하게 렌더 */
+    if ($('#view-dashboard')?.classList.contains('is-active') || document.body.classList.contains('surface-fullpage')) renderDashboard();
   } else if (route === 'calendar') {
     renderCalendarView();
   } else if (route === 'projects') {

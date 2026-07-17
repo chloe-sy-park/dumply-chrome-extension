@@ -151,6 +151,28 @@
   box-sizing: border-box;
 }
 
+/* ── 반응형: 좁은 창 (태블릿/모바일) ── */
+@media (max-width: 860px) {
+  /* 레일 → 아이콘 전용 */
+  .surface-fullpage .nav-rail { width: 56px; }
+  .surface-fullpage .nav-label { display: none !important; }
+  .surface-fullpage .rail-btn { justify-content: center !important; padding: 0 !important; gap: 0 !important; }
+
+  /* 홈 2컬럼 → 1컬럼 스택 (덤프 위 · 대시보드 아래), 스크롤은 content가 담당 */
+  .surface-fullpage #route-home .content {
+    display: block;
+    overflow-y: auto;
+  }
+  .surface-fullpage #view-dump,
+  .surface-fullpage #view-dashboard {
+    max-width: none;
+    border-right: none;
+    overflow-y: visible;
+    padding-bottom: 0;
+  }
+  .surface-fullpage #view-dashboard { padding-bottom: 40px; }
+}
+
 /* ── 시트(모달): 화면 중앙 ── */
 .surface-fullpage .sheet {
   position: fixed;
