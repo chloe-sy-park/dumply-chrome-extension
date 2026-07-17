@@ -1062,14 +1062,6 @@ body {
   text-transform: uppercase;
   color: var(--text-secondary);
 }
-/* 대시보드 섹션은 eyebrow가 아니라 실제 콘텐츠 타이틀 — 한 단계 격상 */
-#view-dashboard .section-label {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  text-transform: none;
-  color: var(--text-primary);
-}
 .moscow-guide { font-size: 11px; color: var(--text-secondary); margin-bottom: var(--dumply-gap-md); }
 .moscow-board {
   display: flex;
@@ -1241,21 +1233,22 @@ body {
 .prio-row.row-clickable:hover, .bucket-item.row-clickable:hover, .inbox-row.row-clickable:hover, .tl-row.row-clickable:hover {
   background: var(--bg-base);
 }
+/* 더보기 — 카드 안 전폭 리스트 행 (보더 필 아님, radius는 카드 overflow가 처리) */
 .prio-expand-btn {
   display: block;
   width: 100%;
-  margin-top: var(--dumply-gap-sm);
-  min-height: 36px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--bg-surface);
+  min-height: 44px;
+  border: none;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
   font-family: inherit;
   font-size: 12px;
   font-weight: 600;
   color: var(--text-body);
   cursor: pointer;
 }
-.prio-expand-btn:hover { background: var(--bg-active); }
+.prio-expand-btn:hover { background: var(--bg-base); }
 .prio-expand-btn[hidden] { display: none !important; }
 .prio-row-head { display: flex; align-items: flex-start; gap: var(--dumply-gap-sm); }
 .prio-row-head .memo-check { flex-shrink: 0; margin-top: 1px; }
