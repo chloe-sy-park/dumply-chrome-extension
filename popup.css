@@ -2018,13 +2018,14 @@ body {
 }
 .compose-panel .compose-tabs,
 .detail-type-tabs {
-  width: 100%;
+  width: fit-content;         /* 컴팩트 세그먼트 (갤러리 DS) — 전폭 점유 금지 */
   max-width: none;
   margin: 0 0 var(--dumply-gap-md);
 }
 .compose-tabs .compose-tab {
-  flex: 1;
-  min-height: 32px;
+  flex: 0 0 auto;
+  padding: 0 16px;
+  min-height: 30px;
   border: none;
   background: transparent;
   color: var(--text-secondary);
@@ -2244,7 +2245,7 @@ body {
   cursor: pointer;
 }
 .compose-cal-day.is-empty { pointer-events: none; }
-.compose-cal-day.is-today { color: var(--error); }
+.compose-cal-day.is-today { box-shadow: inset 0 0 0 1.5px var(--border-strong); font-weight: var(--font-weight-bold); } /* 오늘 = 잉크 링 (레드 금지 — 갤러리 DS) */
 .compose-cal-day.is-selected { background: var(--accent); color: var(--accent-text); }
 .compose-cal-day:not(.is-selected):hover { background: var(--bg-active); }
 .compose-footer {
@@ -3766,3 +3767,29 @@ button.proj-card {
     scroll-behavior: auto !important;
   }
 }
+
+/* ── DS 타임피커 (compose popover · 네이티브 input[type=time] 대체) ── */
+.tp-seg { display: inline-flex; width: fit-content; background: var(--bg-input); border-radius: 11px; padding: 2.5px; margin-bottom: 10px; }
+.tp-seg button { min-height: 30px; padding: 0 16px; border: 0; border-radius: 9px; background: transparent; color: var(--text-secondary); font-size: var(--font-size-caption); font-weight: var(--font-weight-semibold); font-family: inherit; cursor: pointer; }
+.tp-seg button.is-selected { background: var(--bg-surface); color: var(--text-primary); box-shadow: var(--shadow-sm); }
+.tp-hgrid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-bottom: 10px; }
+.tp-hcell { border: 0; background: transparent; font-size: var(--font-size-caption); font-family: inherit; height: 34px; border-radius: var(--radius-md); cursor: pointer; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.tp-hcell:hover { background: var(--bg-input); }
+.tp-hcell.is-selected { background: var(--accent); color: var(--accent-text); }
+.tp-mrow { display: flex; gap: 6px; flex-wrap: wrap; }
+.tp-mchip { font-size: var(--font-size-caption); font-weight: var(--font-weight-semibold); font-family: inherit; color: var(--text-secondary); background: var(--bg-surface); border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.tp-mchip.is-selected { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+
+/* ── 컴포즈 칩 SVG 스트로크 아이콘 (이모지 대체 · currentColor 마스크) ── */
+.compose-pill { display: inline-flex; align-items: center; gap: 5px; }
+.compose-pill::before { content: ''; width: 13px; height: 13px; flex: 0 0 auto; background: currentColor; -webkit-mask: var(--pill-ic) no-repeat center / contain; mask: var(--pill-ic) no-repeat center / contain; }
+#compose-pill-moscow { --pill-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3Ccircle cx='12' cy='12' r='2.5' fill='black' stroke='none'/%3E%3C/svg%3E"); }
+#compose-pill-start-date { --pill-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Crect x='4' y='6' width='16' height='14' rx='3'/%3E%3Cpath d='M4 10.5h16M8.5 4v3.5M15.5 4v3.5'/%3E%3C/svg%3E"); }
+#compose-pill-deadline { --pill-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Crect x='4' y='6' width='16' height='14' rx='3'/%3E%3Cpath d='M4 10.5h16M8.5 4v3.5M15.5 4v3.5'/%3E%3C/svg%3E"); }
+#compose-pill-date { --pill-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Crect x='4' y='6' width='16' height='14' rx='3'/%3E%3Cpath d='M4 10.5h16M8.5 4v3.5M15.5 4v3.5'/%3E%3C/svg%3E"); }
+#compose-pill-start-time { --pill-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3Cpath d='M12 8v4.3l2.8 1.7'/%3E%3C/svg%3E"); }
+#compose-pill-deadline-time { --pill-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3Cpath d='M12 8v4.3l2.8 1.7'/%3E%3C/svg%3E"); }
+#compose-pill-time { --pill-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3Cpath d='M12 8v4.3l2.8 1.7'/%3E%3C/svg%3E"); }
+#compose-pill-duration { --pill-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M9 3h6M12 3v3'/%3E%3Ccircle cx='12' cy='14' r='7'/%3E%3Cpath d='M12 10.5V14l2.2 1.4'/%3E%3C/svg%3E"); }
+#compose-pill-event-duration { --pill-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M9 3h6M12 3v3'/%3E%3Ccircle cx='12' cy='14' r='7'/%3E%3Cpath d='M12 10.5V14l2.2 1.4'/%3E%3C/svg%3E"); }
+#compose-pill-reminder { --pill-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 16H6c1.2-1.4 1.8-2.7 1.8-5.2a4.2 4.2 0 0 1 8.4 0c0 2.5.6 3.8 1.8 5.2z'/%3E%3Cpath d='M10.3 19a1.9 1.9 0 0 0 3.4 0'/%3E%3C/svg%3E"); }

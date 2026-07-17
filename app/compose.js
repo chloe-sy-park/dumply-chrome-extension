@@ -169,7 +169,77 @@ function clearComposeTaskTime() {
   if (timeField === 'startTime') composeState.draft.startTime = null;
   else if (timeField === 'deadlineTime') composeState.draft.deadlineTime = null;
   syncComposePills();
+  if (composeState.expanded) renderComposeExpandedFields();
   closeComposePopover();
+}
+
+// 시간 라벨 — '오후 3:15' (버튼·행 표시용)
+function formatComposeTimeLabel(hhmm) {
+  if (!hhmm) return t('compose.time.none');
+  const [h, m] = hhmm.split(':').map(Number);
+  const ap = h >= 12 ? t('compose.time.pm') : t('compose.time.am');
+  const h12 = ((h + 11) % 12) + 1;
+  return `${ap} ${h12}:${String(m).padStart(2, '0')}`;
+}
+
+// DS 타임피커 — 오전/오후 세그 + 시(1–12) 그리드 + 15분 단위 칩.
+// 네이티브 input[type=time](파란 휠) 대체 — 갤러리 DS '날짜·시간 선택' 스펙.
+function fillTimePickerPopover(pop, { value, onChange }) {
+  let ap = 'PM';
+  let h12 = null;
+  let mm = null;
+  if (value && /^\d{1,2}:\d{2}$/.test(value)) {
+    const [h24, m] = value.split(':').map(Number);
+    ap = h24 >= 12 ? 'PM' : 'AM';
+    h12 = ((h24 + 11) % 12) + 1;
+    mm = String((Math.round(m / 15) * 15) % 60).padStart(2, '0');
+  }
+  const emit = () => {
+    if (h12 === null) return;
+    let h = h12 % 12;
+    if (ap === 'PM') h += 12;
+    onChange(`${String(h).padStart(2, '0')}:${mm || '00'}`);
+  };
+  const seg = document.createElement('div');
+  seg.className = 'tp-seg';
+  const segBtns = [['AM', t('compose.time.am')], ['PM', t('compose.time.pm')]].map(([key, lab]) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = lab;
+    b.addEventListener('click', () => { ap = key; sync(); emit(); });
+    seg.append(b);
+    return [key, b];
+  });
+  const grid = document.createElement('div');
+  grid.className = 'tp-hgrid';
+  const hourBtns = [];
+  for (let h = 1; h <= 12; h += 1) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tp-hcell';
+    b.textContent = String(h);
+    b.addEventListener('click', () => { h12 = h; if (mm === null) mm = '00'; sync(); emit(); });
+    hourBtns.push([h, b]);
+    grid.append(b);
+  }
+  const mrow = document.createElement('div');
+  mrow.className = 'tp-mrow';
+  const minBtns = ['00', '15', '30', '45'].map((m) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tp-mchip';
+    b.textContent = `${m}${t('compose.time.min')}`;
+    b.addEventListener('click', () => { mm = m; if (h12 === null) h12 = ap === 'PM' ? 3 : 9; sync(); emit(); });
+    mrow.append(b);
+    return [m, b];
+  });
+  function sync() {
+    segBtns.forEach(([k, b]) => b.classList.toggle('is-selected', k === ap));
+    hourBtns.forEach(([h, b]) => b.classList.toggle('is-selected', h === h12));
+    minBtns.forEach(([m, b]) => b.classList.toggle('is-selected', m === mm));
+  }
+  sync();
+  pop.append(seg, grid, mrow);
 }
 
 function renderComposeTimePopover(pop) {
@@ -179,30 +249,24 @@ function renderComposeTimePopover(pop) {
     ? (timeField === 'startTime' ? t('compose.time.start') : t('compose.time.deadline'))
     : t('compose.time.label');
 
-  const label = document.createElement('label');
-  label.className = 'field';
-  const lbl = document.createElement('span');
-  lbl.className = 'field-label';
+  const lbl = document.createElement('p');
+  lbl.className = 'compose-pop-label';
   lbl.textContent = labelText;
-  const inp = document.createElement('input');
-  inp.type = 'time';
-  inp.id = 'compose-pop-time';
-  if (isTaskTime) {
-    inp.value = draft[timeField] || '';
-  } else {
-    inp.value = draft.time || defaultEventTime();
-  }
-  inp.addEventListener('change', () => {
-    if (isTaskTime) {
-      composeState.draft[timeField] = inp.value || null;
-    } else {
-      composeState.draft.time = inp.value;
-      composeState.draft.allDay = false;
-    }
-    syncComposePills();
+  pop.append(lbl);
+
+  fillTimePickerPopover(pop, {
+    value: isTaskTime ? (draft[timeField] || '') : (draft.time || defaultEventTime()),
+    onChange: (v) => {
+      if (isTaskTime) {
+        composeState.draft[timeField] = v;
+      } else {
+        composeState.draft.time = v;
+        composeState.draft.allDay = false;
+      }
+      syncComposePills();
+      if (composeState.expanded) renderComposeExpandedFields();
+    },
   });
-  label.append(lbl, inp);
-  pop.append(label);
 
   if (isTaskTime) {
     const clearBtn = document.createElement('button');
@@ -219,11 +283,11 @@ function renderComposeTimePopover(pop) {
     allDayBtn.addEventListener('click', () => {
       composeState.draft.allDay = true;
       syncComposePills();
+      if (composeState.expanded) renderComposeExpandedFields();
       closeComposePopover();
     });
     pop.append(allDayBtn);
   }
-  setTimeout(() => inp.focus(), 40);
 }
 
 function renderComposePopover() {
@@ -337,7 +401,7 @@ function renderComposePopover() {
         composeState.draft.durationReason = reason || null;
         syncComposePills();
         closeComposePopover();
-        toast(reason ? `⏱️ ${formatDurationLabel(minutes)} — ${reason}` : `⏱️ ${formatDurationLabel(minutes)}`);
+        toast(reason ? `${formatDurationLabel(minutes)} — ${reason}` : `${formatDurationLabel(minutes)}`);
       });
       pop.append(suggestBtn);
     }
@@ -401,55 +465,55 @@ function syncComposePills() {
     const label = draft.bucket == null
       ? 'Inbox'
       : (BUCKETS.find((b) => b.key === draft.bucket)?.label || 'MoSCoW');
-    moscowPill.textContent = `🎯 ${label}`;
+    moscowPill.textContent = `${label}`;
     moscowPill.hidden = mode !== 'task';
   }
   if (deadlinePill) {
     deadlinePill.textContent = draft.deadline
-      ? `📅 ${formatComposeDateWithWeekday(draft.deadline, draft.deadlineHint)}`
+      ? `${formatComposeDateWithWeekday(draft.deadline, draft.deadlineHint)}`
       : t('compose.pill.deadline');
     deadlinePill.hidden = mode !== 'task';
   }
   const startDatePill = $('#compose-pill-start-date');
   if (startDatePill) {
     startDatePill.textContent = draft.startDate
-      ? `📅 ${formatComposeDateWithWeekday(draft.startDate)}`
+      ? `${formatComposeDateWithWeekday(draft.startDate)}`
       : t('compose.pill.start.date');
     startDatePill.hidden = mode !== 'task';
   }
   const startTimePill = $('#compose-pill-start-time');
   if (startTimePill) {
-    startTimePill.textContent = draft.startTime ? `⏰ ${draft.startTime}` : t('compose.pill.start.time');
+    startTimePill.textContent = draft.startTime ? `${draft.startTime}` : t('compose.pill.start.time');
     startTimePill.hidden = mode !== 'task';
   }
   const deadlineTimePill = $('#compose-pill-deadline-time');
   if (deadlineTimePill) {
-    deadlineTimePill.textContent = draft.deadlineTime ? `⏰ ${draft.deadlineTime}` : t('compose.pill.deadline.time');
+    deadlineTimePill.textContent = draft.deadlineTime ? `${draft.deadlineTime}` : t('compose.pill.deadline.time');
     deadlineTimePill.hidden = mode !== 'task';
   }
   if (datePill) {
     const dateLabel = formatComposeDateWithWeekday(draft.date, draft.dateHint);
-    datePill.textContent = `📅 ${dateLabel}`;
+    datePill.textContent = `${dateLabel}`;
     datePill.hidden = mode !== 'event';
   }
   if (timePill) {
-    timePill.textContent = draft.allDay ? t('compose.pill.allday') : `⏰ ${draft.time}`;
+    timePill.textContent = draft.allDay ? t('compose.pill.allday') : `${draft.time}`;
     timePill.hidden = mode !== 'event';
   }
   if (reminderPill) {
-    reminderPill.textContent = `🔔 ${formatRemindLabel(draft.remindMinutes)}`;
+    reminderPill.textContent = `${formatRemindLabel(draft.remindMinutes)}`;
     reminderPill.hidden = mode !== 'event';
   }
   const durationPill = $('#compose-pill-duration');
   if (durationPill) {
     durationPill.textContent = draft.durationMinutes
-      ? `⏱️ ${formatDurationLabel(draft.durationMinutes)}`
+      ? `${formatDurationLabel(draft.durationMinutes)}`
       : t('compose.pill.duration');
     durationPill.hidden = mode !== 'task';
   }
   const eventDurationPill = $('#compose-pill-event-duration');
   if (eventDurationPill) {
-    eventDurationPill.textContent = `⏱️ ${formatDurationLabel(draft.duration || 30)}`;
+    eventDurationPill.textContent = `${formatDurationLabel(draft.duration || 30)}`;
     eventDurationPill.hidden = mode !== 'event';
   }
 }
@@ -551,30 +615,25 @@ function renderComposeExpandedFields() {
     dateBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleComposePopover('date', 'event'); });
     container.append(makeExpRow(t('compose.exp.date'), dateBtn));
 
-    // 시간 + 종일
+    // 시간 + 종일 — DS 타임피커 팝오버로 (네이티브 input[type=time] 제거)
     const timeWrap = document.createElement('div');
     timeWrap.className = 'compose-exp-time-wrap';
-    const timeInp = document.createElement('input');
-    timeInp.type = 'time';
-    timeInp.className = 'compose-exp-time';
-    timeInp.value = draft.allDay ? '' : (draft.time || '');
-    timeInp.disabled = Boolean(draft.allDay);
-    timeInp.addEventListener('change', () => {
-      composeState.draft.time = timeInp.value;
-      composeState.draft.allDay = false;
-      syncComposePills();
-    });
+    const timeBtn = document.createElement('button');
+    timeBtn.type = 'button';
+    timeBtn.className = 'compose-exp-date-btn';
+    timeBtn.textContent = draft.allDay ? t('compose.time.none') : formatComposeTimeLabel(draft.time || '');
+    timeBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleComposePopover('time'); });
     const allDayBtn = document.createElement('button');
     allDayBtn.type = 'button';
     allDayBtn.className = `compose-exp-toggle${draft.allDay ? ' is-active' : ''}`;
     allDayBtn.textContent = t('compose.allday');
     allDayBtn.addEventListener('click', () => {
       composeState.draft.allDay = !composeState.draft.allDay;
-      timeInp.disabled = composeState.draft.allDay;
       allDayBtn.classList.toggle('is-active', composeState.draft.allDay);
+      timeBtn.textContent = composeState.draft.allDay ? t('compose.time.none') : formatComposeTimeLabel(composeState.draft.time || '');
       syncComposePills();
     });
-    timeWrap.append(timeInp, allDayBtn);
+    timeWrap.append(timeBtn, allDayBtn);
     container.append(makeExpRow(t('compose.exp.time'), timeWrap));
 
     // 소요시간
@@ -643,13 +702,13 @@ function renderComposeExpandedFields() {
     startDateBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleComposePopover('date', 'startDate'); });
     container.append(makeExpRow(t('compose.exp.start.date'), startDateBtn));
 
-    // 시작 시간
-    const startTimeInp = document.createElement('input');
-    startTimeInp.type = 'time';
-    startTimeInp.className = 'compose-exp-time';
-    startTimeInp.value = draft.startTime || '';
-    startTimeInp.addEventListener('change', () => { composeState.draft.startTime = startTimeInp.value || null; syncComposePills(); });
-    container.append(makeExpRow(t('compose.exp.start.time'), startTimeInp));
+    // 시작 시간 — DS 타임피커 팝오버로
+    const startTimeBtn = document.createElement('button');
+    startTimeBtn.type = 'button';
+    startTimeBtn.className = 'compose-exp-date-btn';
+    startTimeBtn.textContent = formatComposeTimeLabel(draft.startTime || '');
+    startTimeBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleComposePopover('time', 'startTime'); });
+    container.append(makeExpRow(t('compose.exp.start.time'), startTimeBtn));
 
     // 마감일
     const deadlineBtn = document.createElement('button');
@@ -659,13 +718,13 @@ function renderComposeExpandedFields() {
     deadlineBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleComposePopover('date', 'deadline'); });
     container.append(makeExpRow(t('compose.exp.deadline.date'), deadlineBtn));
 
-    // 마감 시간
-    const deadlineTimeInp = document.createElement('input');
-    deadlineTimeInp.type = 'time';
-    deadlineTimeInp.className = 'compose-exp-time';
-    deadlineTimeInp.value = draft.deadlineTime || '';
-    deadlineTimeInp.addEventListener('change', () => { composeState.draft.deadlineTime = deadlineTimeInp.value || null; syncComposePills(); });
-    container.append(makeExpRow(t('compose.exp.deadline.time'), deadlineTimeInp));
+    // 마감 시간 — DS 타임피커 팝오버로
+    const deadlineTimeBtn = document.createElement('button');
+    deadlineTimeBtn.type = 'button';
+    deadlineTimeBtn.className = 'compose-exp-date-btn';
+    deadlineTimeBtn.textContent = formatComposeTimeLabel(draft.deadlineTime || '');
+    deadlineTimeBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleComposePopover('time', 'deadlineTime'); });
+    container.append(makeExpRow(t('compose.exp.deadline.time'), deadlineTimeBtn));
 
     // 소요시간
     const durSel = document.createElement('select');
