@@ -1585,7 +1585,7 @@ body {
   opacity: 1;
 }
 .tb-block-del:hover {
-  background: var(--danger, #e53e3e);
+  background: var(--error);
 }
 .tb-block-resize {
   position: absolute;
@@ -2330,8 +2330,8 @@ body {
   white-space: nowrap;
 }
 .compose-exp-toggle.is-active {
-  background: var(--accent-1, #6c6bff);
-  border-color: var(--accent-1, #6c6bff);
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 .compose-exp-select {

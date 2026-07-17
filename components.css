@@ -484,7 +484,7 @@
 .credits-history-label { flex: 1; }
 .credits-history-meta { color: var(--text-secondary); font-size: 11px; }
 .credits-history-delta { font-weight: 800; min-width: 36px; text-align: right; }
-.credits-history-delta.is-plus { color: #0A8A5F; }
+.credits-history-delta.is-plus { color: color-mix(in srgb, var(--success) 72%, var(--text-primary)); }
 .credits-history-delta.is-minus { color: var(--text-secondary); }
 .ob-credit-pro-sub { font-size: var(--font-size-sm); color: var(--text-secondary); margin: 2px 0 0; }
 
