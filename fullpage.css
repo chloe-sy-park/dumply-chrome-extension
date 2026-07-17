@@ -30,7 +30,7 @@
   width: 160px;
   flex-shrink: 0;
   border-right: 1px solid var(--dumply-border);
-  background: var(--dumply-surface);
+  background: var(--bg-base); /* 드로어 문법 — 레일은 크롬(base), 화이트는 강조 전용 */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -56,7 +56,7 @@
   background: transparent !important;
   box-shadow: none !important;
   border-radius: 0 !important;
-  padding: 8px 0 !important;
+  padding: 8px !important; /* 드로어처럼 pill이 가장자리에 닿지 않게 */
   gap: 2px !important;
 }
 
@@ -71,9 +71,11 @@
   flex-direction: row !important;
   justify-content: flex-start !important;
   width: 100% !important;
-  height: 36px !important;
-  padding: 0 12px !important;
-  gap: 8px !important;
+  height: 40px !important; /* 드로어 항목(40px)과 동일 */
+  padding: 0 10px !important;
+  gap: 10px !important;
+  border-radius: var(--radius-md); /* DS radius 사다리(10) — 기본 8은 사다리 밖 */
+  color: var(--text-body);
 }
 
 /* 하단 버튼 정렬 */
@@ -169,8 +171,9 @@
   max-width: 90vw;
   max-height: 85vh;
   overflow-y: auto;
-  border-radius: var(--radius-md);
-  box-shadow: var(--dumply-shadow-md);
+  border-radius: 20px; /* DS: 시트 = 20 (기존 10은 인풋 급) */
+  border: 1px solid var(--card-line); /* 바텀시트의 border-top 잔재 대체 */
+  box-shadow: var(--dumply-shadow-md), 0 16px 48px rgba(9, 9, 11, 0.18);
 }
 
 /* ── 온보딩: 중앙 카드 ── */
