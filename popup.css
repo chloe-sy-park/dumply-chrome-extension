@@ -3920,3 +3920,17 @@ button.proj-card {
 .settings-row .sr-value { font-size: var(--font-size-caption); color: var(--text-secondary); }
 .settings-row .sr-chev { width: 15px; height: 15px; stroke: var(--text-placeholder); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
 .settings-group .field ~ .field { border-top: 1px solid var(--bg-input); padding-top: 14px; } /* 항목 구분선 — 행 위계 */
+
+/* ── rank 배지 = MoSCoW 색 (도트 신호 통합) ── */
+.prio-rank { width: 20px; height: 20px; border-radius: 7px; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; background: var(--bg-input); color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.prio-rank-must { background: color-mix(in srgb, var(--moscow-must) 12%, transparent); color: color-mix(in srgb, var(--moscow-must) 82%, var(--text-primary)); }
+.prio-rank-should { background: color-mix(in srgb, var(--moscow-should) 14%, transparent); color: color-mix(in srgb, var(--moscow-should) 72%, var(--text-primary)); }
+.prio-rank-wont { color: var(--text-placeholder); }
+
+/* ── 타임라인 스마트 윈도우: 스텁 · 빈 날 ── */
+.tb-stub { display: block; width: 100%; padding: 7px 14px; border: 0; background: var(--bg-accent-soft);
+  color: var(--text-secondary); font-family: inherit; font-size: 11px; font-weight: 600; cursor: pointer; text-align: left; }
+.tb-stub:hover { background: var(--bg-active); }
+.tb-day-empty { padding: 22px 16px 20px; text-align: center; }
+.tb-day-empty p { font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; }

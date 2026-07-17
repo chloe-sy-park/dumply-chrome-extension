@@ -186,10 +186,10 @@ function createTaskRow(m, options = {}) {
   // prio variant
   const head = document.createElement('div');
   head.className = 'prio-row-head';
-  head.append(chk, createPriorityDot(m.priority, { size: 'sm' }));
+  head.append(chk);
   if (options.rank != null) {
     const rank = document.createElement('span');
-    rank.className = 'prio-rank';
+    rank.className = `prio-rank prio-rank-${m.priority || 'none'}`; // rank 배지 = MoSCoW 색 (도트 신호 통합)
     rank.textContent = String(options.rank);
     head.append(rank);
   }
