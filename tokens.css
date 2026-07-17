@@ -239,6 +239,14 @@
   --dumply-text-body: #5E574E;
   --dumply-text-secondary: #928B80;
   --dumply-text-placeholder: #B7B0A4;
+  /* 이벤트 밴드 — 웜 크림 바닥과 온도 맞춘 뮤트 파스텔 (기본 쿨톤 상속 방지) */
+  --dumply-cal-a: #CFDCE6;
+  --dumply-cal-b: #EDD3D8;
+  --dumply-cal-c: #EAE0BE;
+  --dumply-cal-d: #D2E0CB;
+  --dumply-cal-gcal: #DCE0E2;
+  --dumply-cal-tl: #EDDCC4;
+  --dumply-cal-memo: #DFD5E2;
   --dumply-shadow-sm: 0 1px 2px rgba(52, 40, 24, 0.05), 0 1px 1px rgba(52, 40, 24, 0.04);
   --dumply-shadow-md: 0 6px 20px rgba(52, 40, 24, 0.09), 0 1px 2px rgba(52, 40, 24, 0.05);
   --dumply-overlay: rgba(38, 32, 25, 0.54);
