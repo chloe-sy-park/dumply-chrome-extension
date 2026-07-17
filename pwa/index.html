@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F3F1EB" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#191612" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F6F6F8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#09090B" media="(prefers-color-scheme: dark)">
 <title>Dumply — 오늘의 수사 보드</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="../icons/icon-128.png">
@@ -13,6 +13,7 @@
 /* 테마 부트스트랩 — 첫 페인트 전에 적용해야 라이트→다크 플래시가 없다 */
 (() => { const t = localStorage.getItem('dumply-theme'); if (t) document.documentElement.setAttribute('data-theme', t); })();
 </script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="./tokens.css">
 <link rel="stylesheet" href="./app.css">
 </head>
@@ -24,6 +25,8 @@
   <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></symbol>
   <symbol id="i-gear" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 12h2M10 12h10M4 17h13M20 17h0"/><circle cx="16" cy="7" r="2"/><circle cx="7" cy="12" r="2"/><circle cx="18.5" cy="17" r="2"/></symbol>
   <symbol id="i-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></symbol>
   <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 4c-3 4-5 6.5-5 9.5a5 5 0 0 0 10 0C17 10.5 15 8 12 4Z"/></symbol>
 </svg>
 
@@ -42,6 +45,13 @@
       <span class="streak" title="연속 수사 완료"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-flame"/></svg> <span id="streak-n">5</span>일 연속</span>
     </header>
 
+    <div class="filters" role="group" aria-label="우선순위 필터">
+      <button class="fchip" aria-pressed="true" type="button">전체</button>
+      <button class="fchip" aria-pressed="false" type="button"><span class="dot dot-must"></span>Must</button>
+      <button class="fchip" aria-pressed="false" type="button"><span class="dot dot-should"></span>Should</button>
+      <button class="fchip" aria-pressed="false" type="button"><span class="dot dot-could"></span>Could</button>
+    </div>
+
     <div class="offline-banner" role="status">
       <img src="./assets/alfredo/offline.svg" alt="">
       <span>연결이 끊겼어요. 알프레도가 기록해두고, 연결되면 정리할게요.</span>
@@ -56,8 +66,14 @@
       <button class="stage-fold" id="stage-fold" type="button" aria-expanded="true">접기</button>
     </section>
 
+    <button class="quick-add" id="quick-add" type="button">
+      <span class="plus-circle"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-plus"/></svg></span>
+      새 덤프 — 그냥 던지세요
+      <kbd>⌃N</kbd>
+    </button>
+
     <div class="sec-head">
-      <h2>알프레도의 제안</h2>
+      <h2><button class="sec-toggle" type="button" aria-expanded="true"><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg>알프레도의 제안</button></h2>
       <span class="count" id="sug-count">3</span>
     </div>
     <div class="stack" id="suggestions">
@@ -97,7 +113,7 @@
     </div>
 
     <div class="sec-head moscow-must">
-      <h2>Must — 오늘 꼭</h2>
+      <h2><button class="sec-toggle" type="button" aria-expanded="true"><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg>Must — 오늘 꼭</button></h2>
     </div>
     <div class="stack" id="board-must">
       <article class="card">
@@ -110,7 +126,7 @@
     </div>
 
     <div class="sec-head moscow-should">
-      <h2>Should — 하면 좋음</h2>
+      <h2><button class="sec-toggle" type="button" aria-expanded="true"><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg>Should — 하면 좋음</button></h2>
     </div>
     <div class="stack" id="board-should">
       <article class="card">

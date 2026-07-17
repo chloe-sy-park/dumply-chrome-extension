@@ -1,19 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="알프레도 — 축하 (사건 종결)">
   <!-- placeholder asset — 정식 일러스트로 교체 예정 (docs/alfredo-asset-spec.md) -->
-  <ellipse cx="60" cy="72" rx="30" ry="34" fill="#36312B"/>
-  <ellipse cx="60" cy="80" rx="20" ry="24" fill="#FBFAF6"/>
-  <circle cx="60" cy="38" r="20" fill="#36312B"/>
-  <circle cx="53" cy="35" r="3.2" fill="#FBFAF6"/>
-  <circle cx="67" cy="35" r="3.2" fill="#FBFAF6"/>
-  <circle cx="53.8" cy="35.6" r="1.4" fill="#1A1510"/>
-  <circle cx="67.8" cy="35.6" r="1.4" fill="#1A1510"/>
-  <polygon points="56,42 64,42 60,48" fill="#C97C1E"/>
-  <path d="M42 24 Q60 12 78 24 L74 20 Q60 8 46 20 Z" fill="#1A1510"/>
-  <rect x="40" y="22" width="40" height="5" rx="2.5" fill="#1A1510"/>
-  <circle cx="24" cy="26" r="3.5" fill="#D6493C"/>
-  <circle cx="96" cy="20" r="3" fill="#C97C1E"/>
-  <circle cx="104" cy="44" r="2.5" fill="#3F8F5F"/>
-  <circle cx="16" cy="52" r="2.5" fill="#4A7DC9"/>
-  <rect x="30" y="14" width="6" height="6" rx="1" fill="#3F8F5F" transform="rotate(20 33 17)"/>
-  <rect x="88" y="32" width="5" height="5" rx="1" fill="#D6493C" transform="rotate(-15 90 34)"/>
+  <ellipse cx="60" cy="72" rx="30" ry="34" fill="#1B1B1F"/>
+  <ellipse cx="60" cy="80" rx="20" ry="24" fill="#FAFAFA"/>
+  <circle cx="60" cy="38" r="20" fill="#1B1B1F"/>
+  <circle cx="53" cy="35" r="3.2" fill="#FAFAFA"/>
+  <circle cx="67" cy="35" r="3.2" fill="#FAFAFA"/>
+  <circle cx="53.8" cy="35.6" r="1.4" fill="#09090B"/>
+  <circle cx="67.8" cy="35.6" r="1.4" fill="#09090B"/>
+  <polygon points="56,42 64,42 60,48" fill="#FF9500"/>
+  <path d="M42 24 Q60 12 78 24 L74 20 Q60 8 46 20 Z" fill="#09090B"/>
+  <rect x="40" y="22" width="40" height="5" rx="2.5" fill="#09090B"/>
+  <circle cx="24" cy="26" r="3.5" fill="#FF3B30"/>
+  <circle cx="96" cy="20" r="3" fill="#FF9500"/>
+  <circle cx="104" cy="44" r="2.5" fill="#34C759"/>
+  <circle cx="16" cy="52" r="2.5" fill="#007AFF"/>
+  <rect x="30" y="14" width="6" height="6" rx="1" fill="#34C759" transform="rotate(20 33 17)"/>
+  <rect x="88" y="32" width="5" height="5" rx="1" fill="#FF3B30" transform="rotate(-15 90 34)"/>
 </svg>

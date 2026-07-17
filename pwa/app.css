@@ -1,5 +1,5 @@
-/* Dumply PWA — 앱 셸 컴포넌트 스타일
-   거버넌스: raw hex 금지 · box-shadow 금지 · 유채 배경 금지(기능 칩 예외) ·
+/* Dumply PWA — 앱 셸 컴포넌트 스타일 (토큰 v0.2 · Zinc 모노크롬)
+   거버넌스: raw hex 금지 · box-shadow는 섀도 토큰만 · 유채 배경 금지(상태 토큰 예외) ·
    radius는 스케일 값만 · 다크 분기 없음(토큰 계층 책임) — .stylelintrc.json으로 강제 */
 
 * { box-sizing: border-box; }
@@ -83,7 +83,7 @@ button { font-family: inherit; cursor: pointer; }
 .greet { display: flex; align-items: center; gap: var(--sp-3); }
 .greet h1 {
   font-size: var(--fs-title); font-weight: var(--fw-bold);
-  color: var(--dumply-ink-primary); margin: 0; letter-spacing: -0.01em;
+  color: var(--dumply-ink-primary); margin: 0; letter-spacing: var(--ls-tight);
 }
 .streak {
   margin-left: auto;
@@ -94,6 +94,46 @@ button { font-family: inherit; cursor: pointer; }
   font-size: var(--fs-caption); font-weight: var(--fw-semibold);
   color: var(--dumply-ink-primary);
   font-variant-numeric: tabular-nums;
+}
+
+/* ── MoSCoW 필터 칩 (Superlist 필터 칩 행) ── */
+.filters { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.fchip {
+  font-size: var(--fs-caption); font-weight: var(--fw-medium);
+  border-radius: var(--dumply-radius-chip);
+  padding: var(--sp-1) var(--sp-3); min-height: 28px;
+  border: 1px solid var(--dumply-border);
+  background: none; color: var(--dumply-ink-secondary);
+  display: inline-flex; align-items: center;
+}
+.fchip:hover { background: var(--dumply-surface-active); }
+.fchip[aria-pressed="true"] { background: var(--dumply-accent); color: var(--dumply-accent-text); border-color: var(--dumply-accent); }
+.fchip .dot { width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; }
+.dot-must { background: var(--dumply-moscow-must); }
+.dot-should { background: var(--dumply-moscow-should); }
+.dot-could { background: var(--dumply-moscow-could); }
+
+/* ── 고스트 퀵애드 행 + kbd 칩 (Superlist: New task ⌃N) — 데스크톱 전용 ── */
+.quick-add {
+  display: none;
+  display: flex; align-items: center; gap: var(--sp-3);
+  width: 100%; text-align: left;
+  padding: var(--sp-2) var(--card-pad); min-height: var(--touch-target);
+  border: none; border-radius: var(--dumply-radius-control);
+  background: none; color: var(--dumply-ink-placeholder);
+  font-size: var(--fs-body); font-weight: var(--fw-medium);
+}
+.quick-add:hover { background: var(--dumply-surface-soft); color: var(--dumply-ink-secondary); }
+.quick-add .plus-circle {
+  width: 20px; height: 20px; flex: none; border-radius: 50%;
+  border: 1.5px dashed var(--dumply-border-strong);
+  display: grid; place-items: center;
+}
+kbd {
+  font-family: var(--dumply-font-family); font-size: var(--fs-xs); font-weight: var(--fw-semibold);
+  background: var(--dumply-surface-sunken); border: 1px solid var(--dumply-border);
+  border-radius: var(--dumply-radius-xs); padding: 2px 6px;
+  color: var(--dumply-ink-secondary); margin-left: auto;
 }
 
 /* ── 알프레도 무대 ── */
@@ -124,9 +164,16 @@ button { font-family: inherit; cursor: pointer; }
 }
 .sec-head h2 {
   font-size: var(--fs-sm); font-weight: var(--fw-bold);
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--dumply-ink-placeholder); margin: 0;
+  letter-spacing: var(--ls-label); text-transform: uppercase;
+  color: var(--dumply-ink-secondary); margin: 0;
 }
+.sec-toggle {
+  display: inline-flex; align-items: center; gap: 4px;
+  border: none; background: none; padding: 0;
+  font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit;
+}
+.chev { width: 12px; height: 12px; transition: transform var(--motion-quick) var(--ease-standard); }
+.sec-head.is-collapsed .chev { transform: rotate(-90deg); }
 .sec-head .count { font-size: var(--fs-sm); color: var(--dumply-ink-placeholder); font-variant-numeric: tabular-nums; }
 .sec-head.moscow-must h2 { color: var(--dumply-moscow-must); }
 .sec-head.moscow-should h2 { color: var(--dumply-moscow-should); }
@@ -138,15 +185,18 @@ button { font-family: inherit; cursor: pointer; }
   background: var(--card-bg);
   border: var(--card-border);
   border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
   padding: var(--sp-3) var(--card-pad);
   display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); align-items: flex-start;
   transition: border-color var(--motion-emphasis) var(--ease-spring), background var(--motion-standard) var(--ease-out);
 }
 .card-body { min-width: 0; flex: 1 1 160px; }
+.card:hover { box-shadow: var(--shadow-card-hover); }
+.card.is-suggestion { box-shadow: none; } /* 제안은 점선만 — 확정(실선+섀도)과 깊이로도 구분 */
 .card .check {
   width: 20px; height: 20px; flex: none; margin-top: 1px;
   border: 1.5px solid var(--dumply-border-strong);
-  border-radius: 7px; background: none; padding: 0;
+  border-radius: 50%; background: none; padding: 0;
 }
 .card .check:hover { background: var(--dumply-surface-active); }
 .card-title { margin: 0; font-size: var(--fs-body); font-weight: var(--fw-medium); color: var(--dumply-ink-primary); }
@@ -173,6 +223,8 @@ button { font-family: inherit; cursor: pointer; }
   transition: background var(--motion-quick) var(--ease-out);
 }
 .btn:hover { background: var(--dumply-surface-active); }
+.btn:active, .dump-pill:active, .tab:active { transform: scale(0.97); }
+.btn, .dump-pill, .tab { transition: transform var(--motion-quick) var(--ease-standard), background var(--motion-quick) var(--ease-standard); }
 .btn-primary { background: var(--dumply-accent); color: var(--dumply-accent-text); border-color: var(--dumply-accent); }
 
 /* 완료 상태 */
@@ -224,6 +276,8 @@ button { font-family: inherit; cursor: pointer; }
   position: fixed; left: 0; right: 0; bottom: 0;
   display: flex; justify-content: space-around;
   background: var(--tabbar-bg);
+  -webkit-backdrop-filter: blur(var(--tabbar-blur));
+  backdrop-filter: blur(var(--tabbar-blur));
   border-top: var(--tabbar-border-top);
   padding: var(--sp-2) var(--sp-2) var(--tabbar-pad-bottom);
 }
@@ -254,7 +308,36 @@ body.is-offline .offline-banner { display: flex; }
   .card, .btn, .rail-btn { transition: none; }
 }
 
-/* 데스크톱: 탭바 숨김 — .tabbar 기본 규칙보다 뒤에 와야 함 (캐스케이드) */
+/* ── 데스크톱 오버라이드 (캐스케이드 최후순 — 기본 규칙들보다 뒤) ── */
 @media (min-width: 1024px) {
   .tabbar { display: none; }
+
+  /* Superlist식 플로팅 패널: 메인 칼럼이 라운드 시트로 떠 있음 */
+  .col-main {
+    max-width: 640px;
+    background: var(--dumply-surface-raised);
+    border: 1px solid var(--dumply-border);
+    border-radius: var(--dumply-radius-sheet);
+    box-shadow: var(--card-shadow);
+    margin: var(--sp-5) auto;
+    padding: var(--sp-8);
+    align-self: start;
+  }
+  .col-side {
+    border-left: none;
+    border: 1px solid var(--dumply-border);
+    border-radius: var(--dumply-radius-sheet);
+    box-shadow: var(--card-shadow);
+    margin: var(--sp-5) var(--sp-5) var(--sp-5) 0;
+    top: var(--sp-5); height: calc(100dvh - var(--sp-10));
+  }
+  /* 패널 위 행은 플랫 — 섀도는 패널이 가진다 (Superlist 행 문법) */
+  .card { box-shadow: none; }
+  .card:hover { box-shadow: none; background: var(--dumply-surface-soft); }
+  .card.is-suggestion:hover { background: var(--suggestion-bg); }
+  /* 페이지 타이틀 승격: 32px 디스플레이 (Superlist 극대비 위계) */
+  .greet h1 { font-size: var(--fs-display); }
+  /* 캡처는 고스트 행이 담당 — 하단 필 숨김 */
+  .dump-pill { display: none; }
+  .quick-add { display: flex; }
 }

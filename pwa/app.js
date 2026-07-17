@@ -97,6 +97,21 @@
     navigator.serviceWorker.register('./sw.js').catch(() => {});
   }
 
+  /* 접이식 섹션 (Superlist: Overdue/Today 셰브런 그룹) */
+  document.querySelectorAll('.sec-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const head = btn.closest('.sec-head');
+      const stack = head.nextElementSibling;
+      const collapsed = head.classList.toggle('is-collapsed');
+      if (stack) stack.hidden = collapsed;
+      btn.setAttribute('aria-expanded', String(!collapsed));
+    });
+  });
+
+  $('#quick-add')?.addEventListener('click', () => {
+    alert('컴포즈 시트 자리 — 자연어 퀵애드(Todoist 01)가 여기 붙습니다.');
+  });
+
   $('#dump-cta').addEventListener('click', () => {
     /* 데모 셸: 실제 앱에서는 컴포즈 시트 오픈 */
     alert('컴포즈 시트 자리 — 자연어 퀵애드(Todoist 01)가 여기 붙습니다.');
