@@ -13,6 +13,8 @@ body {
   background: var(--bg-base);
   color: var(--text-primary);
   overflow: hidden;
+  word-break: keep-all;       /* 한글 어절 단위 줄바꿈 — "업로\n드" 방지 */
+  overflow-wrap: break-word;  /* 긴 URL·영단어는 강제 개행으로 오버플로 방지 */
 }
 
 /* 콘텐츠 래퍼 — 유동 폭, 넓은 패널에선 max로 가드 후 가운데 정렬 */
