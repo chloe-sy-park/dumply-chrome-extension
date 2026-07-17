@@ -6,7 +6,8 @@
 ## 한눈에 보기 — 현재 상태
 
 - **✅ 결정 완료 (2026-07-17): PWA는 v0.2 "Zinc 모노크롬" 채택** — [PR #29](https://github.com/chloe-sy-park/dumply-chrome-extension/pull/29) main 머지 완료 (`9f5a4f5`). ai-alfredo 저장소의 Zinc 회색 기반 모노크롬으로 PWA 토큰 전면 개정.
-- **크롬 확장은 여전히 v0.1 "웜 듄(warm dune)"** (`tokens.css`) — 확장을 Zinc로 따라갈지, 서피스별로 다른 팔레트를 유지할지가 **다음 최상위 결정**.
+- **✅ 크롬 확장도 Zinc 전환 (2026-07-17)** — `tokens.css`의 기본 `:root`와 `data-theme="system"` 라이트 테마를 PWA와 동일한 Zinc 값으로 교체. 사용자 선택 테마(ash/barbie/midnight/dawn/pale)는 유지. Chromium 렌더링으로 확인됨.
+- 남은 정합성 격차: 확장의 OS 다크는 여전히 `midnight`(로즈 액센트) 테마로 해석됨 — Zinc 다크 사다리(zinc-975 바닥/950 카드/900 웰) 도입 여부는 미결.
 - v0.2의 살아있는 스펙은 `docs/pwa-design-system.html`(개정판), 단일 토큰 소스는 `pwa/tokens.css`.
 
 ## 핵심 원칙 (확장 v0.1 웜 듄 기준 — PWA는 아래 v0.2 비교표 참조)
@@ -65,7 +66,7 @@
 ## 다음 세션에서 열린 결정/할 일
 
 1. ~~PR #29 방향 결정~~ → **v0.2 Zinc 채택, 머지 완료 (2026-07-17, `9f5a4f5`)**
-2. **확장 `tokens.css` 정합성 결정** — 확장도 Zinc로 전환할지, 서피스별 팔레트 분리를 유지할지. (새 최상위 결정)
+2. ~~확장 `tokens.css` 정합성 결정~~ → **Zinc 전환 완료 (라이트, 2026-07-17)**. 후속: 확장 Zinc 다크 사다리 도입 여부 (현재 OS 다크 = midnight 테마).
 3. 알프레도 정식 일러스트 반입 (5상태 + celebrating 요일 variant 7종) — 팔레트는 v0.2 Zinc 규격(`docs/alfredo-asset-spec.md`, 부리 #FF9500).
 4. PWA 앱 아이콘(512 maskable) 정식 제작 — 현재 Zinc 리컬러 플레이스홀더.
 5. 랜딩 ↔ 확장 ↔ PWA 간 토큰 일관성 점검.
