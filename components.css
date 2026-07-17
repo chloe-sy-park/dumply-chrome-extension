@@ -282,13 +282,12 @@
   overflow: hidden;
 }
 
-/* Step 2 — 헤더 행 (캐논: 8px 14px) */
+/* Step 2 — 헤더 행 (갤러리 캐논: 카드 패딩 안 타이틀 텍스트, 구분선 없음) */
 .a-card-head {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 14px;
-  min-height: 44px;
+  padding: 14px 16px 2px;
   box-sizing: border-box;
 }
 
@@ -300,22 +299,9 @@
   font-size: 16px;
 }
 
-/* Step 3 — 아이콘 (투명 배경, 잉크 — 구조 아이콘은 모노 유지, 액센트는 CTA·선택·완료·크레딧 전용) */
+/* Step 3 — 아이콘 (갤러리 캐논: 섹션 카드 헤드에 아이콘 없음 — 타이틀 텍스트만) */
 .a-card-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  color: var(--text-primary);
-}
-.a-card-icon .icon,
-.a-card-icon svg {
-  width: 16px;
-  height: 16px;
-  color: var(--text-primary);
-  stroke: currentColor;
+  display: none;
 }
 
 /* Step 4 — 제목 영역 */
@@ -328,7 +314,7 @@
 }
 .a-card-title-main {
   font-size: var(--font-size-body);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-medium); /* 갤러리: 카드 타이틀 = Body-sm 14 / Medium */
   color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -362,16 +348,11 @@
   margin-top: 0;
 }
 
-/* Step 6 — 목록 컨테이너 + 행 사이 구분선 */
+/* Step 6 — 목록 컨테이너 (갤러리 캐논: 구분선 없이 행 패딩으로 분리) */
 .a-card-list {
   display: flex;
   flex-direction: column;
-}
-.a-card-head + .a-card-list {
-  border-top: 1px solid var(--border);
-}
-.a-card-row + .a-card-row {
-  border-top: 1px solid var(--border);
+  padding-bottom: 4px;
 }
 
 /* Step 7 — 목록 한 줄 */

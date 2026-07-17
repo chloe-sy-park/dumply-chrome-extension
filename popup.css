@@ -801,9 +801,9 @@ body {
   border-radius: 999px;
   margin-right: auto;
 }
-/* 인박스 목록 — a-card 안에 살므로 셸 없음(a-card 문법 통일), 첫 구분선만 소유 */
+/* 인박스 목록 — a-card 안에 삶 (갤러리: 구분선 없이 여백 분리) */
 .inbox-card {
-  border-top: 1px solid var(--border);
+  padding-bottom: 4px;
 }
 .inbox-row {
   display: grid;
@@ -812,10 +812,8 @@ body {
   row-gap: 0;
   align-items: center;
   padding: 10px var(--dumply-gap-md);
-  border-bottom: 1px solid var(--border);
   cursor: grab;
 }
-.inbox-row:last-child { border-bottom: none; }
 .inbox-row.dragging { opacity: 0.5; }
 .inbox-check,
 .memo-check {
@@ -857,10 +855,10 @@ body {
   grid-column: 3;
   grid-row: 1;
   min-width: 0;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--text-primary);
-  line-height: 1.35;
+  line-height: 1.4;
 }
 .inbox-actions {
   grid-column: 4;
@@ -1064,8 +1062,7 @@ body {
   flex-direction: column;
 }
 .bucket {
-  border-top: 1px solid var(--border);
-  padding: 12px var(--dumply-gap-md); /* 캐논 a-card-row 좌우선(16) */
+  padding: 10px var(--dumply-gap-md) 12px; /* 갤러리: 구분선 없이 그룹 여백 분리 */
 }
 .bucket-head { display: flex; align-items: center; gap: var(--dumply-gap-sm); margin-bottom: var(--dumply-gap-sm); flex-wrap: wrap; }
 .bucket-dot { width: var(--dot-size-sm); height: var(--dot-size-sm); border-radius: 50%; flex-shrink: 0; }
@@ -1077,12 +1074,13 @@ body {
 .bucket-list { list-style: none; min-height: 8px; }
 .bucket-item {
   display: flex; align-items: center; gap: var(--dumply-gap-sm);
-  padding: 5px 8px;
+  padding: 6px 8px;
   border-radius: var(--radius-sm);
   background: var(--bg-base);
   margin-bottom: var(--dumply-gap-xs);
   cursor: grab;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 500;
   border-bottom: none;
 }
 .bucket-item:last-child { margin-bottom: 0; border-bottom: none; }
@@ -1216,10 +1214,8 @@ body {
   stroke-linejoin: round;
 }
 .prio-row {
-  padding: 12px var(--dumply-gap-md); /* 캐논 a-card-row: 12px 16px */
-  border-bottom: 1px solid var(--border);
+  padding: 10px var(--dumply-gap-md); /* 갤러리: 구분선 없이 여백 분리 */
 }
-.prio-row:last-child { border-bottom: none; }
 .prio-row.row-clickable, .bucket-item.row-clickable, .inbox-row.row-clickable, .tl-row.row-clickable {
   cursor: pointer;
 }
@@ -1271,7 +1267,7 @@ body {
 .prio-row-should .prio-rank { color: var(--moscow-should); }
 .prio-row-could .prio-rank { color: var(--moscow-could); }
 .prio-row-wont .prio-rank { color: var(--moscow-wont); }
-.prio-title { font-weight: 600; font-size: 12px; color: var(--text-primary); line-height: 1.4; }
+.prio-title { font-weight: 500; font-size: 15px; color: var(--text-primary); line-height: 1.4; } /* 갤러리 태스크 타이틀 15/500 */
 .prio-meta {
   font-size: 11px;
   color: var(--text-secondary);
@@ -1298,11 +1294,8 @@ body {
 .remember-section { margin-bottom: var(--dumply-section-gap); }
 .remember-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  margin-top: var(--dumply-gap-sm);
   overflow: hidden;
+  padding-bottom: 4px; /* a-card 안에 삶 — 자체 셸 없음 (갤러리 문법) */
 }
 .remember-card.is-empty {
   background: var(--bg-accent-soft);
@@ -1310,11 +1303,9 @@ body {
 }
 .remember-item {
   display: flex; align-items: center; gap: var(--dumply-gap-md);
-  padding: var(--dumply-gap-lg);
+  padding: 12px var(--dumply-gap-md);
   font-size: 12px;
-  border-bottom: 1px solid var(--border);
 }
-.remember-item:last-child { border-bottom: none; }
 .remember-empty {
   width: 100%;
   border: none;
@@ -1359,10 +1350,13 @@ body {
 /* ── 타임블록 타임라인 ── */
 .timeline-block-wrap {
   background: var(--bg-card);
-  border: 1px solid var(--border);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-sm);
   overflow: hidden;
+}
+/* a-card 밖 단독 사용 시에만 자체 셸 */
+.timeline-block-wrap:not(.a-card *) {
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
 }
 .tb-allday-row {
   display: flex;
@@ -1629,7 +1623,7 @@ body {
   color: var(--text-secondary);
   flex-shrink: 0;
 }
-.remember-text { font-size: 12px; }
+.remember-text { font-size: 14px; font-weight: 500; }
 .remember-due { font-size: 11px; color: var(--text-secondary); }
 
 .detail-duration-wrap { display: flex; align-items: center; gap: var(--dumply-gap-xs); flex-wrap: wrap; }
