@@ -45,6 +45,7 @@ function syncRoutes() {
   $$('.home-only').forEach((el) => {
     el.classList.toggle('is-hidden', route !== 'home');
   });
+  if (route !== 'home' && typeof window.__resetHeaderMini === 'function') window.__resetHeaderMini();
   syncNavRail();
 }
 
@@ -136,14 +137,23 @@ function bindNavEvents() {
     await persist();
   });
 
-  // ── 공통 헤더: 스크롤 시 인사말 축소 (60px 진입 / 40px 복귀 히스테리시스) ──
+  // ── 공통 헤더: 스크롤 축소 — 인사말이 크롬 바로 올라와 한 줄 (60px 진입 / 40px 복귀) ──
   const content = document.querySelector('#route-home .content') || document.querySelector('.content');
   const dash = document.querySelector('.dash-header');
+  const chrome = document.querySelector('.app-chrome');
+  const chromeTitle = $('#chrome-title');
+  const setHeaderMini = (mini) => {
+    dash?.classList.toggle('mini', mini);
+    chrome?.classList.toggle('mini', mini);
+    if (mini && chromeTitle) chromeTitle.textContent = $('#hdr-greeting')?.textContent || '';
+  };
   if (content && dash) {
     content.addEventListener('scroll', () => {
       const y = content.scrollTop;
-      if (!dash.classList.contains('mini') && y > 60) dash.classList.add('mini');
-      else if (dash.classList.contains('mini') && y < 40) dash.classList.remove('mini');
+      if (!dash.classList.contains('mini') && y > 60) setHeaderMini(true);
+      else if (dash.classList.contains('mini') && y < 40) setHeaderMini(false);
     }, { passive: true });
   }
+  // 홈 밖으로 이동하면 축소 상태 해제
+  window.__resetHeaderMini = () => setHeaderMini(false);
 }

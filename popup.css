@@ -3830,19 +3830,24 @@ button.proj-card {
 /* ── 공통 헤더: 아이콘 버튼 · 알림 도트(앰버) · 스크롤 축소 ── */
 .hdr-ic { width: 38px; height: 38px; position: relative; }
 .hdr-notif-dot { position: absolute; top: 8px; right: 8px; width: 7px; height: 7px; border-radius: 50%; background: var(--warning); border: 1.5px solid var(--bg-base); }
-.dash-greet { transition: none; }
-.dash-header .hdr-greeting { transition: font-size 0.2s ease-out; }
-.dash-header .hdr-meta-row { overflow: hidden; max-height: 24px; opacity: 1; transition: max-height 0.2s ease-out, opacity 0.2s ease-out; }
-.dash-header.mini .hdr-greeting { font-size: 15px; }
-.dash-header.mini .hdr-meta-row { max-height: 0; opacity: 0; }
-@media (prefers-reduced-motion: reduce) { .dash-header .hdr-greeting, .dash-header .hdr-meta-row { transition: none; } }
+.dash-header .dash-greet { overflow: hidden; max-height: 96px; opacity: 1;
+  transition: max-height 0.2s ease-out, opacity 0.2s ease-out; }
+.dash-header.mini .dash-greet { max-height: 0; opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .dash-header .dash-greet { transition: none; } }
 
 /* ── 공통 크롬 바 (전역) vs 페이지 헤더 분리 ── */
 .app-chrome { display: flex; align-items: center; gap: 2px; flex-shrink: 0;
-  padding: calc(var(--dumply-chrome-safe-top, 12px)) var(--dumply-padding-x) 4px;
+  padding: 4px var(--dumply-padding-x) 2px;                /* 슬림 36px (A안) */
   background: color-mix(in srgb, var(--bg-base) 88%, transparent);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   position: relative; z-index: 7; }
+.app-chrome .hdr-ic { width: 30px; height: 30px; }
+.chrome-title { flex: 0 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  font-size: 14px; font-weight: 700; letter-spacing: -0.02em; margin-left: 4px;
+  opacity: 0; max-width: 0; transition: opacity 0.2s ease-out, max-width 0.2s ease-out; }
+.app-chrome.mini .chrome-title { opacity: 1; max-width: 70%; }
+.app-chrome.mini { box-shadow: 0 1px 0 var(--card-line); }
+@media (prefers-reduced-motion: reduce) { .chrome-title { transition: none; } }
 .chrome-spacer { flex: 1; }
 /* display 유틸이 hidden 속성을 이기는 함정 방지 */
 .rail-btn[hidden], .credit-pill[hidden], .hdr-notif-dot[hidden] { display: none !important; }
