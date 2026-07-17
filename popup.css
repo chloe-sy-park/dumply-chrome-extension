@@ -235,8 +235,9 @@ body {
 .page-dot.is-active { background: var(--accent); }
 .onboard-card {
   background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--card-line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
   padding: var(--dumply-gap-md) var(--dumply-gap-md);
   margin-bottom: var(--dumply-gap-sm);
   display: flex;
@@ -650,10 +651,10 @@ body {
 }
 .dump-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--card-line);
   border-radius: var(--radius-card);
   padding: 0;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
 }
 .dump-card-head {
@@ -801,8 +802,9 @@ body {
 }
 .inbox-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--card-line);
   border-radius: var(--radius-card);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
 }
 .inbox-row {
@@ -980,8 +982,9 @@ body {
 .mind-section { margin-top: var(--dumply-section-gap); }
 .mind-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--card-line);
   border-radius: var(--radius-card);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
 }
 .mind-row {

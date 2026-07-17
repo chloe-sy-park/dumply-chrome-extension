@@ -48,8 +48,9 @@
   --dumply-tag-bg: #EDEDF0;
   --dumply-tag-text: #6B6F76;
   --dumply-active: #E4E4E7;             /* hover·active (한 계단 더 깊게) */
-  --dumply-border: #E4E4E7;             /* Zinc 보더 */
+  --dumply-border: #E4E4E7;             /* Zinc 보더 (인풋·구분선) */
   --dumply-border-strong: #D4D4D8;
+  --dumply-card-line: rgba(9, 9, 11, 0.04); /* 카드 헤어라인 — 분리는 그림자가 담당 (갤러리 DS) */
   --dumply-accent: #08090A;            /* 잉크 Primary (매트 모노 기본) */
   --dumply-accent-dark: #27272A;
   --dumply-accent-soft: #EDEDF0;       /* 들어간 소프트 웰 — 빈상태·배지·세그먼트 트랙 */
@@ -127,6 +128,7 @@
   --text-muted: var(--dumply-text-placeholder);
   --border: var(--dumply-border);
   --border-strong: var(--dumply-border-strong);
+  --card-line: var(--dumply-card-line);
   --accent: var(--dumply-accent);
   --accent-dark: var(--dumply-accent-dark);
   --accent-gradient: var(--dumply-accent-gradient);
@@ -190,6 +192,7 @@
   --dumply-active: #2E2E33;
   --dumply-border: rgba(255, 255, 255, 0.07);
   --dumply-border-strong: #3F3F46;
+  --dumply-card-line: rgba(255, 255, 255, 0.07);
   --dumply-accent: #FAFAFA;
   --dumply-accent-dark: #E4E4E7;
   --dumply-accent-soft: #27272A;
@@ -226,6 +229,7 @@
   --dumply-active: #DFD9CF;
   --dumply-border: #EAE7E1;
   --dumply-border-strong: #DDD8D0;
+  --dumply-card-line: #EAE7E1;
   --dumply-accent: #262019;
   --dumply-accent-dark: #1A1510;
   --dumply-accent-soft: #EAE6DE;
@@ -363,6 +367,7 @@
   --dumply-active: #26262A;
   --dumply-border: #232325;
   --dumply-border-strong: #343438;
+  --dumply-card-line: rgba(255, 255, 255, 0.07);
   --dumply-accent: #D25E65;
   --dumply-accent-dark: #B84E55;
   --dumply-accent-soft: #2A1E20;
@@ -397,6 +402,7 @@
   --dumply-active: #4A3A54;
   --dumply-border: #45374B;
   --dumply-border-strong: #564661;
+  --dumply-card-line: rgba(255, 255, 255, 0.07);
   --dumply-accent: #A84376;
   --dumply-accent-dark: #8E3563;
   --dumply-accent-soft: #43304A;
@@ -431,6 +437,7 @@
   --dumply-active: #3E4358;
   --dumply-border: #393E52;
   --dumply-border-strong: #4A4F66;
+  --dumply-card-line: rgba(255, 255, 255, 0.07);
   --dumply-accent: #7D57C1;
   --dumply-accent-dark: #6A47A8;
   --dumply-accent-soft: #393D54;
