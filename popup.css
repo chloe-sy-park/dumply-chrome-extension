@@ -2512,12 +2512,13 @@ body {
 .toast:not([hidden]) {
   position: fixed; left: 50%; bottom: var(--dumply-cta-bottom); transform: translateX(-50%);
   background: var(--accent); color: var(--accent-text);
-  padding: 10px var(--dumply-gap-lg); border-radius: 999px;
-  font-size: 13px; font-weight: 600;
-  box-shadow: var(--shadow-md); z-index: 60;
-  max-width: var(--dumply-content-max);
-  display: inline-flex; align-items: center; justify-content: center;
-  gap: var(--dumply-gap-sm); text-align: center;
+  padding: 11px 16px; border-radius: var(--radius-lg); /* 갤러리: 짧으면 필처럼, 길어도 카드형 유지 (999px 블롭 방지) */
+  font-size: 13px; font-weight: 500; line-height: 1.45;
+  box-shadow: var(--shadow-md), 0 8px 24px rgba(9, 9, 11, 0.14); z-index: 60;
+  width: max-content;
+  max-width: min(calc(100vw - 2 * var(--dumply-padding-x)), 360px);
+  display: inline-flex; align-items: center;
+  gap: 12px; text-align: left;
 }
 .toast-action {
   flex-shrink: 0;
