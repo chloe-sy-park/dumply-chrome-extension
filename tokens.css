@@ -71,14 +71,14 @@
   --dumply-moscow-could: var(--dumply-could);
   --dumply-moscow-wont: var(--dumply-text-placeholder);
 
-  /* ── Calendar band pastels ── */
-  --dumply-cal-a: #D4E4FF;
-  --dumply-cal-b: #FFD6E8;
-  --dumply-cal-c: #FFF3B0;
-  --dumply-cal-d: #D4F5E0;
-  --dumply-cal-gcal: #E8EEF8;
-  --dumply-cal-tl: #FFE4CC;
-  --dumply-cal-memo: #E8DEFF;
+  /* ── Calendar band pastels — Zinc 뮤트 (채도↓·명도 통일, 매트 모노 정합 2026-07-17) ── */
+  --dumply-cal-a: #DCE5F2;
+  --dumply-cal-b: #F0DFE8;
+  --dumply-cal-c: #EFEACB;
+  --dumply-cal-d: #DCEAE0;
+  --dumply-cal-gcal: #E2E7EF;
+  --dumply-cal-tl: #EFE3D4;
+  --dumply-cal-memo: #E6E1F1;
 
   /* ── Status soft fills ── */
   --dumply-status-success-soft: rgba(52, 199, 89, 0.12);
