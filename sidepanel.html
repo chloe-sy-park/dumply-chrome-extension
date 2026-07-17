@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dumply</title>
   <link rel="stylesheet" href="fonts.css?v=48" />
-  <link rel="stylesheet" href="tokens.css?v=57" />
-  <link rel="stylesheet" href="components.css?v=60" />
-  <link rel="stylesheet" href="popup.css?v=96" />
+  <link rel="stylesheet" href="tokens.css?v=58" />
+  <link rel="stylesheet" href="components.css?v=61" />
+  <link rel="stylesheet" href="popup.css?v=98" />
   <link rel="stylesheet" href="surface.css?v=48" />
 </head>
 <body class="surface-sidepanel">
@@ -276,15 +276,29 @@
           <span class="field-label" data-i18n="settings.theme">테마</span>
           <select id="theme-select">
             <option value="system">System</option>
-            <option value="light">Off-white</option>
+            <option value="light">Mono</option>
+            <option value="dark">Mono Dark</option>
+            <option value="craft">Craft (Warm)</option>
             <option value="ash">Ash</option>
             <option value="barbie">Barbie Dreamhouse</option>
             <option value="midnight">Midnight</option>
             <option value="dawn">Dawn</option>
             <option value="pale">Pale</option>
           </select>
-          <span class="field-hint" data-i18n="settings.theme.hint">System은 라이트=Ash · 다크=Midnight로 자동 전환돼요</span>
+          <span class="field-hint" data-i18n="settings.theme.hint">System은 라이트=Mono · 다크=Mono Dark로 자동 전환돼요</span>
         </label>
+        <div class="field">
+          <span class="field-label" data-i18n="settings.accent">액센트</span>
+          <div class="accent-swatches" id="accent-swatches" role="group" aria-label="액센트 색상">
+            <button type="button" class="accent-sw" data-accent-value="" style="background:var(--dumply-text-primary)" title="Mono" aria-pressed="false"></button>
+            <button type="button" class="accent-sw" data-accent-value="blue" style="background:#007AFF" title="Blue" aria-pressed="false"></button>
+            <button type="button" class="accent-sw" data-accent-value="indigo" style="background:#5856D6" title="Indigo" aria-pressed="false"></button>
+            <button type="button" class="accent-sw" data-accent-value="green" style="background:#34C759" title="Green" aria-pressed="false"></button>
+            <button type="button" class="accent-sw" data-accent-value="amber" style="background:#FF9500" title="Amber" aria-pressed="false"></button>
+            <button type="button" class="accent-sw" data-accent-value="rose" style="background:#FF2D55" title="Rose" aria-pressed="false"></button>
+          </div>
+          <span class="field-hint" data-i18n="settings.accent.hint">CTA와 선택 상태에만 물드는 포인트 색이에요</span>
+        </div>
         <label class="field">
           <span class="field-label" data-i18n="settings.weather.city">날씨 도시</span>
           <input id="weather-city" type="text" placeholder="예: 서울" autocomplete="off" />
@@ -511,20 +525,20 @@
         ></textarea>
         <button type="button" id="btn-compose-notes-toggle" class="compose-notes-toggle" data-i18n="compose.notes.btn">+ 설명</button>
         <div id="compose-event-meta" class="compose-event-meta" hidden>
-          <input id="compose-with" class="compose-meta-input" type="text" data-i18n-placeholder="compose.with.placeholder" placeholder="👥 누구랑" autocomplete="off" />
-          <input id="compose-location" class="compose-meta-input" type="text" data-i18n-placeholder="compose.location.placeholder" placeholder="📍 어디서" autocomplete="off" />
+          <input id="compose-with" class="compose-meta-input" type="text" data-i18n-placeholder="compose.with.placeholder" placeholder="누구랑" autocomplete="off" />
+          <input id="compose-location" class="compose-meta-input" type="text" data-i18n-placeholder="compose.location.placeholder" placeholder="어디서" autocomplete="off" />
         </div>
         <div class="compose-pills">
-          <button type="button" id="compose-pill-moscow" class="compose-pill" hidden>🎯 MoSCoW</button>
-          <button type="button" id="compose-pill-start-date" class="compose-pill" hidden>📅 시작</button>
-          <button type="button" id="compose-pill-start-time" class="compose-pill" hidden>⏰ 시작</button>
-          <button type="button" id="compose-pill-deadline" class="compose-pill" hidden>📅 마감</button>
-          <button type="button" id="compose-pill-deadline-time" class="compose-pill" hidden>⏰ 마감</button>
-          <button type="button" id="compose-pill-duration" class="compose-pill" hidden>⏱️ 소요</button>
-          <button type="button" id="compose-pill-date" class="compose-pill" hidden>📅 날짜</button>
-          <button type="button" id="compose-pill-time" class="compose-pill" hidden>⏰ 시간</button>
-          <button type="button" id="compose-pill-event-duration" class="compose-pill" hidden>⏱️ 30분</button>
-          <button type="button" id="compose-pill-reminder" class="compose-pill" hidden>🔔 알림</button>
+          <button type="button" id="compose-pill-moscow" class="compose-pill" hidden>MoSCoW</button>
+          <button type="button" id="compose-pill-start-date" class="compose-pill" hidden>시작</button>
+          <button type="button" id="compose-pill-start-time" class="compose-pill" hidden>시작</button>
+          <button type="button" id="compose-pill-deadline" class="compose-pill" hidden>마감</button>
+          <button type="button" id="compose-pill-deadline-time" class="compose-pill" hidden>마감</button>
+          <button type="button" id="compose-pill-duration" class="compose-pill" hidden>소요</button>
+          <button type="button" id="compose-pill-date" class="compose-pill" hidden>날짜</button>
+          <button type="button" id="compose-pill-time" class="compose-pill" hidden>시간</button>
+          <button type="button" id="compose-pill-event-duration" class="compose-pill" hidden>30분</button>
+          <button type="button" id="compose-pill-reminder" class="compose-pill" hidden>알림</button>
         </div>
         <div id="compose-expanded-fields" class="compose-expanded-fields" hidden></div>
         <div id="compose-popover" class="compose-popover" hidden></div>
@@ -604,8 +618,8 @@
 
   <script src="lib/icons.js?v=3"></script>
   <script src="lib/brand.js?v=48"></script>
-  <script src="lib/i18n.js?v=1"></script>
-  <script src="lib/storage.js?v=63"></script>
+  <script src="lib/i18n.js?v=5"></script>
+  <script src="lib/storage.js?v=64"></script>
   <script src="lib/decisions.js?v=5"></script>
   <script src="lib/tags.js?v=81"></script>
   <script src="lib/dumply.js?v=1"></script>
@@ -617,12 +631,12 @@
   <script src="app/onboard.js?v=58"></script>
   <script src="app/timeline-block.js?v=66"></script>
   <script src="app/render.js?v=72"></script>
-  <script src="app/compose.js?v=52"></script>
+  <script src="app/compose.js?v=54"></script>
   <script src="app/detail.js?v=61"></script>
   <script src="app/nav.js?v=51"></script>
   <script src="app/calendar-view.js?v=77"></script>
   <script src="app/projects.js?v=52"></script>
-  <script src="app/handlers.js?v=97"></script>
+  <script src="app/handlers.js?v=99"></script>
   <script src="popup.js?v=49"></script>
   <script src="lib/icons-init.js?v=1"></script>
 </body>
