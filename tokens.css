@@ -1,14 +1,15 @@
-/* Dumply 크롬 확장 — 디자인 토큰 (단일 소스) */
+/* Dumply 크롬 확장 — 디자인 토큰 (단일 소스)
+   v0.2: PWA(pwa/tokens.css)와 동일한 Zinc 모노크롬 팔레트로 기본 테마 전환.
+   사용자 선택 테마(data-theme)는 별도 유지. */
 
 :root {
   /* ── Layout ── (사이드 패널 전용 · 유동 너비) */
-  /* ── 톤온톤 서피스 사다리 (웜 · 순백/순흑 미사용) ──
-     들어감(soft·track) < 바닥(page) < 올라옴(card)
-     L: 90 ───────── 95.7 ───────── 98.4  (모두 같은 웜 온도) */
-  --dumply-bg: #F3F1EB;                 /* 바닥 — 페이지·시트 배경 */
-  --dumply-sheet: #F3F1EB;              /* 본문 영역 배경 */
-  --dumply-surface: #FBFAF6;            /* 올라온 카드 — 웜 오프화이트 (순백 X) */
-  --dumply-card: #FBFAF6;               /* empty-card · dump-card 등 */
+  /* ── Zinc 서피스 사다리 (미세 틴트 바닥 위 순백 카드) ──
+     들어감(soft·track, zinc-150) < 바닥(page, zinc-100) < 올라옴(card, zinc-0) */
+  --dumply-bg: #F6F6F8;                 /* 바닥 — 페이지·시트 배경 (zinc-100) */
+  --dumply-sheet: #F6F6F8;              /* 본문 영역 배경 */
+  --dumply-surface: #FFFFFF;            /* 올라온 카드 — 순백 (zinc-0) */
+  --dumply-card: #FFFFFF;               /* empty-card · dump-card 등 */
   --dumply-padding-x: 16px;             /* 가장자리 패딩 (가변 너비 대응) */
   --dumply-content-max: 520px;          /* 넓은 패널 대비 콘텐츠 최대 폭 */
   --dumply-safe-top: 24px;
@@ -37,32 +38,32 @@
   --dumply-font-weight-semibold: 600;
   --dumply-font-weight-bold: 700;
 
-  /* ── Typography — color (4단계) ── */
-  --dumply-text-primary: #36312B;       /* 가장 중요한 텍스트 (웜 소프트 먹색 — 순흑 회피) */
-  --dumply-text-body: #5E574E;          /* 일반 설명 · 소제목 */
-  --dumply-text-secondary: #928B80;     /* 보조 텍스트 (웜 그레이) */
-  --dumply-text-placeholder: #B7B0A4;   /* 플레이스홀더 · 비활성 */
+  /* ── Typography — color (4단계 · Zinc 잉크 사다리) ── */
+  --dumply-text-primary: #1B1B1F;       /* 가장 중요한 텍스트 (zinc-925 근흑) */
+  --dumply-text-body: #52525B;          /* 일반 설명 · 소제목 (zinc-800) */
+  --dumply-text-secondary: #6B6F76;     /* 보조 텍스트 (zinc-700) */
+  --dumply-text-placeholder: #BBBCC0;   /* 플레이스홀더 · 비활성 (zinc-400) */
 
   /* ── Surface & UI (모노톤) ── */
-  --dumply-input: #E6E1D8;              /* 들어간 트랙·태그칩 (바닥보다 어둡게) */
-  --dumply-tag-bg: #E6E1D8;
-  --dumply-tag-text: #5E574E;
-  --dumply-active: #DFD9CF;             /* hover·active (한 계단 더 깊게) */
-  --dumply-border: #EAE7E1;             /* 웜 보더 */
-  --dumply-border-strong: #DDD8D0;
-  --dumply-accent: #262019;            /* 모노톤 Primary (웜 에스프레소 차콜) */
-  --dumply-accent-dark: #1A1510;
-  --dumply-accent-soft: #EAE6DE;       /* 들어간 소프트 웰 — 빈상태·배지·세그먼트 트랙 */
-  --dumply-cal-range-bg: rgba(8, 9, 10, 0.10);
-  --dumply-accent-gradient: linear-gradient(to right, #2E2820, #262019);
-  --dumply-accent-text: #FBFAF8;
+  --dumply-input: #EDEDF0;              /* 들어간 트랙·태그칩 (zinc-150) */
+  --dumply-tag-bg: #EDEDF0;
+  --dumply-tag-text: #52525B;
+  --dumply-active: #E4E4E7;             /* hover·active (zinc-200) */
+  --dumply-border: #E4E4E7;             /* iOS separator 계열 (zinc-200) */
+  --dumply-border-strong: #D4D4D8;      /* zinc-300 */
+  --dumply-accent: #1B1B1F;            /* 모노톤 Primary (zinc-925 근흑) */
+  --dumply-accent-dark: #3A3A3F;       /* pressed */
+  --dumply-accent-soft: #EDEDF0;       /* 들어간 소프트 웰 — 빈상태·배지·세그먼트 트랙 */
+  --dumply-cal-range-bg: rgba(27, 27, 31, 0.10);
+  --dumply-accent-gradient: linear-gradient(to right, #27272A, #1B1B1F);
+  --dumply-accent-text: #FFFFFF;
   --dumply-success: #34C759;
   --dumply-warning: #FF9500;
   --dumply-error: #FF3B30;
   --dumply-mint: #34C759;
   --dumply-coral: #FF3B30;
   --dumply-could: var(--dumply-text-secondary);
-  --dumply-info: #3B82F6;
+  --dumply-info: #007AFF;               /* Apple 시스템 시맨틱 */
 
   /* ── MoSCoW (기능색 — 상태·우선순위 전용) ── */
   --dumply-moscow-must: var(--dumply-error);
@@ -95,10 +96,10 @@
   --dumply-radius-sheet: 12px;         /* 본문 곡선 시트 (4모서리) */
   --dumply-radius-sheet-top: 12px;     /* 하위 호환 */
 
-  /* ── Shadow ── */
-  --dumply-shadow-sm: 0 1px 2px rgba(52, 40, 24, 0.05), 0 1px 1px rgba(52, 40, 24, 0.04);
-  --dumply-shadow-md: 0 6px 20px rgba(52, 40, 24, 0.09), 0 1px 2px rgba(52, 40, 24, 0.05);
-  --dumply-overlay: rgba(38, 32, 25, 0.54);
+  /* ── Shadow (v0.2 섀도 토큰 값과 정렬) ── */
+  --dumply-shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.10);
+  --dumply-shadow-md: 0px 8px 20px rgba(0, 0, 0, 0.14);
+  --dumply-overlay: rgba(0, 0, 0, 0.50);
 
   /* ── Spacing ── */
   --dumply-gap-xs: 6px;
@@ -181,30 +182,30 @@
    미지정 토큰(기능색 등)은 :root에서 상속.
    ───────────────────────────────────────────── */
 
-/* 시스템 — 순중립 그레이 (macOS/iOS System Gray 팔레트) · 라이트 */
+/* 시스템 — Zinc 모노크롬 (v0.2, PWA와 동일 팔레트) · 라이트 */
 :root[data-theme="system"] {
-  --dumply-bg: #F2F2F5;
-  --dumply-sheet: #F2F2F5;
+  --dumply-bg: #F6F6F8;
+  --dumply-sheet: #F6F6F8;
   --dumply-surface: #FFFFFF;
   --dumply-card: #FFFFFF;
-  --dumply-input: #E5E5EA;
-  --dumply-tag-bg: #E5E5EA;
-  --dumply-tag-text: #636366;
-  --dumply-active: #D8D8DC;
-  --dumply-border: #E4E4E8;
-  --dumply-border-strong: #CCCCD0;
-  --dumply-accent: #636366;
-  --dumply-accent-dark: #48484A;
-  --dumply-accent-soft: #E9E9EC;
-  --dumply-accent-gradient: linear-gradient(to right, #6E6E72, #636366);
+  --dumply-input: #EDEDF0;
+  --dumply-tag-bg: #EDEDF0;
+  --dumply-tag-text: #52525B;
+  --dumply-active: #E4E4E7;
+  --dumply-border: #E4E4E7;
+  --dumply-border-strong: #D4D4D8;
+  --dumply-accent: #1B1B1F;
+  --dumply-accent-dark: #3A3A3F;
+  --dumply-accent-soft: #EDEDF0;
+  --dumply-accent-gradient: linear-gradient(to right, #27272A, #1B1B1F);
   --dumply-accent-text: #FFFFFF;
-  --dumply-text-primary: #1C1C1E;
-  --dumply-text-body: #3A3A3C;
-  --dumply-text-secondary: #8E8E93;
-  --dumply-text-placeholder: #AEAEB2;
-  --dumply-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08), 0 1px 1px rgba(0, 0, 0, 0.04);
-  --dumply-shadow-md: 0 6px 20px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
-  --dumply-overlay: rgba(0, 0, 0, 0.48);
+  --dumply-text-primary: #1B1B1F;
+  --dumply-text-body: #52525B;
+  --dumply-text-secondary: #6B6F76;
+  --dumply-text-placeholder: #BBBCC0;
+  --dumply-shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.10);
+  --dumply-shadow-md: 0px 8px 20px rgba(0, 0, 0, 0.14);
+  --dumply-overlay: rgba(0, 0, 0, 0.50);
 }
 
 /* 애쉬 — 화이트 + 인디고 (Linear: Ash) · 라이트 */
