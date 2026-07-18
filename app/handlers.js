@@ -881,14 +881,15 @@ async function openCreditSheet() {
 // ── 크레딧 & 구독 페이지 (route-credits) — 클로드식 사용량 가시화 ──
 // 원장 reason → 사람이 읽는 라벨/아이콘
 function ledgerRowLabel(reason) {
-  if (reason.startsWith('ai_call')) return { icon: '🧠', key: 'credits.row.ai' };
-  if (reason === 'free_monthly_refresh') return { icon: '🔄', key: 'credits.row.monthly' };
-  if (reason.startsWith('purchase:pro_monthly')) return { icon: '⭐', key: 'credits.row.pro' };
-  if (reason.startsWith('purchase:')) return { icon: '🛒', key: 'credits.row.pack' };
-  if (reason === 'refund_ai_failure') return { icon: '↩️', key: 'credits.row.ai_refund' };
-  if (reason.startsWith('refund:')) return { icon: '💳', key: 'credits.row.refund' };
-  if (reason.startsWith('referral')) return { icon: '🎁', key: 'credits.row.referral' };
-  return { icon: '·', key: 'credits.row.etc' };
+  // DS: 이모지 금지 → DumplyIcons 스트로크 아이콘 이름 반환
+  if (reason.startsWith('ai_call')) return { icon: 'brain', key: 'credits.row.ai' };
+  if (reason === 'free_monthly_refresh') return { icon: 'refresh-cw', key: 'credits.row.monthly' };
+  if (reason.startsWith('purchase:pro_monthly')) return { icon: 'sparkles', key: 'credits.row.pro' };
+  if (reason.startsWith('purchase:')) return { icon: 'zap', key: 'credits.row.pack' };
+  if (reason === 'refund_ai_failure') return { icon: 'trending-up', key: 'credits.row.ai_refund' };
+  if (reason.startsWith('refund:')) return { icon: 'trending-up', key: 'credits.row.refund' };
+  if (reason.startsWith('referral')) return { icon: 'smile', key: 'credits.row.referral' };
+  return { icon: 'circle', key: 'credits.row.etc' };
 }
 
 let creditLedgerCache = null;
@@ -939,7 +940,8 @@ function renderCreditsPageBody() {
     li.className = 'credits-history-row';
     const label = document.createElement('span');
     label.className = 'credits-history-label';
-    label.textContent = `${icon} ${t(key)}`;
+    if (typeof DumplyIcons !== 'undefined') label.appendChild(DumplyIcons.icon(icon, { size: 14 }));
+    label.appendChild(Object.assign(document.createElement('span'), { textContent: t(key) }));
     const meta = document.createElement('span');
     meta.className = 'credits-history-meta';
     meta.textContent = fmt.format(new Date(r.created_at));
@@ -1107,6 +1109,7 @@ function refreshSettingsForm() {
   renderDictionarySettings();
   renderDecisionStats();
   refreshGoogleSettingsUI();
+  refreshEmailSettingsUI();
   refreshLocationSettingsUI();
 }
 
@@ -1381,6 +1384,103 @@ async function disconnectGoogleAccount() {
   refreshCalendarIfActive();
   renderTimeline?.();
   toast(AlfredoI18n.lang() === 'en' ? 'Google disconnected' : 'Google 연결을 해제했어요');
+}
+
+// ── Email(Gmail) 연동 — 중요·안읽음 메일을 Inbox 덤프로 가져오기 ──
+// 토큰은 Google 계정(gmail.readonly 스코프 포함)과 공유. 별도 OAuth 없음.
+function ensureEmailSettings() {
+  if (!state.settings.email) state.settings.email = { connected: false, address: '', seenIds: [], lastPull: 0 };
+  return state.settings.email;
+}
+
+function emailToMemo(mail) {
+  return {
+    id: AlfredoStorage.uid(),
+    content: mail.subject,
+    notes: [mail.from, mail.snippet].filter(Boolean).join(' — ') || null,
+    createdAt: Date.now(),
+    completed: false,
+    pinned: false,
+    priority: null,          // 미분류 → Inbox
+    suggestedPriority: null,
+    suggestReason: null,
+    loading: false,
+    domain: null,
+    tags: [t('email.tag')],
+    source: 'email',
+    emailId: mail.id,
+  };
+}
+
+async function pullEmailsIntoInbox() {
+  const em = ensureEmailSettings();
+  if (!em.connected) return 0;
+  let token;
+  try {
+    token = await AlfredoCalendar.connect({ interactive: false });
+  } catch {
+    return 0;
+  }
+  let mails = [];
+  try {
+    mails = await AlfredoGmail.pullImportant(token, { max: 8 });
+  } catch (e) {
+    console.warn('[Dumply] gmail pull:', e?.message || e);
+    return 0;
+  }
+  const seen = new Set(em.seenIds || []);
+  const fresh = mails.filter((m) => !seen.has(m.id));
+  fresh.forEach((m) => {
+    state.memos.unshift(emailToMemo(m));
+    seen.add(m.id);
+  });
+  em.seenIds = [...seen].slice(-200);
+  em.lastPull = Date.now();
+  await persist();
+  if (fresh.length) renderInbox?.();
+  return fresh.length;
+}
+
+async function connectEmail() {
+  const em = ensureEmailSettings();
+  if (!state.settings.calendar?.connected) {
+    const ok = await connectGoogleAccount();
+    if (!ok) return false;
+  }
+  em.connected = true;
+  em.address = state.settings.googleAccount?.email || '';
+  await persist();
+  refreshEmailSettingsUI();
+  const n = await pullEmailsIntoInbox();
+  toast(n > 0
+    ? t('toast.email.pulled', n)
+    : (AlfredoI18n.lang() === 'en' ? 'Email connected — no new important mail' : '이메일 연결됨 — 새 중요 메일 없음'));
+  return true;
+}
+
+async function disconnectEmail() {
+  const em = ensureEmailSettings();
+  em.connected = false;
+  em.address = '';
+  await persist();
+  refreshEmailSettingsUI();
+  toast(AlfredoI18n.lang() === 'en' ? 'Email disconnected' : '이메일 연결을 해제했어요');
+}
+
+function refreshEmailSettingsUI() {
+  const em = ensureEmailSettings();
+  const status = $('#email-status');
+  const connectBtn = $('#btn-email-connect');
+  const disconnectBtn = $('#btn-email-disconnect');
+  if (status) {
+    status.textContent = em.connected && em.address
+      ? t('settings.email.status.on', em.address)
+      : em.connected
+        ? t('settings.email.status.connected')
+        : t('settings.email.status.none');
+  }
+  if (connectBtn) connectBtn.hidden = em.connected;
+  if (disconnectBtn) disconnectBtn.hidden = !em.connected;
 }
 
 async function enableDeviceLocation() {
@@ -1837,6 +1937,8 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   $('#btn-save-settings')?.addEventListener('click', saveSettings);
   $('#btn-google-connect')?.addEventListener('click', connectGoogleAccount);
   $('#btn-google-disconnect')?.addEventListener('click', disconnectGoogleAccount);
+  $('#btn-email-connect')?.addEventListener('click', connectEmail);
+  $('#btn-email-disconnect')?.addEventListener('click', disconnectEmail);
   $('#btn-dumply-otp')?.addEventListener('click', onDumplyOtpClick);
   $('#btn-dumply-signout')?.addEventListener('click', onDumplySignout);
   $('#btn-dumply-buy-pro')?.addEventListener('click', (e) => onDumplyBuy('pro_monthly', e.currentTarget));

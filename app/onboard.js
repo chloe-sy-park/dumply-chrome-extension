@@ -168,7 +168,7 @@ function renderOnboardStep() {
       el('p', 'onboard-desc onboard-desc-sub', t('ob.calendar.desc')),
       renderObLearnGauge(),
       onboardConnectCard(t('ob.calendar.google'), t('ob.calendar.google.sub'), 'ob-cal-connect'),
-      onboardSoonCard('mail', 'Email', t('ob.calendar.email.sub')),
+      onboardConnectCard('Email', t('ob.calendar.email.sub'), 'ob-email-connect', 'mail'),
       onboardSoonCard('message-circle', 'Slack / Messenger', t('ob.calendar.slack.sub')),
       fieldHint(t('ob.calendar.hint')),
     );
@@ -182,6 +182,7 @@ function renderOnboardStep() {
       body.append(editBtn);
     }
     $('#ob-cal-connect')?.addEventListener('click', connectCalendarFromOb);
+    $('#ob-email-connect')?.addEventListener('click', () => { connectEmail?.(); });
   } else if (step === 'api') {
     // 크레딧 우선 게이트 — "가입 = 무료 20✦ 선물" 프레이밍, BYO 키는 아래 보조 경로 (벤치마크 P1·STEP4)
     body.append(
@@ -403,12 +404,17 @@ function fieldSelect(id, label, options) {
   return wrap;
 }
 
-function onboardConnectCard(title, sub, actionId) {
+function onboardConnectCard(title, sub, actionId, iconName) {
   const card = document.createElement('div');
   card.className = 'onboard-card onboard-card--connect';
   const ic = document.createElement('span');
-  ic.className = 'card-icon card-icon-gcal';
   ic.setAttribute('aria-hidden', 'true');
+  if (iconName) {
+    ic.className = 'card-icon';
+    ic.append(DumplyIcons.icon(iconName, { size: 22 })); /* DS: 이모지 금지 → 스트로크 아이콘 */
+  } else {
+    ic.className = 'card-icon card-icon-gcal'; /* Google 로고 (CSS 배경) */
+  }
   const body = document.createElement('div');
   body.className = 'card-body';
   const titleEl = document.createElement('div');

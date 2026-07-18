@@ -462,7 +462,8 @@
   font-size: var(--font-size-sm); border-top: 1px solid var(--border);
 }
 .credits-history-row:first-child { border-top: none; }
-.credits-history-label { flex: 1; }
+.credits-history-label { flex: 1; display: inline-flex; align-items: center; gap: 7px; }
+.credits-history-label svg { flex: 0 0 auto; color: var(--text-secondary); }
 .credits-history-meta { color: var(--text-secondary); font-size: 11px; }
 .credits-history-delta { font-weight: 800; min-width: 36px; text-align: right; }
 .credits-history-delta.is-plus { color: color-mix(in srgb, var(--success) 72%, var(--text-primary)); }
