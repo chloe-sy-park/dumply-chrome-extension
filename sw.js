@@ -5,7 +5,7 @@
  * 네트워크 우선 + 캐시 폴백. API 호출(교차 출처)은 건드리지 않는다.
  */
 
-const VERSION = 'dumply-v3';
+const VERSION = 'dumply-v5';
 const SHELL = [
   'fullpage.html',
   'app.webmanifest',
@@ -18,14 +18,14 @@ const SHELL = [
   'lib/platform.js?v=2',
   'lib/icons.js?v=4',
   'lib/brand.js?v=48',
-  'lib/i18n.js?v=15',
+  'lib/i18n.js?v=17',
   'lib/storage.js?v=65',
   'lib/tags.js?v=81',
   'lib/ai.js?v=72',
   'lib/weather.js?v=49',
   'lib/calendar.js?v=52',
   'lib/gmail.js?v=1',
-  'lib/dumply.js?v=2',
+  'lib/dumply.js?v=4',
   'lib/decisions.js?v=5',
   'lib/sync.js?v=1',
   'lib/icons-init.js?v=1',
@@ -39,9 +39,9 @@ const SHELL = [
   'app/projects.js?v=54',
   'app/quickpanel.js?v=1',
   'app/nav.js?v=57',
-  'app/onboard.js?v=61',
-  'app/handlers.js?v=104',
-  'popup.js?v=52',
+  'app/onboard.js?v=63',
+  'app/handlers.js?v=106',
+  'popup.js?v=53',
   'icons/icon-192.png',
   'icons/icon-512.png',
 ];

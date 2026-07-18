@@ -12,6 +12,12 @@ function isIncognito() {
 async function init() {
   window.__dumplyReady = (async () => {
     try {
+      // Google 로그인 복귀 처리 — 상태를 읽기 전에 세션부터 세워야
+      // 온보딩이 이미 로그인된 상태로 렌더된다.
+      if (typeof DumplyAccount !== 'undefined' && DumplyAccount.completeOAuthRedirect) {
+        const r = await DumplyAccount.completeOAuthRedirect().catch(() => null);
+        if (r?.error) console.warn('[Dumply] Google 로그인 실패:', r.error);
+      }
       state = await AlfredoStorage.load();
       if (!state.ui) {
         state.ui = { ...AlfredoStorage.DEFAULT_STATE.ui };

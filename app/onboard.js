@@ -139,22 +139,38 @@ function renderOnboardStep() {
     body.append(title);
     const actions = document.createElement('div');
     actions.className = 'onboard-welcome-actions';
-    // Google 로그인은 chrome.identity에 의존해 확장에서만 동작한다.
-    // 웹(PWA)에서는 계정·동기화의 실제 주체인 이메일 로그인을 주 CTA로 내보낸다.
+    // 확장: chrome.identity로 Google 계정·캘린더 연결.
+    // 웹: Supabase Google provider로 로그인 (같은 auth.uid() → 동기화가 그대로 붙는다).
     const isExtension = typeof chrome !== 'undefined' && !!chrome?.runtime?.id;
     const googleBtn = document.createElement('button');
     googleBtn.type = 'button';
-    googleBtn.id = isExtension ? 'ob-welcome-google' : 'ob-welcome-email';
+    googleBtn.id = isExtension ? 'ob-welcome-google' : 'ob-welcome-google-web';
     googleBtn.className = 'btn btn-primary btn-block';
-    googleBtn.textContent = isExtension ? t('ob.welcome.google') : t('ob.welcome.email');
-    googleBtn.addEventListener('click', isExtension ? startWithGoogleFromWelcome : startWithEmailFromWelcome);
+    googleBtn.textContent = t('ob.welcome.google');
+    googleBtn.addEventListener('click', isExtension
+      ? startWithGoogleFromWelcome
+      : async () => {
+        const r = await DumplyAccount.signInWithGoogle();
+        if (r && !r.ok) toast(t('auth.google.unavailable'));
+      });
     const guestBtn = document.createElement('button');
     guestBtn.type = 'button';
     guestBtn.id = 'ob-welcome-guest';
     guestBtn.className = 'link-btn onboard-guest-link';
     guestBtn.textContent = t('ob.welcome.guest');
     guestBtn.addEventListener('click', startAsGuestFromWelcome);
-    actions.append(googleBtn, guestBtn);
+    actions.append(googleBtn);
+    // 웹에서는 Google이 막혀 있어도(대시보드 설정 전) 이메일로 계정을 만들 수 있어야 한다
+    if (!isExtension) {
+      const emailBtn = document.createElement('button');
+      emailBtn.type = 'button';
+      emailBtn.id = 'ob-welcome-email';
+      emailBtn.className = 'btn btn-secondary btn-block';
+      emailBtn.textContent = t('ob.welcome.email');
+      emailBtn.addEventListener('click', startWithEmailFromWelcome);
+      actions.append(emailBtn);
+    }
+    actions.append(guestBtn);
     // 라이트 캐릭터 + 다크 테마용 변형 — CSS가 data-theme에 따라 토글
     const illo = onboardIllustration('inspector-hi-285', { single: true });
     illo.querySelector('.onboard-illustration-img')?.classList.add('onboard-illustration-img-light');

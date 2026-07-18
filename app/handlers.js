@@ -1000,6 +1000,9 @@ function refreshDumplySettingsUI() {
   otp.value = '';
   otpBtn.hidden = signedIn;
   otpBtn.textContent = t('settings.dumply.send');
+  // Google 로그인은 웹에서만 (확장은 chrome.identity 경로가 따로 있다)
+  const gBtn = $('#btn-dumply-google');
+  if (gBtn) gBtn.hidden = signedIn || Boolean(chrome?.runtime?.id);
   // 로그아웃 = 완전 로그아웃 → 무언가(계정·Google·Gmail) 연결돼 있으면 노출
   const anyConnected = signedIn
     || Boolean(state.settings.calendar?.connected)
@@ -1990,6 +1993,10 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   $('#btn-save-settings')?.addEventListener('click', saveSettings);
   $('#btn-google-connect')?.addEventListener('click', connectGoogleAccount);
   $('#btn-google-disconnect')?.addEventListener('click', disconnectGoogleAccount);
+  $('#btn-dumply-google')?.addEventListener('click', async () => {
+    const r = await DumplyAccount.signInWithGoogle();
+    if (r && !r.ok) toast(t('auth.google.unavailable'));
+  });
   $('#btn-email-connect')?.addEventListener('click', connectEmail);
   $('#btn-email-disconnect')?.addEventListener('click', disconnectEmail);
   $('#btn-dumply-otp')?.addEventListener('click', onDumplyOtpClick);
