@@ -2,6 +2,14 @@
  "_comment": "日本語チェンジログ — changelog.jsonと同期を保つこと",
  "entries": [
   {
+   "date": "2026-07-18",
+   "product": "extension",
+   "version": "2.3.0",
+   "type": "new",
+   "title": "APIキーなしでもAI整理が使えるように",
+   "body": "メールでログインすれば、APIキーを設定しなくてもAI整理をすぐ使えます。クレジット残高と利用履歴は設定画面で確認でき、もっと使いたいときはProプランやクレジットパックを追加できます。すでに自分のClaude・OpenAI・Geminiキーを接続している方は、これまで通りクレジットを消費せずに使えます。"
+  },
+  {
    "date": "2026-07-04",
    "product": "extension",
    "version": "2.2.0",
