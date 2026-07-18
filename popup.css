@@ -3940,8 +3940,27 @@ button.proj-card {
 .chrome-title { flex: 0 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
   font-size: 14px; font-weight: 700; letter-spacing: -0.02em; margin-left: 4px;
   opacity: 0; max-width: 0; transition: opacity 0.2s ease-out, max-width 0.2s ease-out; }
-.app-chrome.mini .chrome-title { opacity: 1; max-width: 70%; }
 .app-chrome.mini { box-shadow: 0 1px 0 var(--card-line); }
+/* A안 — 스크롤하면 인사말 대신 탭이 크롬 바로 올라와 상단이 한 겹이 된다 */
+.chrome-tabs {
+  display: inline-flex; flex: 0 0 auto; gap: 2px; padding: 2px; margin-left: 2px;
+  background: var(--bg-input); border-radius: 9px;
+  opacity: 0; max-width: 0; overflow: hidden;
+  transition: opacity 0.2s ease-out, max-width 0.2s ease-out, padding 0.2s ease-out;
+}
+.app-chrome.mini .chrome-tabs { opacity: 1; max-width: 220px; }
+.chrome-tab {
+  border: 0; background: none; font: inherit; font-size: 11.5px; font-weight: 700;
+  color: var(--text-placeholder); padding: 4px 10px; border-radius: 7px;
+  cursor: pointer; white-space: nowrap;
+}
+.chrome-tab.is-active { background: var(--bg-surface); color: var(--text-primary); box-shadow: var(--shadow-sm); }
+.chrome-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+/* 탭이 크롬 바로 올라가므로 본래 탭 줄은 접는다 */
+.tabs-shell { overflow: hidden; max-height: 80px; opacity: 1;
+  transition: max-height 0.2s ease-out, opacity 0.2s ease-out; }
+.tabs-shell.mini { max-height: 0; opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .chrome-tabs, .tabs-shell { transition: none; } }
 @media (prefers-reduced-motion: reduce) { .chrome-title { transition: none; } }
 .chrome-spacer { flex: 1; }
 /* display 유틸이 hidden 속성을 이기는 함정 방지 */

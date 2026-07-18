@@ -143,11 +143,12 @@ function bindNavEvents() {
   const content = document.querySelector('#route-home .content') || document.querySelector('.content');
   const dash = document.querySelector('.dash-header');
   const chrome = document.querySelector('.app-chrome');
-  const chromeTitle = $('#chrome-title');
+  const tabsShell = document.querySelector('.tabs-shell');
+  // A안 — 접히면 인사말·탭 줄이 사라지고 크롬 바 안의 컴팩트 탭이 뜬다 (상단 한 겹)
   const setHeaderMini = (mini) => {
     dash?.classList.toggle('mini', mini);
     chrome?.classList.toggle('mini', mini);
-    if (mini && chromeTitle) chromeTitle.textContent = $('#hdr-greeting')?.textContent || '';
+    tabsShell?.classList.toggle('mini', mini);
   };
   if (content && dash) {
     content.addEventListener('scroll', () => {
