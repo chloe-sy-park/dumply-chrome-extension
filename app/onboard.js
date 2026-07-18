@@ -70,6 +70,13 @@ async function startWithGoogleFromWelcome() {
   await persist();
 }
 
+/** 웹(PWA) 전용 — 이메일 OTP 가입 단계(계정·크레딧 게이트)로 바로 이동한다. */
+function startWithEmailFromWelcome() {
+  const i = ONBOARD_STEPS.indexOf('api');
+  onboardStep = i < 0 ? 1 : i;
+  renderOnboardStep();
+}
+
 function startAsGuestFromWelcome() {
   onboardStep++;
   renderOnboardStep();
@@ -132,12 +139,15 @@ function renderOnboardStep() {
     body.append(title);
     const actions = document.createElement('div');
     actions.className = 'onboard-welcome-actions';
+    // Google 로그인은 chrome.identity에 의존해 확장에서만 동작한다.
+    // 웹(PWA)에서는 계정·동기화의 실제 주체인 이메일 로그인을 주 CTA로 내보낸다.
+    const isExtension = typeof chrome !== 'undefined' && !!chrome?.runtime?.id;
     const googleBtn = document.createElement('button');
     googleBtn.type = 'button';
-    googleBtn.id = 'ob-welcome-google';
+    googleBtn.id = isExtension ? 'ob-welcome-google' : 'ob-welcome-email';
     googleBtn.className = 'btn btn-primary btn-block';
-    googleBtn.textContent = t('ob.welcome.google');
-    googleBtn.addEventListener('click', startWithGoogleFromWelcome);
+    googleBtn.textContent = isExtension ? t('ob.welcome.google') : t('ob.welcome.email');
+    googleBtn.addEventListener('click', isExtension ? startWithGoogleFromWelcome : startWithEmailFromWelcome);
     const guestBtn = document.createElement('button');
     guestBtn.type = 'button';
     guestBtn.id = 'ob-welcome-guest';
