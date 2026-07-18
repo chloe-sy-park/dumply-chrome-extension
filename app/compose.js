@@ -830,6 +830,7 @@ function setComposeMode(mode) {
       deadlineTime: draft.deadlineTime ?? (draft.allDay ? null : draft.time) ?? null,
       deadlineHint: draft.deadlineHint ?? draft.dateHint ?? null,
       durationMinutes: draft.durationMinutes ?? null,
+      projectId: draft.projectId ?? null,   // 프로젝트 소속 유지 (모드 왕복 시 유실 방지)
       tags: draft.tags || [],
     }
     : {
@@ -842,6 +843,8 @@ function setComposeMode(mode) {
       duration: draft.duration ?? 30,
       remindMinutes: draft.remindMinutes ?? 10,
       allDay: draft.allDay ?? false,
+      bucket: draft.bucket ?? 'must',        // 왕복(할일→일정→할일) 시 버킷 복원용으로 보존
+      projectId: draft.projectId ?? null,    // 프로젝트 소속 유지 (일정도 프로젝트에 속할 수 있음)
       tags: draft.tags || [],
     };
   syncComposeUI();
