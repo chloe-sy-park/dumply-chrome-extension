@@ -91,9 +91,8 @@ function createRowDeleteButton(id) {
 }
 
 function buildPrioMetaText(m) {
-  /* 우선순위 카드 메타 다이어트 — 태그 나열·AI 근거는 상세에서만 (텍스트 덩어리 방지) */
-  const tag = getBucketByKey(m.priority)?.label || '';
-  const parts = [tag];
+  /* 우선순위 카드 메타 다이어트 — MoSCoW는 rank 배지 색이 담당, 태그·AI 근거는 상세에서만 */
+  const parts = [];
   if (m.deadline) parts.push(formatComposeDateWithWeekday(m.deadline));
   if (m.durationMinutes) parts.push(formatDurationLabel(m.durationMinutes));
   return parts.filter(Boolean).join(' · ');
