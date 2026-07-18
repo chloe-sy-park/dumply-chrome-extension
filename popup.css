@@ -1796,12 +1796,22 @@ body {
 .data-actions .btn { flex: 1; }
 .import-label { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
 
-/* ── 시트 ── */
+/* ── 시트 ──
+   네비 드로어와 같은 곡선으로 등장: 딤 페이드(0.2s) + 패널 슬라이드업(0.24s).
+   숨김은 display:none을 유지한다 — 전체화면 오버레이가 화면에 남을 위험이 없어야 하므로
+   트랜지션(양방향) 대신 등장 애니메이션만 건다. */
 .sheet[hidden] { display: none !important; }
 .sheet:not([hidden]) {
   position: fixed; inset: 0;
   background: var(--dumply-overlay);
   display: flex; align-items: flex-end; z-index: 50;
+  animation: sheet-dim-in 0.2s ease-out;
+}
+.sheet:not([hidden]) .sheet-panel {
+  animation: sheet-slide-up 0.24s cubic-bezier(0, 0, 0, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheet:not([hidden]), .sheet:not([hidden]) .sheet-panel { animation: none; }
 }
 .sheet-panel {
   width: 100%;
@@ -3683,7 +3693,9 @@ button.proj-card {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-/* 불러오기 바텀시트 */
+/* 불러오기 바텀시트 — JS로 붙였다 떼므로 등장 애니메이션(시트와 같은 곡선) */
+@keyframes sheet-dim-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sheet-slide-up { from { transform: translateY(100%); } to { transform: none; } }
 .proj-import-panel {
   position: fixed;
   inset: 0;
@@ -3691,8 +3703,10 @@ button.proj-card {
   background: var(--dumply-overlay);
   display: flex;
   align-items: flex-end;
+  animation: sheet-dim-in 0.2s ease-out;
 }
 .proj-import-inner {
+  animation: sheet-slide-up 0.24s cubic-bezier(0, 0, 0, 1);
   width: 100%;
   max-height: 72vh;
   overflow-y: auto;
@@ -3822,7 +3836,8 @@ button.proj-card {
   display: flex; flex-direction: column; padding: 14px 12px 12px;
   transform: translateX(-110%); transition: transform 0.24s cubic-bezier(0, 0, 0, 1); }
 .dr-dim.open .drawer { transform: none; }
-@media (prefers-reduced-motion: reduce) { .drawer { transition: none; } .dr-dim { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .drawer { transition: none; } .dr-dim { transition: none; }
+  .proj-import-panel, .proj-import-inner { animation: none; } }
 .dr-head { display: flex; align-items: center; gap: 10px; padding: 2px 6px 12px; }
 .dr-head img { border-radius: 50%; }
 .dr-head b { flex: 1; font-size: 15px; font-weight: 700; }
