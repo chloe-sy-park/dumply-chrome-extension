@@ -30,7 +30,11 @@
 
 ## 3. 표면 구조 (사이드패널)
 
-- **크롬 바(전역, 36px)**: 좌 햄버거 | (스크롤 시 인사말 승격) | 우 검색·알림(`data-feature`로 hidden, 기능 배포 시 해제)·저잔액 크레딧 배지(잔액 ≤5일 때만, 앰버).
+- **크롬 바(전역, 36px)**: 좌 햄버거 | **스크롤 시 탭 승격**(아래 참조) | 우 검색·알림·저잔액 크레딧 배지(잔액 ≤5일 때만, 앰버).
+- **스크롤 헤더(A안, 확정)**: 스크롤하면 인사말(`.dash-header`)과 탭 줄(`.tabs-shell`)이 함께 접히고, 크롬 바 안 `.chrome-tabs` 컴팩트 세그먼트가 뜬다 → 상단 **188px → 36px**. 인사말은 접힌 상태에서 표시하지 않는다(정보 가치 없음). 미니 탭은 `data-tab`만 달면 `switchTab`(`$$('[data-tab]')`)이 클릭·활성상태를 자동 연동 — 탭 JS 추가 금지.
+- **프로젝트 오버뷰(A안, 확정)**: 이모지 타일 + 영역·중요도 + 상태 필 → 큰 %(26/800) + 완료 카운트 + **진행 트랙 1개** → 기간은 **텍스트 한 줄**(`3/1 — 7/23 · D-5`, 7일 이내 앰버). **평행한 가로 바 2개 금지** — 별도 타임라인 바를 붙이지 않는다.
+- **빈 상태**: 대면적 회색 웰 금지. 카드 안은 투명 배경, 리스트 그룹은 담백한 한 줄(`proj-empty-inline`). 회색 박스 안에 회색 박스를 넣지 말 것.
+- **시트 모션**: 네비 드로어와 같은 곡선 — 딤 0.2s ease-out, 패널 0.24s cubic-bezier(0,0,0,1). 등장은 `.sheet:not([hidden])` 애니메이션, **퇴장은 `bindSheetExitMotion`의 MutationObserver 1개**가 `hidden` 부착을 감지해 `.is-closing`을 260ms 부여(닫기 호출부 16곳 무수정). 숨김은 `display:none` 유지 — 전체화면 오버레이가 남는 위험을 만들지 않는다.
 - **드로어(좌측)**: 미니 페이지 톤 — base 92% blur 몸체 > input 웰 그룹 > **화이트 잔액 카드**(유일한 강조). 항목은 `data-nav`로 기존 라우팅 재사용. 닫기 = 항목 탭/딤/ESC.
 - **페이지 헤더**: 홈 = 인사말(22px Bold −0.03em)+날짜, 서브 라우트 = topbar(← 메인)+타이틀. 헤더↔첫 카드 여백 16px.
 - **설정 위계**: 크레딧 히어로(액센트 카드, 미로그인 CTA="무료 20✦") → 계정·연동 → AI(BYOK 셰브론 진입 행 → `route-byok` 서브 라우트) → 프로필 → 데이터(초기화 최하단). 그룹 = 화이트 카드 + 내부 인풋 base 트랙 + 항목 구분선.
@@ -46,6 +50,18 @@
   4. `lib/tags.test.js` 실패는 기존 베이스라인(`AlfredoTags is not defined`, Node 22).
   5. git push 무한대기 시: `git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push`
 - 확장은 순수 JS/MV3, 빌드 없음. 스프링·레이아웃 애니메이션은 CSS 근사로.
+- **트랜지션이 걸린 값 측정 시**: 클래스 토글 직후 `getComputedStyle`은 시작값을 준다. `el.style.transition='none'` + 리플로우 후 읽어야 최종값이 나온다(프리뷰 렌더러가 불안정할 때 특히).
+
+## 4-1. PWA 이중 타깃 (같은 코드베이스 · 포크·빌드 없음)
+
+`lib/platform.js`가 유일한 분기점이며 **가장 먼저 로드**되어야 한다.
+
+- 확장(`chrome.runtime.id` 존재) → 아무것도 하지 않음. http(s) → 매니페스트 링크 주입 + `sw.js` 등록 + `chrome.*` 심 설치.
+- 심 매핑: `storage`→localStorage · `tabs.create`→`window.open` · `notifications`→Notification API · `runtime`/`alarms`→no-op(`sendMessage`는 **Promise 반환** — 호출부가 `.catch()`로 쓴다) · `identity`→명시적 실패.
+- **Google 캘린더·Gmail은 확장 전용**: `chrome.identity`의 PWA 대체가 없다. PWA에서 쓰려면 GIS 리다이렉트 OAuth를 별도로 붙여야 한다.
+- **웹 저장소에 BYOK 키를 평문 저장하지 않는다** — 심의 `set`이 `settings.apiKeys`를 비운다(storage.js 폴백과 동일 정책). PWA는 키를 매 세션 입력.
+- `sw.js`는 앱 셸을 프리캐시하고, 문서=네트워크 우선 / 정적 자산=캐시 우선 / 교차 출처 API=미개입. **자산 파일을 바꾸면 HTML의 `?v=`와 `sw.js`의 SHELL 목록을 함께 올릴 것.**
+- 진입점 `fullpage.html`, 앱 바로가기는 `?tab=dump|dashboard`(popup.js 처리). 배포는 HTTPS + `app.webmanifest`·`sw.js`가 루트 스코프에 오도록 서빙.
 
 ## 5. 레퍼런스
 
