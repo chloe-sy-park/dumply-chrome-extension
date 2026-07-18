@@ -1,45 +1,109 @@
 {
- "_comment": "English changelog — keep entries in sync with changelog.json",
- "entries": [
-  {
-   "date": "2026-07-04",
-   "product": "extension",
-   "version": "2.2.0",
-   "type": "new",
-   "title": "Dumps are now read with the 5W1H principle",
-   "body": "When organizing a brain dump, Alfredo now also extracts who, when, where, what, how, and why. Events get their people and location filled in automatically, and you can check the 👥 📍 🔧 💡 chips in the inbox rationale line and the detail view. Works without an AI key too, powered by built-in rules."
-  },
-  {
-   "date": "2026-07-03",
-   "product": "prompts",
-   "version": "0.1.0-beta",
-   "type": "new",
-   "title": "Prompt Library beta is live",
-   "body": "The Prompt Library — save your go-to prompts and pull them out instantly — is now in beta at prompts.dumply.app. Automatic platform sorting, tags and search, and cross-device sync are free, and connecting a personal Anthropic API key unlocks unlimited AI prompt improvement and generation."
-  },
-  {
-   "date": "2026-06-12",
-   "product": "extension",
-   "version": "2.1.2",
-   "type": "fix",
-   "title": "Fixed calendar monthly view not loading",
-   "body": "Fixed an issue where monthly events wouldn't load. Also improved Google sign-in stability for non-store installs."
-  },
-  {
-   "date": "2026-06-01",
-   "product": "extension",
-   "version": "2.1.0",
-   "type": "improve",
-   "title": "Smoother onboarding",
-   "body": "Lightened up onboarding so first-time users can finish their first dump within 30 seconds."
-  },
-  {
-   "date": "2026-05-20",
-   "product": "extension",
-   "version": "2.0.0",
-   "type": "new",
-   "title": "First release, with Alfredo",
-   "body": "The first release of the side-panel extension where Alfredo the detective penguin reads your dumps and sorts them with MoSCoW. Supports Claude · OpenAI · Gemini (BYOK)."
-  }
- ]
+  "_comment": "English changelog — keep entries in sync with changelog.json",
+  "entries": [
+    {
+      "date": "2026-07-18",
+      "product": "extension",
+      "version": "2.3.0",
+      "type": "new",
+      "title": "One account, AI on credits — no key needed",
+      "body": "Sign up with your email and get 20✦ free. You can use AI organizing without pasting an API key, and your balance and usage history live in the header badge and the Credits & Subscription page. Bring your own key and credits are not spent."
+    },
+    {
+      "date": "2026-07-18",
+      "product": "extension",
+      "version": "2.3.0",
+      "type": "new",
+      "title": "Sync across devices — extension and web app share data",
+      "body": "Sign in and your notes, projects and events merge across devices, so a dump from the desktop extension continues on your phone at dumply-app.vercel.app. Edits made on two devices merge per item instead of one overwriting the other, and deletions no longer come back. API keys and Google connections stay on each device."
+    },
+    {
+      "date": "2026-07-18",
+      "product": "extension",
+      "version": "2.3.0",
+      "type": "new",
+      "title": "New look — matte mono with themes and accents",
+      "body": "Backgrounds are now a calm matte monotone (Zinc), with cards, type, spacing and icons all reworked. Pick a theme such as dark or craft, plus one of five accent colours, in Settings. Emoji icons were replaced with stroke icons."
+    },
+    {
+      "date": "2026-07-18",
+      "product": "extension",
+      "version": "2.3.0",
+      "type": "new",
+      "title": "Reworked navigation — drawer and a collapsing header",
+      "body": "The side panel's left rail became a drawer. As you scroll, the greeting and tabs fold into a single top bar, giving the narrow panel noticeably more room. Search and notifications in the header now work."
+    },
+    {
+      "date": "2026-07-18",
+      "product": "extension",
+      "version": "2.3.0",
+      "type": "new",
+      "title": "Gmail — important mail into your Inbox",
+      "body": "Connect Gmail from Settings or onboarding to pull recent important, unread mail into your Inbox and sort it like any other dump. Messages are never pulled twice."
+    },
+    {
+      "date": "2026-07-18",
+      "product": "extension",
+      "version": "2.3.0",
+      "type": "improve",
+      "title": "Settings and project screens cleaned up",
+      "body": "Settings is grouped into Profile, AI, Accounts & Sync and Data, with API key entry moved to its own page. Project detail is down to a single progress bar and one line for the period, and the large grey boxes on empty lists are gone. Date and time pickers were replaced too."
+    },
+    {
+      "date": "2026-07-18",
+      "product": "extension",
+      "version": "2.3.0",
+      "type": "fix",
+      "title": "Tasks added from a project not landing in it",
+      "body": "Switching between the task and event tabs reset the project and priority, so an item created inside a project only appeared on the dashboard. It now survives the switch. Items already created can be pulled in with Import in the project."
+    },
+    {
+      "date": "2026-07-18",
+      "product": "extension",
+      "version": "2.3.0",
+      "type": "fix",
+      "title": "Other fixes",
+      "body": "Fixed the blank gap on days with no events, toasts collapsing into a circle when the message ran long, and grey blocks behind empty states inside cards. Signing out now clears the Google and Gmail connections too."
+    },
+    {
+      "date": "2026-07-04",
+      "product": "extension",
+      "version": "2.2.0",
+      "type": "new",
+      "title": "Dumps are now read with the 5W1H principle",
+      "body": "When organizing a brain dump, Alfredo now also extracts who, when, where, what, how, and why. Events get their people and location filled in automatically, and you can check the 👥 📍 🔧 💡 chips in the inbox rationale line and the detail view. Works without an AI key too, powered by built-in rules."
+    },
+    {
+      "date": "2026-07-03",
+      "product": "prompts",
+      "version": "0.1.0-beta",
+      "type": "new",
+      "title": "Prompt Library beta is live",
+      "body": "The Prompt Library — save your go-to prompts and pull them out instantly — is now in beta at prompts.dumply.app. Automatic platform sorting, tags and search, and cross-device sync are free, and connecting a personal Anthropic API key unlocks unlimited AI prompt improvement and generation."
+    },
+    {
+      "date": "2026-06-12",
+      "product": "extension",
+      "version": "2.1.2",
+      "type": "fix",
+      "title": "Fixed calendar monthly view not loading",
+      "body": "Fixed an issue where monthly events wouldn't load. Also improved Google sign-in stability for non-store installs."
+    },
+    {
+      "date": "2026-06-01",
+      "product": "extension",
+      "version": "2.1.0",
+      "type": "improve",
+      "title": "Smoother onboarding",
+      "body": "Lightened up onboarding so first-time users can finish their first dump within 30 seconds."
+    },
+    {
+      "date": "2026-05-20",
+      "product": "extension",
+      "version": "2.0.0",
+      "type": "new",
+      "title": "First release, with Alfredo",
+      "body": "The first release of the side-panel extension where Alfredo the detective penguin reads your dumps and sorts them with MoSCoW. Supports Claude · OpenAI · Gemini (BYOK)."
+    }
+  ]
 }
