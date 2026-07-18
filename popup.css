@@ -3290,13 +3290,37 @@ button.proj-card {
   color: var(--text-body);
 }
 .proj-detail-title { flex: 1; font-size: 16px; font-weight: 600; min-width: 0; }
+/* ── 프로젝트 오버뷰 (A안 — 진행바 1개 + 기간 텍스트) ── */
 .proj-overview {
   margin: 0 var(--dumply-padding-x) var(--dumply-gap-lg);
-  padding: var(--dumply-gap-md);
-  border: 1px solid var(--border);
+  padding: 16px;
+  border: 1px solid var(--card-line);
   border-radius: var(--radius-card);
   background: var(--bg-surface);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
+.proj-ov-head { display: flex; align-items: flex-start; gap: 12px; }
+.proj-ov-emoji {
+  width: 40px; height: 40px; flex: 0 0 auto; border-radius: 12px;
+  background: var(--bg-input); display: flex; align-items: center; justify-content: center; font-size: 21px;
+}
+.proj-ov-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; min-height: 40px; }
+.proj-ov-meta { font-size: 11.5px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.proj-overview .proj-badge { margin-left: 0; align-self: center; }
+.proj-ov-prog { display: flex; flex-direction: column; gap: 8px; }
+.proj-ov-prog-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.proj-ov-pct { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); font-variant-numeric: tabular-nums; line-height: 1; }
+.proj-ov-count { font-size: 12px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.proj-ov-track { height: 8px !important; margin: 0 !important; }
+.proj-ov-track.is-done .progress-fill { background: var(--success); }
+.proj-ov-period { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 11.5px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.proj-ov-dday { font-weight: 700; color: var(--text-secondary); }
+.proj-ov-dday.warn { color: var(--warning); }
+.proj-ov-noperiod { font-size: 11.5px; color: var(--text-placeholder); }
+.proj-ov-addperiod { border: 0; background: none; font: inherit; font-size: 11.5px; font-weight: 700; color: var(--accent); cursor: pointer; padding: 0; }
 .proj-overview-top { display: flex; gap: var(--dumply-gap-md); align-items: flex-start; margin-bottom: var(--dumply-gap-md); }
 .proj-overview-range { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
 .proj-progress-row {

@@ -881,6 +881,7 @@ function renderProjectDetail(projectId) {
   if (!isArchive) {
     const editBtn = document.createElement('button');
     editBtn.type = 'button';
+    editBtn.id = 'proj-edit-btn';
     editBtn.className = 'btn btn-secondary btn-xs';
     editBtn.textContent = t('projects.edit');
     editBtn.addEventListener('click', () => {
@@ -922,59 +923,83 @@ function renderProjectDetail(projectId) {
   root.append(header);
 
   if (!isArchive) {
+    // A안 오버뷰 — 진행 트랙 1개 + 기간은 텍스트 한 줄 (평행 바 2개 제거)
     const overview = document.createElement('div');
     overview.className = 'proj-overview';
     const dLeft = project.endDate ? daysUntil(project.endDate) : null;
     const statusKey = normalizeProjectStatus(project.status);
     const st = PROJECT_STATUS[statusKey] || PROJECT_STATUS.active;
 
-    const oTop = document.createElement('div');
-    oTop.className = 'proj-overview-top';
+    // 헤더: 이모지 타일 + 메타(영역·중요도) + 상태 필
+    const head = document.createElement('div');
+    head.className = 'proj-ov-head';
     const emoji = document.createElement('span');
-    emoji.className = 'proj-emoji';
+    emoji.className = 'proj-ov-emoji';
     emoji.textContent = project.emoji || '📁';
-    const oInfo = document.createElement('div');
-    const oMeta = document.createElement('div');
-    oMeta.className = 'proj-overview-range';
-    oMeta.textContent = formatProjectMeta(project);
-    const oRange = document.createElement('div');
-    oRange.className = 'proj-overview-sub';
-    const rangeText = formatProjectRange(project);
-    if (rangeText) {
-      oRange.textContent = `${rangeText}${dLeft != null ? ` · D-${Math.max(0, dLeft)}` : ''}`;
-    } else {
-      oRange.textContent = t('projects.no.period');
-      oRange.classList.add('is-muted');
-    }
-    const oBadge = document.createElement('span');
-    oBadge.className = `proj-badge ${st.cls}`;
-    oBadge.textContent = st.label;
-    oInfo.append(oMeta, oRange, oBadge);
-    oTop.append(emoji, oInfo);
+    const info = document.createElement('div');
+    info.className = 'proj-ov-info';
+    const metaLine = document.createElement('div');
+    metaLine.className = 'proj-ov-meta';
+    metaLine.textContent = formatProjectMeta(project) || t('projects.progress');
+    info.append(metaLine);
+    const badge = document.createElement('span');
+    badge.className = `proj-badge ${st.cls}`;
+    badge.textContent = st.label;
+    head.append(emoji, info, badge);
 
-    const progRow = document.createElement('div');
-    progRow.className = 'proj-progress-row';
-    progRow.append(document.createTextNode(t('projects.progress')));
-    const progVal = document.createElement('strong');
-    progVal.textContent = `${pct}%`;
-    progRow.append(progVal);
-
+    // 진행률: 큰 % + 완료 카운트 + 트랙
+    const prog = document.createElement('div');
+    prog.className = 'proj-ov-prog';
+    const progTop = document.createElement('div');
+    progTop.className = 'proj-ov-prog-top';
+    const pctEl = document.createElement('span');
+    pctEl.className = 'proj-ov-pct';
+    pctEl.textContent = `${pct}%`;
+    const countEl = document.createElement('span');
+    countEl.className = 'proj-ov-count';
+    countEl.textContent = t('projects.ov.count', done, total);
+    progTop.append(pctEl, countEl);
     const track = document.createElement('div');
-    track.className = 'progress-track proj-progress-track';
+    track.className = `progress-track proj-ov-track${pct >= 100 ? ' is-done' : ''}`;
     const fill = document.createElement('div');
     fill.className = 'progress-fill';
     fill.style.width = `${pct}%`;
     track.append(fill);
+    prog.append(progTop, track);
 
-    const meta = document.createElement('div');
-    meta.className = 'proj-progress-meta';
-    meta.textContent = t('projects.tasks.meta', done, total, dLeft);
-
-    overview.append(oTop, progRow, track, meta);
-    root.append(overview);
-    if (project.startDate && project.endDate) {
-      root.append(renderProjectTimelineBar(project, pct));
+    // 기간: 트랙 아래 텍스트 한 줄 (없으면 "기간 미설정 · 기간 추가")
+    const rangeText = formatProjectRange(project);
+    if (rangeText) {
+      const period = document.createElement('div');
+      period.className = 'proj-ov-period';
+      const rng = document.createElement('span');
+      rng.className = 'proj-ov-range';
+      rng.textContent = rangeText;
+      const dday = document.createElement('span');
+      dday.className = 'proj-ov-dday';
+      if (pct >= 100 || (dLeft != null && dLeft < 0)) {
+        dday.textContent = t('projects.ov.closed');
+      } else if (dLeft != null) {
+        dday.textContent = t('projects.ov.dday', dLeft);
+        if (dLeft <= 7) dday.classList.add('warn');
+      }
+      period.append(rng, dday);
+      prog.append(period);
+    } else {
+      const noPeriod = document.createElement('div');
+      noPeriod.className = 'proj-ov-noperiod';
+      noPeriod.append(document.createTextNode(`${t('projects.ov.noperiod')} `));
+      const addBtn = document.createElement('button');
+      addBtn.type = 'button';
+      addBtn.className = 'proj-ov-addperiod';
+      addBtn.textContent = t('projects.ov.addperiod');
+      addBtn.addEventListener('click', () => root.querySelector('#proj-edit-btn')?.click());
+      noPeriod.append(addBtn);
+      prog.append(noPeriod);
     }
+
+    overview.append(head, prog);
+    root.append(overview);
   } else {
     const hint = document.createElement('p');
     hint.className = 'proj-archive-hint';
