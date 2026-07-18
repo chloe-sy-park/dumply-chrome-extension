@@ -2,6 +2,14 @@
   "_comment": "덤플리 통합 업데이트 로그. 새 글은 배열 맨 앞에 추가하세요. product 값은 products.json의 id와 맞춰야 필터가 동작합니다. type: new(신규) · improve(개선) · fix(수정).",
   "entries": [
     {
+      "date": "2026-07-18",
+      "product": "extension",
+      "version": "2.3.0",
+      "type": "new",
+      "title": "API 키 없이도 되는 AI 정리",
+      "body": "이메일로 로그인하면 API 키를 걸지 않아도 AI 정리를 바로 쓸 수 있어요. 크레딧 잔액과 사용 내역은 설정에서 확인하고, 더 쓰고 싶으면 Pro 구독이나 크레딧 팩을 더하면 됩니다. Claude·OpenAI·Gemini 키를 이미 연결해 둔 분은 지금처럼 크레딧 소모 없이 그대로 쓰면 돼요."
+    },
+    {
       "date": "2026-07-04",
       "product": "extension",
       "version": "2.2.0",

@@ -2,6 +2,14 @@
  "_comment": "English changelog — keep entries in sync with changelog.json",
  "entries": [
   {
+   "date": "2026-07-18",
+   "product": "extension",
+   "version": "2.3.0",
+   "type": "new",
+   "title": "AI sorting now works without an API key",
+   "body": "Sign in with email and AI sorting just works, no API key required. Check your credit balance and usage history in settings, and add a Pro subscription or a credit pack whenever you need more. If you've already connected your own Claude, OpenAI, or Gemini key, nothing changes for you — it keeps running on your key instead of credits."
+  },
+  {
    "date": "2026-07-04",
    "product": "extension",
    "version": "2.2.0",
