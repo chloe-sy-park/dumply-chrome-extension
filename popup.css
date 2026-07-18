@@ -818,8 +818,8 @@ body {
 .inbox-check,
 .memo-check {
   appearance: none;
-  width: 15px; /* 갤러리 체크 서클 시각 지름(~13px) 기준 — 18px는 행 대비 과대 */
-  height: 15px;
+  width: 13px; /* 갤러리 체크 서클 시각 지름(~13px) 기준 */
+  height: 13px;
   border: 1.5px solid var(--text-placeholder);
   border-radius: 50%;
   cursor: pointer;
@@ -1267,7 +1267,7 @@ body {
 .prio-row-should .prio-rank { color: var(--moscow-should); }
 .prio-row-could .prio-rank { color: var(--moscow-could); }
 .prio-row-wont .prio-rank { color: var(--moscow-wont); }
-.prio-title { font-weight: 500; font-size: 15px; color: var(--text-primary); line-height: 1.4; } /* 갤러리 태스크 타이틀 15/500 */
+.prio-title { font-weight: 500; font-size: 14px; color: var(--text-primary); line-height: 1.4; } /* 카드 타이틀 = Body-sm 14/500 */
 .prio-meta {
   font-size: 11px;
   color: var(--text-secondary);
@@ -1336,7 +1336,7 @@ body {
 }
 .remember-add-input::placeholder { color: var(--text-placeholder); }
 .remember-check {
-  appearance: none; width: 15px; height: 15px; flex-shrink: 0; /* memo-check와 동일 크기 */
+  appearance: none; width: 13px; height: 13px; flex-shrink: 0; /* memo-check와 동일 크기 */
   border: 1.5px solid var(--text-placeholder); border-radius: 50%; cursor: pointer; position: relative;
 }
 .remember-check:checked { background: var(--accent); border-color: var(--accent); }
@@ -1624,7 +1624,7 @@ body {
   color: var(--text-secondary);
   flex-shrink: 0;
 }
-.remember-text { font-size: 14px; font-weight: 500; }
+.remember-text { font-size: 13.5px; font-weight: 500; }
 .remember-due { font-size: 11px; color: var(--text-secondary); }
 
 .detail-duration-wrap { display: flex; align-items: center; gap: var(--dumply-gap-xs); flex-wrap: wrap; }
