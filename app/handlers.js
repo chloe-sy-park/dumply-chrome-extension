@@ -1863,6 +1863,31 @@ function bindIntegrationMessages() {
   });
 }
 
+// 시트 퇴장 모션 — 닫는 호출부(16곳)를 건드리지 않고 hidden 전환만 관찰해 역방향 애니메이션을 재생.
+// hidden 속성은 그대로 두고 .is-closing으로 잠깐만 화면에 남긴다(CSS가 display 유지 + 역모션).
+function bindSheetExitMotion() {
+  const CLOSE_MS = 260;
+  const obs = new MutationObserver((records) => {
+    records.forEach(({ target: el }) => {
+      if (!el.classList?.contains('sheet')) return;
+      if (el.hasAttribute('hidden')) {
+        if (el.dataset.closing) return;
+        el.dataset.closing = '1';
+        el.classList.add('is-closing');
+        setTimeout(() => {
+          el.classList.remove('is-closing');
+          delete el.dataset.closing;
+        }, CLOSE_MS);
+      } else if (el.dataset.closing) {
+        // 모션 도중 다시 열림 → 퇴장 취소
+        el.classList.remove('is-closing');
+        delete el.dataset.closing;
+      }
+    });
+  });
+  $$('.sheet').forEach((el) => obs.observe(el, { attributes: true, attributeFilter: ['hidden'] }));
+}
+
 function bindEvents() {
   applyUiLabels();
 
@@ -1923,6 +1948,7 @@ $('#onboard-next')?.addEventListener('click', advanceOnboarding);
   bindNavEvents?.();
   bindProjectSheet?.();
   initSheetA11y?.();
+  bindSheetExitMotion?.();
   bindIntegrationMessages?.();
   $('#btn-settings-cal-select')?.addEventListener('click', openCalSelectSheet);
   $('#btn-cal-select-close')?.addEventListener('click', () => { $('#cal-select-sheet').hidden = true; });

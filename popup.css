@@ -1810,8 +1810,20 @@ body {
 .sheet:not([hidden]) .sheet-panel {
   animation: sheet-slide-up 0.24s cubic-bezier(0, 0, 0, 1);
 }
+/* 퇴장 — hidden이 붙은 뒤에도 잠깐 화면에 남겨 역방향 모션을 재생 (is-closing은 JS가 260ms 후 제거) */
+.sheet[hidden].is-closing {
+  display: flex !important;
+  pointer-events: none;
+  animation: sheet-dim-out 0.2s ease-out forwards;
+}
+.sheet[hidden].is-closing .sheet-panel {
+  animation: sheet-slide-down 0.24s cubic-bezier(0, 0, 0, 1) forwards;
+}
+@keyframes sheet-dim-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes sheet-slide-down { from { transform: none; } to { transform: translateY(100%); } }
 @media (prefers-reduced-motion: reduce) {
   .sheet:not([hidden]), .sheet:not([hidden]) .sheet-panel { animation: none; }
+  .sheet[hidden].is-closing { display: none !important; }
 }
 .sheet-panel {
   width: 100%;
