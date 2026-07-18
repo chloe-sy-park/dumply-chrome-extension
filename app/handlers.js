@@ -1000,7 +1000,11 @@ function refreshDumplySettingsUI() {
   otp.value = '';
   otpBtn.hidden = signedIn;
   otpBtn.textContent = t('settings.dumply.send');
-  outBtn.hidden = !signedIn;
+  // 로그아웃 = 완전 로그아웃 → 무언가(계정·Google·Gmail) 연결돼 있으면 노출
+  const anyConnected = signedIn
+    || Boolean(state.settings.calendar?.connected)
+    || Boolean(state.settings.email?.connected);
+  outBtn.hidden = !anyConnected;
   if (!signedIn) {
     status.textContent = t('settings.dumply.hint.signedout');
     return;
@@ -1051,9 +1055,32 @@ async function onDumplyOtpClick() {
 }
 
 async function onDumplySignout() {
-  await DumplyAccount.signOut();
+  // 완전 로그아웃 — Dumply 계정 + Google/Gmail 연결까지 한 번에 정리 (gmail 연결 여부 무관)
+  await DumplyAccount.signOut().catch(() => {});
+  const em = ensureEmailSettings();
+  em.connected = false;
+  em.address = '';
+  if (state.settings.calendar?.connected || state.settings.googleAccount?.email) {
+    const token = await new Promise((r) =>
+      chrome.identity.getAuthToken({ interactive: false }, r)
+    ).catch(() => null);
+    await revokeGoogleToken(token);
+    state.settings.calendar = {
+      ...structuredClone(AlfredoStorage.DEFAULT_STATE.settings.calendar),
+      syncDirection: state.settings.calendar?.syncDirection || 'both',
+    };
+    state.settings.googleAccount = { email: '', name: '', picture: '' };
+    state.timeline = state.timeline.filter((t) => !t.gcalEventId && t.source !== 'google');
+  }
+  await persist();
   refreshDumplySettingsUI();
+  refreshEmailSettingsUI();
+  refreshGoogleSettingsUI();
+  renderCalListSettings?.();
+  updateTimelineSyncBtn?.();
+  refreshCalendarIfActive?.();
   renderAll();
+  toast(AlfredoI18n.lang() === 'en' ? 'Signed out' : '로그아웃 됐어요');
 }
 
 // 크레딧 팩 결제 — Stripe Checkout을 새 탭으로 (결제 완료 시 웹훅이 지급)
