@@ -5,7 +5,7 @@
  * 네트워크 우선 + 캐시 폴백. API 호출(교차 출처)은 건드리지 않는다.
  */
 
-const VERSION = 'dumply-v1';
+const VERSION = 'dumply-v2';
 const SHELL = [
   'fullpage.html',
   'app.webmanifest',
@@ -83,14 +83,25 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // 정적 자산은 캐시 우선 (파일명에 ?v= 버전이 붙어 있어 갱신은 새 URL로 이뤄진다)
+  const save = (res) => {
+    if (res && res.ok) {
+      const copy = res.clone();
+      caches.open(VERSION).then((c) => c.put(request, copy)).catch(() => {});
+    }
+    return res;
+  };
+
+  // ?v= 가 붙은 자산만 캐시 우선 — 갱신이 새 URL로 이뤄지므로 낡을 일이 없다.
+  // 버전이 없는 파일(app.webmanifest 등)을 캐시 우선으로 두면 영원히 갱신되지 않는다.
+  if (url.searchParams.has('v')) {
+    e.respondWith(
+      caches.match(request).then((hit) => hit || fetch(request).then(save).catch(() => hit)),
+    );
+    return;
+  }
+
+  // 버전 없는 자산은 네트워크 우선, 오프라인일 때만 캐시
   e.respondWith(
-    caches.match(request).then((hit) => hit || fetch(request).then((res) => {
-      if (res.ok) {
-        const copy = res.clone();
-        caches.open(VERSION).then((c) => c.put(request, copy)).catch(() => {});
-      }
-      return res;
-    }).catch(() => hit)),
+    fetch(request).then(save).catch(() => caches.match(request)),
   );
 });

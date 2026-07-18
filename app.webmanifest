@@ -4,30 +4,48 @@
   "description": "머릿속을 그대로 쏟아내면 할 일·일정·우선순위로 정리해 주는 앱",
   "lang": "ko",
   "dir": "ltr",
-  "start_url": "fullpage.html",
+  "start_url": "/",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#F6F7F9",
   "theme_color": "#F6F7F9",
-  "categories": ["productivity", "lifestyle"],
+  "categories": [
+    "productivity",
+    "lifestyle"
+  ],
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icons/adaptive-icon.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/adaptive-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ],
   "shortcuts": [
     {
       "name": "브레인 덤프",
       "short_name": "덤프",
       "description": "바로 쏟아내기",
-      "url": "fullpage.html?tab=dump"
+      "url": "/?tab=dump"
     },
     {
       "name": "대시보드",
       "short_name": "대시보드",
       "description": "오늘의 우선순위 보기",
-      "url": "fullpage.html?tab=dashboard"
+      "url": "/?tab=dashboard"
     }
   ]
 }
