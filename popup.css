@@ -3870,7 +3870,10 @@ button.proj-card {
 .dash-header .dash-greet { overflow: hidden; max-height: 96px; opacity: 1;
   transition: max-height 0.2s ease-out, opacity 0.2s ease-out; }
 .dash-header.mini .dash-greet { max-height: 0; opacity: 0; }
-@media (prefers-reduced-motion: reduce) { .dash-header .dash-greet { transition: none; } }
+/* 인사말이 크롬 바로 올라가면 헤더 패딩도 함께 접어 빈 띠 제거 */
+.dash-header { transition: padding-top 0.2s ease-out, padding-bottom 0.2s ease-out; }
+.dash-header.mini { padding-top: 0; padding-bottom: 0; }
+@media (prefers-reduced-motion: reduce) { .dash-header .dash-greet, .dash-header { transition: none; } }
 
 /* ── 공통 크롬 바 (전역) vs 페이지 헤더 분리 ── */
 .app-chrome { display: flex; align-items: center; gap: 2px; flex-shrink: 0;
