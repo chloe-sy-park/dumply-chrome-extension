@@ -1267,7 +1267,7 @@ body {
 .prio-row-should .prio-rank { color: var(--moscow-should); }
 .prio-row-could .prio-rank { color: var(--moscow-could); }
 .prio-row-wont .prio-rank { color: var(--moscow-wont); }
-.prio-title { font-weight: 500; font-size: 14px; color: var(--text-primary); line-height: 1.4; } /* 카드 타이틀 = Body-sm 14/500 */
+.prio-title { font-weight: 500; font-size: 13px; color: var(--text-primary); line-height: 1.4; } /* 리스트 행 밀도 — 갤러리 sched 행 13.5 기준 */
 .prio-meta {
   font-size: 11px;
   color: var(--text-secondary);
@@ -1624,7 +1624,7 @@ body {
   color: var(--text-secondary);
   flex-shrink: 0;
 }
-.remember-text { font-size: 13.5px; font-weight: 500; }
+.remember-text { font-size: 13px; font-weight: 500; }
 .remember-due { font-size: 11px; color: var(--text-secondary); }
 
 .detail-duration-wrap { display: flex; align-items: center; gap: var(--dumply-gap-xs); flex-wrap: wrap; }
