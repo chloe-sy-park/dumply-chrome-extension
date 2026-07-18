@@ -595,7 +595,11 @@ function renderProjectTaskSection(label, items, { allowImport, projectId, sectio
   block.className = 'proj-task-group';
   const head = document.createElement('div');
   head.className = 'proj-group-label';
-  head.textContent = `${label} [${items.length}]`;
+  head.textContent = label;
+  const count = document.createElement('span');
+  count.className = 'proj-group-count';
+  count.textContent = String(items.length);
+  head.append(count);
   const ul = document.createElement('ul');
   ul.className = 'proj-task-list';
   const key = projectKey || projectId || '__archive__';
@@ -612,12 +616,12 @@ function renderProjectTaskSection(label, items, { allowImport, projectId, sectio
         actionLabel: t('proj.task.import.btn'),
         buttonClass: 'link-btn proj-import-btn',
         onAction: () => openProjectImportPicker(projectId, 'task'),
-        className: 'empty-state empty-state-inline empty-card empty-card--left',
+        className: 'empty-state empty-state-inline proj-empty-inline',
       }));
     } else {
       placeholder.append(createEmptyState({
         message: sectionKey === 'done' ? t('proj.task.done.empty') : t('proj.task.empty'),
-        className: 'empty-state empty-state-inline empty-card empty-card--left',
+        className: 'empty-state empty-state-inline proj-empty-inline',
       }));
     }
     ul.append(placeholder);
@@ -675,12 +679,12 @@ function renderProjectEventSection(items, { allowImport, projectId } = {}) {
         actionLabel: t('proj.task.import.btn'),
         buttonClass: 'link-btn proj-import-btn',
         onAction: () => openProjectImportPicker(projectId, 'event'),
-        className: 'empty-state empty-state-inline empty-card empty-card--left',
+        className: 'empty-state empty-state-inline proj-empty-inline',
       }));
     } else {
       placeholder.append(createEmptyState({
         message: t('proj.event.empty'),
-        className: 'empty-state empty-state-inline empty-card empty-card--left',
+        className: 'empty-state empty-state-inline proj-empty-inline',
       }));
     }
     ul.append(placeholder);

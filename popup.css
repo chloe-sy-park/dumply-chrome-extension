@@ -3340,7 +3340,8 @@ button.proj-card {
   color: var(--text-secondary);
 }
 .proj-task-group { padding: 0 var(--dumply-padding-x) var(--dumply-gap-md); }
-.proj-group-label { font-size: 11px; font-weight: 600; letter-spacing: 0.03em; color: var(--text-secondary); margin-bottom: var(--dumply-gap-sm); }
+.proj-group-label { display: flex; align-items: baseline; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; color: var(--text-secondary); margin-bottom: var(--dumply-gap-sm); }
+.proj-group-count { font-size: 11px; font-weight: 600; color: var(--text-placeholder); font-variant-numeric: tabular-nums; }
 .proj-task-list { list-style: none; display: flex; flex-direction: column; gap: var(--dumply-gap-xs); }
 .proj-task {
   display: flex;
@@ -3628,19 +3629,22 @@ button.proj-card {
   gap: var(--dumply-gap-sm);
   padding: 0 var(--dumply-padding-x) var(--dumply-gap-sm);
 }
+/* 빈 그룹 = 담백한 한 줄 (갤러리 그래머 — 큰 회색 웰 금지, 이중 박스 제거) */
 .proj-task-placeholder {
+  list-style: none;
+  padding: 2px 0 var(--dumply-gap-xs);
+}
+.proj-empty-inline {
+  padding: 6px 2px;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  align-items: flex-start;
+}
+.proj-empty-inline .empty-state-msg {
   font-size: 12px;
   color: var(--text-placeholder);
-  padding: var(--dumply-gap-lg) var(--dumply-gap-md);
-  text-align: left;
-  background: var(--bg-accent-soft);
-  border: 1px dashed var(--border);
-  border-radius: var(--radius-card);
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--dumply-gap-xs);
 }
 .proj-empty-line { margin: 0; }
 .proj-import-btn {
