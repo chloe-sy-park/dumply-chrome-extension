@@ -37,6 +37,9 @@ async function init() {
         showOnboarding();
       } else {
         showApp();
+        // PWA 앱 바로가기(app.webmanifest shortcuts) — ?tab=dump|dashboard로 진입 탭 지정
+        const wanted = new URLSearchParams(location.search).get('tab');
+        if (wanted === 'dump' || wanted === 'dashboard') switchTab?.(wanted);
         if (state.settings.calendar.connected) {
           syncCalendarIfConnected?.();
         }
