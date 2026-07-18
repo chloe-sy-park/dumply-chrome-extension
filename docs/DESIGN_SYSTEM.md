@@ -61,7 +61,22 @@
 - **Google 캘린더·Gmail은 확장 전용**: `chrome.identity`의 PWA 대체가 없다. PWA에서 쓰려면 GIS 리다이렉트 OAuth를 별도로 붙여야 한다.
 - **웹 저장소에 BYOK 키를 평문 저장하지 않는다** — 심의 `set`이 `settings.apiKeys`를 비운다(storage.js 폴백과 동일 정책). PWA는 키를 매 세션 입력.
 - `sw.js`는 앱 셸을 프리캐시하고, 문서=네트워크 우선 / 정적 자산=캐시 우선 / 교차 출처 API=미개입. **자산 파일을 바꾸면 HTML의 `?v=`와 `sw.js`의 SHELL 목록을 함께 올릴 것.**
-- 진입점 `fullpage.html`, 앱 바로가기는 `?tab=dump|dashboard`(popup.js 처리). 배포는 HTTPS + `app.webmanifest`·`sw.js`가 루트 스코프에 오도록 서빙.
+- 진입점 `fullpage.html`(루트 `/`는 `vercel.json` 리라이트로 연결), 앱 바로가기는 `?tab=dump|dashboard`(popup.js 처리).
+
+### 배포 (임시)
+
+- **https://dumply-app.vercel.app** — Vercel 프로젝트 `dumply-app`. 배포: 레포 루트에서 `vercel deploy --prod --yes --scope dopamine-languages-projects`.
+- 기존 `dumply-chrome-extension` 프로젝트는 **랜딩(`www.dumply.app`) 전용**이며 Root Directory가 `landing/`이다(레포 루트 파일이 404인 것으로 확인). 그래서 루트 `vercel.json`을 추가해도 랜딩에 영향이 없다. **이 프로젝트는 건드리지 말 것.**
+- SW 캐시 전략의 함정: `?v=`가 붙은 자산만 캐시 우선이고, 버전 없는 파일(`app.webmanifest` 등)은 **네트워크 우선**이어야 한다. 캐시 우선으로 두면 영원히 갱신되지 않는다(실제로 발생했던 버그). 셸 목록을 바꾸면 `sw.js`의 `VERSION`도 올릴 것.
+
+### 계정 · 기기 간 동기화
+
+- **계정 = Supabase**(이메일 OTP + 웹 Google OAuth). 확장의 "구글 메일로 시작하기"는 계정 생성이 아니라 **캘린더 연결**이다 — 혼동 주의(가입자는 전부 email provider).
+- **동기화**: `lib/sync.js` ↔ `public.dumply_state(user_id PK, data jsonb, rev, updated_at)`, RLS `user_id = auth.uid()`. 같은 프로젝트의 `user_data`는 **다른 앱 소유**이므로 쓰지 말 것.
+- 병합은 **항목 단위**(같은 id는 `updatedAt` 최신 우선) + **툼스톤**으로 삭제 전파. 통째 last-write-wins는 다른 기기가 적은 내용을 통째로 날린다.
+- `updatedAt`은 마지막 동기화 스냅샷과의 diff로 push 직전에만 찍는다 — 앱의 변경 지점을 건드리지 않기 위함.
+- **동기화 제외(기기 전용)**: API 키, Google/Gmail 연결, 알림·위치 권한, UI 라우트, 온보딩 여부.
+- **Google 로그인(웹)**: `DumplyAccount.signInWithGoogle()` → Supabase `/auth/v1/authorize`. provider가 꺼져 있으면 400 JSON이 오므로 **preflight 후 토스트**로 돌린다(그냥 보내면 사용자가 JSON 에러 페이지에 떨어짐). 활성화하려면 Google Cloud OAuth 웹 클라이언트(redirect: `https://<project>.supabase.co/auth/v1/callback`) + Supabase Providers 설정 + Redirect URLs에 배포 도메인 추가가 필요하다.
 
 ## 5. 레퍼런스
 
