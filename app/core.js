@@ -278,6 +278,8 @@ function initSheetA11y() {
 async function persist() {
   await AlfredoStorage.save(state);
   scheduleAlarms();
+  // 로그인 상태면 기기 간 동기화 큐에 올린다 (디바운스 — 연타는 한 번으로 묶임)
+  if (typeof DumplySync !== 'undefined') DumplySync.schedulePush();
 }
 
 function scheduleAlarms() {

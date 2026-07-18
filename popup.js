@@ -40,6 +40,11 @@ async function init() {
         // PWA 앱 바로가기(app.webmanifest shortcuts) — ?tab=dump|dashboard로 진입 탭 지정
         const wanted = new URLSearchParams(location.search).get('tab');
         if (wanted === 'dump' || wanted === 'dashboard') switchTab?.(wanted);
+        // 기기 간 동기화 — 원격을 받아 병합하고, 창 복귀·온라인 복귀 때마다 다시 당겨온다
+        // (?. 는 미선언 식별자를 막지 못한다 — 스크립트 로드 실패까지 견디도록 typeof 가드)
+        if (typeof DumplySync !== 'undefined') {
+          DumplySync.init().catch((e) => console.warn('[Dumply] sync init:', e?.message || e));
+        }
         if (state.settings.calendar.connected) {
           syncCalendarIfConnected?.();
         }
