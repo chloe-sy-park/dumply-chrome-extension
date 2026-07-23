@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brain Dump Apps Compared (2026): dumply vs Goblin Tools, Saner.ai, Todoist, Tiimo · Dumply</title>
+  <meta name="description" content="I used five brain dump apps for a few days each. Sign-up, price, auto-sorting, platform, and whether they keep feelings — compared in one 2026 table." />
+  <link rel="canonical" href="https://www.dumply.app/en/guide/brain-dump-apps" />
+  <link rel="alternate" hreflang="ko" href="https://www.dumply.app/guide/brain-dump-apps" />
+  <link rel="alternate" hreflang="en" href="https://www.dumply.app/en/guide/brain-dump-apps" />
+  <link rel="alternate" hreflang="ja" href="https://www.dumply.app/ja/guide/brain-dump-apps" />
+  <link rel="alternate" hreflang="x-default" href="https://www.dumply.app/en/guide/brain-dump-apps" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Dumply" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="Brain Dump Apps Compared (2026): I used five for a few days each" />
+  <meta property="og:description" content="dumply vs Goblin Tools, Saner.ai, Todoist, Tiimo. Sign-up, price, auto-sorting, platform, and feelings at a glance." />
+  <meta property="og:url" content="https://www.dumply.app/en/guide/brain-dump-apps" />
+  <meta property="og:image" content="https://www.dumply.app/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Brain Dump Apps Compared (2026): dumply vs Goblin Tools, Saner.ai, Todoist, Tiimo",
+    "description": "A hands-on 2026 comparison of five brain dump apps, tested for a few days each.",
+    "inLanguage": "en",
+    "datePublished": "2026-07-23",
+    "dateModified": "2026-07-23",
+    "image": "https://www.dumply.app/og-image.png",
+    "mainEntityOfPage": "https://www.dumply.app/en/guide/brain-dump-apps",
+    "author": { "@type": "Organization", "name": "Dumply", "url": "https://www.dumply.app/" },
+    "publisher": { "@type": "Organization", "name": "Dumply", "url": "https://www.dumply.app/" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.dumply.app/en" },
+      { "@type": "ListItem", "position": 2, "name": "How to use", "item": "https://www.dumply.app/en/guide" },
+      { "@type": "ListItem", "position": 3, "name": "Brain dump apps compared", "item": "https://www.dumply.app/en/guide/brain-dump-apps" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the free brain dump apps?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Goblin Tools' web version is completely free with no sign-up, and dumply's Chrome extension is free too — AI sorting runs on your own API key (BYOK), so there's no subscription. Saner.ai, Todoist, and Tiimo have free tiers, but most of the core features sit behind paid plans." }
+      },
+      {
+        "@type": "Question",
+        "name": "Which brain dump app is best for ADHD?",
+        "acceptedAnswer": { "@type": "Answer", "text": "One that lets you dump without organizing first and sorts it for you afterward. Low capture friction matters most. dumply auto-sorts your dump into tasks, feelings, and open questions with no sign-up; Goblin Tools breaks big tasks into small steps; Saner.ai also pulls your email and calendar together." }
+      },
+      {
+        "@type": "Question",
+        "name": "Are there apps I can use without signing up?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. dumply's Chrome extension and Goblin Tools' web version both work with no account. Saner.ai, Todoist, and Tiimo require one." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can any of them keep feelings or worries, not just tasks?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Most apps treat every entry as a task, but dumply keeps feelings and open questions separate from tasks. Something like 'should I change jobs?' can't be checked off, so keeping it out of the task list keeps the list light." }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css" />
+
+  <link rel="icon" type="image/png" href="/icons/favicon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/hub.css" />
+  <style>
+    /* ponytail: local styles scoped to the comparison table only */
+    .cmp-wrap { overflow-x: auto; margin: 22px 0 8px; -webkit-overflow-scrolling: touch; }
+    .cmp { border-collapse: collapse; width: 100%; min-width: 720px; font-size: .92rem; }
+    .cmp th, .cmp td { padding: 11px 13px; text-align: left; border-bottom: 1px solid rgba(0,0,0,.09); vertical-align: top; }
+    .cmp thead th { font-weight: 700; white-space: nowrap; border-bottom: 2px solid rgba(0,0,0,.22); }
+    .cmp tbody th { font-weight: 700; white-space: nowrap; }
+    .cmp tr.is-dumply { background: rgba(255, 184, 108, .14); }
+    .cmp tr.is-dumply th { color: #b45309; }
+    .cmp caption { caption-side: bottom; text-align: left; font-size: .82rem; opacity: .62; padding-top: 10px; }
+    @media (prefers-color-scheme: dark) {
+      .cmp th, .cmp td { border-bottom-color: rgba(255,255,255,.12); }
+      .cmp thead th { border-bottom-color: rgba(255,255,255,.28); }
+      .cmp tr.is-dumply { background: rgba(255, 184, 108, .1); }
+      .cmp tr.is-dumply th { color: #fbbf24; }
+    }
+  </style>
+</head>
+<body>
+  <div class="field" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="/en" aria-label="Dumply home">
+      <img class="brand__mark" src="/icons/icon-512.png" alt="" width="28" height="28" />
+      <span class="brand__name">Dumply</span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="/en/guide">How to use</a>
+      <a href="/en/changelog">Updates</a>
+      <a href="/en/support">Support</a>
+    </nav>
+    <a class="btn btn--solid nav__cta" href="/en#products">
+      <span>Add to Chrome</span>
+      <span class="btn__tag">Free</span>
+    </a>
+  </header>
+
+  <main class="hub article" id="top">
+    <header class="hub__head">
+      <p class="hub__eyebrow">Reading · Brain dump apps compared</p>
+      <h1>Brain Dump Apps in 2026: I Used Five for a Few Days Each</h1>
+      <p class="article__meta">July 23, 2026 · Dumply</p>
+    </header>
+
+    <p>You know that urge to just dump everything in your head somewhere? That's why I've installed so many apps. Install, use for a few days, delete. The thing is, most of them make you <strong>organize before you can dump</strong>. Make a project, add tags, set a due date. By the time I'm done with all that, I've forgotten what I wanted to write. All I needed was to <a href="/en/guide/brain-dump">not lose the thought</a>.</p>
+    <p>So I grabbed the five apps that keep coming up for brain dumping and actually used each one for a few days. Spoiler: there's no single winner. It comes down to what you can't put up with. Whether you hate signing up, whether you'll pay, whether you want to keep feelings and not just tasks. Table first.</p>
+
+    <h2>The comparison, at a glance</h2>
+    <div class="cmp-wrap">
+      <table class="cmp">
+        <caption>Tested as of July 2026. Policies change — confirm pricing on each official page.</caption>
+        <thead>
+          <tr>
+            <th scope="col">App</th>
+            <th scope="col">How it works</th>
+            <th scope="col">Auto-sort</th>
+            <th scope="col">Sign-up</th>
+            <th scope="col">Price</th>
+            <th scope="col">Platform</th>
+            <th scope="col">Keeps feelings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="is-dumply">
+            <th scope="row">Dumply</th>
+            <td>Dump into the side panel → AI sorts into tasks, schedule, feelings, open questions</td>
+            <td>Yes (AI)</td>
+            <td>Not needed</td>
+            <td>Free · BYOK (your own API key)</td>
+            <td>Chrome (mobile coming)</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <th scope="row">Goblin Tools</th>
+            <td>Magic ToDo breaks big tasks into steps + Compiler tidies notes</td>
+            <td>Partial (list-making)</td>
+            <td>Not needed (web)</td>
+            <td>Web free · app one-time ~$3.99</td>
+            <td>Web · iOS · Android</td>
+            <td>Partial (tone only)</td>
+          </tr>
+          <tr>
+            <th scope="row">Saner.ai</th>
+            <td>AI assistant Skai organizes notes, email, and calendar into action items</td>
+            <td>Yes (AI)</td>
+            <td>Required</td>
+            <td>Free (30 msgs/mo) · paid $8–16/mo</td>
+            <td>Web · Chrome · Telegram</td>
+            <td>No (productivity-focused)</td>
+          </tr>
+          <tr>
+            <th scope="row">Todoist</th>
+            <td>Task manager + Ramble turns what you say into tasks</td>
+            <td>Partial (task-ify)</td>
+            <td>Required</td>
+            <td>Free tier + paid plans</td>
+            <td>Web · desktop · iOS · Android</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <th scope="row">Tiimo</th>
+            <td>Visual timeline to plan your day</td>
+            <td>Partial (planner)</td>
+            <td>Required</td>
+            <td>Subscription (free trial)</td>
+            <td>Web · iOS · Android</td>
+            <td>Partial (wellbeing)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>A quick word on each</h2>
+
+    <h3>Dumply — no sign-up, and feelings stick around</h3>
+    <p>I made this one, so of course I'll talk it up. Downsides first. Right now it <strong>only runs in Chrome, in the side panel</strong>. The mobile app is in the works. And to use AI sorting you have to plug in your own API key (Claude, OpenAI, or Gemini). That can be a hassle. But because of that setup there's <strong>no subscription, no sign-up, and whatever you write just stays in your browser.</strong> When I built it I had one rule: don't turn everything into a task. Why would "ugh, I'm so annoyed" or "should I quit my job" be a checkbox? Feelings stay feelings, open questions stay open.</p>
+
+    <h3>Goblin Tools — unbeatable at breaking big things down</h3>
+    <p>The web version is <strong>free with no sign-up</strong>, so you just open it and go. When a task is too big to even start, drop it into Magic ToDo and it chops it into small steps — that's oddly good at pressing the start button for you. But it's not really about dumping and holding onto feelings. It's a tool <strong>built for breaking tasks down</strong>.</p>
+
+    <h3>Saner.ai — email and calendar in the mix too</h3>
+    <p>This one does more than brain dumps — its AI pulls your <strong>notes, email, and calendar together</strong>. Good if hopping between apps wears you out. The catch: the free plan's monthly message limit is tight, so using it properly basically means paying. Around $8–16 a month.</p>
+
+    <h3>Todoist — if you already live in it</h3>
+    <p>It's been around forever, so it's solid and runs everywhere. <strong>Ramble</strong>, which turns what you say out loud into tasks, is surprisingly handy for dumping. But it's a task manager at heart, so it's more <strong>"keep things in order"</strong> than "throw whatever, no cleanup." If you already use it, there's no need to switch.</p>
+
+    <h3>Tiimo — when the day has to be visual</h3>
+    <p>Some people find text lists suffocating and only relax when the day is laid out as a <strong>picture</strong>. Those are the folks who stick with this one. It's closer to a <strong>visual planner</strong> than a pure brain-dump tool, and it's subscription-based.</p>
+
+    <h2>So which one should you use</h2>
+    <ul>
+      <li>Need to dump right now and refuse to sign up → <strong>Dumply</strong> or <strong>Goblin Tools</strong> (web)</li>
+      <li>Can't start a big task, want it broken into steps → <strong>Goblin Tools</strong></li>
+      <li>Email and calendar in one place → <strong>Saner.ai</strong></li>
+      <li>Already have a task-management habit → <strong>Todoist</strong></li>
+      <li>Need to see the day as a picture → <strong>Tiimo</strong></li>
+      <li>Want to keep feelings and worries, not just tasks → <strong>Dumply</strong></li>
+    </ul>
+
+    <div class="article__cta">
+      <h2>Try Dumply right now</h2>
+      <p>No sign-up. 30 seconds to install. Open the side panel, throw in whatever's in your head, and Alfredo (a detective penguin) splits it into tasks, feelings, and open questions, then picks what to start today. What you write stays in your browser.</p>
+      <p style="margin-bottom:0">
+        <a class="btn btn--solid" href="/en#products"><span>Add to Chrome</span><span class="btn__tag">Free</span></a>
+      </p>
+    </div>
+
+    <a class="hub__back" href="/en/guide">← Back to How to use</a>
+    <nav class="foot__links" aria-label="Language" style="margin-top:20px">
+      <a href="/guide/brain-dump-apps" hreflang="ko" lang="ko">한국어</a>
+      <a href="/en/guide/brain-dump-apps" hreflang="en" lang="en">English</a>
+      <a href="/ja/guide/brain-dump-apps" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+  </main>
+</body>
+</html>
