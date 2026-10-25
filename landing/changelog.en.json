@@ -2,6 +2,30 @@
  "_comment": "English changelog — keep entries in sync with changelog.json",
  "entries": [
   {
+   "date": "2026-10-25",
+   "product": "prompts",
+   "version": "0.3.1-beta",
+   "type": "improve",
+   "title": "Gallery guides now include images and videos",
+   "body": "Gallery entries can now show example images and YouTube or Vimeo videos right inside the write-up, so you can see how a prompt works while you read. Copy buttons on code and prompt blocks are included, and images are compressed automatically so pages open fast."
+  },
+  {
+   "date": "2026-10-25",
+   "product": "prompts",
+   "version": "0.3.0-beta",
+   "type": "new",
+   "title": "A gallery of work prompts, skills, and workflows",
+   "body": "Browse ready-to-use prompts, skills, and step-by-step workflow guides by job function — planning, marketing, sales, dev, HR, finance, and more — at prompts.dumply.app/gallery. Search to find what you need, download skills as files, and tap “Save to my library” to keep what you like. Each entry has a write-up with how-to and tips, and the top bar takes you straight back to your library."
+  },
+  {
+   "date": "2026-10-24",
+   "product": "prompts",
+   "version": "0.2.0-beta",
+   "type": "new",
+   "title": "Share a prompt by link, save it with just your email",
+   "body": "You can now share a single prompt as a link. Anyone who opens it can sign in with the link we email them and the prompt lands in their own library — no sign-up steps. Share pages appear in Korean, English, and Japanese, and you can stop sharing at any time."
+  },
+  {
    "date": "2026-07-04",
    "product": "extension",
    "version": "2.2.0",
